@@ -11,8 +11,8 @@ const Hero: React.FC = () => {
             🚀 The Future of Pet Care is Here
           </div>
           <h1 className="text-5xl lg:text-6xl font-heading font-extrabold leading-tight mb-6 text-gray-900">
-            Know they’re okay,<br />
-            <span className="text-pawly-orange">before they can't say.</span>
+            Know when to worry, Know what to do.<br />
+            <span className="text-pawly-orange">Your always-on AI companion for pet care.</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
             Pawly is your <strong>24/7 AI Vet</strong>. Instant answers to your health worries, personalized care advice, and peace of mind whenever you need it.
