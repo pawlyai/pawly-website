@@ -11,14 +11,17 @@ const Hero: React.FC = () => {
             🚀 The Future of Pet Care is Here
           </div>
           <h1 className="text-5xl lg:text-6xl font-heading font-extrabold leading-tight mb-6 text-gray-900">
-            Know when to worry, Know what to do.<br />
-            <span className="text-pawly-orange">Your always-on AI companion for pet care.</span>
+            Know they’re okay,<br />
+            <span className="text-pawly-orange">before they can't say.</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
-            Pawly is your <strong>24/7 AI Vet</strong>. Instant answers to your health worries, personalized care advice, and peace of mind whenever you need it.
+            Pawly is your <strong>24/7 AI Care Companion</strong>. Instant answers to your wellness worries, personalized care advice, and peace of mind whenever you need it.
           </p>
           <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-            <a href="#demo" className="bg-pawly-orange text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-orange-500 transition flex items-center justify-center transform hover:scale-105 active:scale-95 duration-200">
+            <a 
+              href="#demo"
+              className="bg-pawly-orange text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-orange-500 transition flex items-center justify-center transform hover:scale-105 active:scale-95 duration-200"
+            >
               <Stethoscope className="mr-2 w-5 h-5" /> Try Free Check
             </a>
             <a href="#product" className="bg-white text-gray-700 border-2 border-gray-200 px-8 py-4 rounded-full font-bold text-lg hover:border-pawly-orange hover:text-pawly-orange transition flex items-center justify-center transform hover:scale-105 active:scale-95 duration-200">
@@ -36,26 +39,27 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Image Content */}
-        <div className="lg:w-1/2 relative z-0">
+        <div className="lg:w-1/2 relative z-0 w-full">
           {/* Animated Background Blobs */}
           <div className="absolute -top-10 -right-10 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob"></div>
           <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000"></div>
           <div className="absolute top-20 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-4000"></div>
           
-          <img 
-            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-            alt="Happy Dog" 
-            className="relative rounded-3xl shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500 w-full object-cover h-[500px]"
-          />
-          
-          {/* Floating Data Card */}
-          <div className="absolute bottom-10 -left-4 sm:-left-10 bg-white p-4 rounded-2xl shadow-xl flex items-center animate-bounce duration-[3000ms] border border-gray-100 max-w-[240px]">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3 shrink-0">
-              <CheckCircle className="text-pawly-green w-6 h-6" />
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Analysis Status</p>
-              <p className="font-bold text-gray-800 text-lg">Instant Reply ⚡</p>
+          <div className="relative animate-fade-in">
+            <img 
+              src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+              alt="Happy Dog" 
+              className="relative rounded-3xl shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500 w-full object-cover h-[500px]"
+            />
+            {/* Floating Data Card */}
+            <div className="absolute bottom-10 -left-4 sm:-left-10 bg-white p-4 rounded-2xl shadow-xl flex items-center animate-bounce duration-[3000ms] border border-gray-100 max-w-[240px]">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3 shrink-0">
+                <CheckCircle className="text-pawly-green w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Analysis Status</p>
+                <p className="font-bold text-gray-800 text-lg">Instant Reply ⚡</p>
+              </div>
             </div>
           </div>
         </div>

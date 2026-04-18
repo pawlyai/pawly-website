@@ -35,7 +35,7 @@ const Philosophy: React.FC = () => {
               </div>
               <div className="ml-4">
                 <h4 className="text-lg font-bold text-gray-800">Data Driven, Love Powered</h4>
-                <p className="text-gray-500 leading-relaxed mt-1">We combine comprehensive medical knowledge with warm, empathetic care. We know they are family, not just animals.</p>
+                <p className="text-gray-500 leading-relaxed mt-1">We combine comprehensive wellness knowledge with warm, empathetic care. We know they are family, not just animals.</p>
               </div>
             </div>
             <div className="flex">

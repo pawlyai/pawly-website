@@ -26,6 +26,7 @@
                     animation: {
                         blob: "blob 7s infinite",
                         'typing': 'typing 1.4s infinite ease-in-out both',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
                     },
                     keyframes: {
                         blob: {
@@ -37,6 +38,10 @@
                         typing: {
                             "0%, 80%, 100%": { transform: "scale(0)" },
                             "40%": { transform: "scale(1)" }
+                        },
+                        fadeIn: {
+                            "0%": { opacity: "0", transform: "translateY(10px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" }
                         }
                     }
                 }
@@ -64,7 +69,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-gray-50 text-pawly-dark antialiased">
     <div id="root"></div>

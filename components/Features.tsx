@@ -13,12 +13,12 @@ const Features: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Feature 1 */}
           <div className="bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
-            <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 text-blue-500">
+            <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 text-blue-500 mx-auto">
               <Clock className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold mb-3 font-heading">24/7 Availability</h3>
+            <h3 className="text-xl font-bold mb-3 font-heading text-center">24/7 Availability</h3>
             <p className="text-gray-500 leading-relaxed">
-              Health concerns don't keep office hours. Whether it's 2 AM or 2 PM, our AI Vet is instantly available to provide guidance and peace of mind.
+              Health concerns don't keep office hours. Whether it's 2 AM or 2 PM, our AI Care Assistant is instantly available to provide guidance and peace of mind.
             </p>
           </div>
 
@@ -27,21 +27,21 @@ const Features: React.FC = () => {
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-pawly-orange text-white text-xs px-4 py-1.5 rounded-full font-bold shadow-md tracking-wide">
               CORE TECHNOLOGY
             </div>
-            <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 text-pawly-orange">
+            <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 text-pawly-orange mx-auto">
               <Stethoscope className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold mb-3 font-heading">AI Triage Doctor</h3>
+            <h3 className="text-xl font-bold mb-3 font-heading text-center">AI Triage Assistant</h3>
             <p className="text-gray-500 leading-relaxed">
-              Instant answers for "Is this an emergency?" We use medical-grade protocols (RAG) to analyze symptoms and give you a Red, Yellow, or Green light status.
+              Instant answers for "Is this an emergency?" We use evidence-based protocols (RAG) to analyze symptoms and give you a Red, Yellow, or Green light status.
             </p>
           </div>
 
           {/* Feature 3 */}
           <div className="bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
-            <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 text-pawly-green">
+            <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 text-pawly-green mx-auto">
               <FileText className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold mb-3 font-heading">Weekly Health Report</h3>
+            <h3 className="text-xl font-bold mb-3 font-heading text-center">Monthly Health Report</h3>
             <p className="text-gray-500 leading-relaxed">
               Get a holistic view of your pet's wellness. We correlate diet, activity, and symptoms to recommend the best food and care products.
             </p>

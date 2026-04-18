@@ -1,12 +1,13 @@
 import React from 'react';
-import { PawPrint, Twitter, Instagram, Facebook } from 'lucide-react';
+import { Twitter, Instagram, Facebook } from 'lucide-react';
+import Logo from './Logo';
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-white py-12 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <div className="flex justify-center items-center mb-6">
-          <PawPrint className="text-pawly-orange w-6 h-6 mr-2" />
+          <Logo className="w-6 h-6 mr-2" />
           <span className="font-heading font-bold text-xl text-gray-800">
             Pawly<span className="text-pawly-orange">AI</span>
           </span>
