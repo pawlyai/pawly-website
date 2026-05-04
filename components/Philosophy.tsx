@@ -26,7 +26,7 @@ const Philosophy: React.FC = () => {
               </div>
               <div className="ml-4">
                 <h4 className="text-lg font-bold text-gray-800">Proactive, Not Reactive</h4>
-                <p className="text-gray-500 leading-relaxed mt-1">We don't wait for your pet to get sick. Our AI helps catch subtle changes in behavior early, saving you money and heartache.</p>
+                <p className="text-gray-500 leading-relaxed mt-1">We don't wait for your pet to get sick. Our AI helps you notice subtle changes early, so you can act with confidence before anything escalates.</p>
               </div>
             </div>
             <div className="flex">
@@ -35,7 +35,7 @@ const Philosophy: React.FC = () => {
               </div>
               <div className="ml-4">
                 <h4 className="text-lg font-bold text-gray-800">Data Driven, Love Powered</h4>
-                <p className="text-gray-500 leading-relaxed mt-1">We combine comprehensive wellness knowledge with warm, empathetic care. We know they are family, not just animals.</p>
+                <p className="text-gray-500 leading-relaxed mt-1">We bring together health expertise and genuine warmth — because we know they're family, not just animals.</p>
               </div>
             </div>
             <div className="flex">

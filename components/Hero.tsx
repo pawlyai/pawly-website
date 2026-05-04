@@ -8,11 +8,11 @@ const Hero: React.FC = () => {
         {/* Text Content */}
         <div className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0 z-10">
           <div className="inline-block bg-orange-100 text-pawly-orange px-4 py-1.5 rounded-full font-bold text-sm mb-6 animate-pulse">
-            🚀 The Future of Pet Care is Here
+            🐾 Pet care guidance, powered by AI
           </div>
           <h1 className="text-5xl lg:text-6xl font-heading font-extrabold leading-tight mb-6 text-gray-900">
-            Know they’re okay,<br />
-            <span className="text-pawly-orange">before they can't say.</span>
+            Always know they’re okay.<br />
+            <span className="text-pawly-orange">Ask Pawly, any time.</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
             Pawly is your <strong>24/7 AI Care Companion</strong>. Instant answers to your wellness worries, personalized care advice, and peace of mind whenever you need it.
@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
                  <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
                  <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
              </span>
-             Trusted by 5,000+ pet parents • 24/7 Availability
+             Join pet parents who care • Available 24/7
           </p>
         </div>
 

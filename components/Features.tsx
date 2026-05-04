@@ -6,8 +6,8 @@ const Features: React.FC = () => {
     <section id="product" className="py-20 bg-pawly-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold mb-4">Complete Care Circle</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">We don't just answer questions. We monitor, analyze, and guide.</p>
+          <h2 className="text-3xl lg:text-4xl font-heading font-bold mb-4">How Pawly AI supports you</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">We don't just answer questions — we listen, guide, and stay by your side.</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -30,9 +30,9 @@ const Features: React.FC = () => {
             <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 text-pawly-orange mx-auto">
               <Stethoscope className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold mb-3 font-heading text-center">AI Triage Assistant</h3>
+            <h3 className="text-xl font-bold mb-3 font-heading text-center">AI care guidance</h3>
             <p className="text-gray-500 leading-relaxed">
-              Instant answers for "Is this an emergency?" We use evidence-based protocols (RAG) to analyze symptoms and give you a Red, Yellow, or Green light status.
+              Instant answers for "Is this an emergency?" We analyze your pet's symptoms and give you clear guidance — Green, Yellow, or Red — so you always know what to do next.
             </p>
           </div>
 

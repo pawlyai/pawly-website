@@ -107,6 +107,13 @@ const Mission: React.FC = () => {
         </div>
       </div>
 
+      {/* Medical Disclaimer */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
+        <p className="text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto">
+          Pawly AI is an information and guidance tool, not a replacement for professional veterinary diagnosis. In a medical emergency, always contact your local veterinarian immediately.
+        </p>
+      </div>
+
       {/* Contact Us */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
         <h2 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-8">Have questions?</h2>
