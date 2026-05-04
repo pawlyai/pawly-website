@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Mission: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="bg-white min-h-screen pt-24 pb-24">
       {/* Hero Section */}
@@ -12,11 +16,10 @@ const Mission: React.FC = () => {
 
       {/* First Full-width Image */}
       <div className="w-full h-[60vh] md:h-[80vh] mb-20">
-        <img 
-          src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=1920&q=80" 
-          alt="A warm moment with a pet" 
+        <img
+          src="/picture1.png"
+          alt="A warm moment with a pet"
           className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
         />
       </div>
 
@@ -87,11 +90,10 @@ const Mission: React.FC = () => {
 
       {/* Third Full-width Image (Team Spirit) */}
       <div className="w-full h-[60vh] md:h-[80vh] mb-24">
-        <img 
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80" 
-          alt="Team putting hands together in sunshine" 
+        <img
+          src="/picture2.png"
+          alt="Team working on user flow and moodboard"
           className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
         />
       </div>
 
