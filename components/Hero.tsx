@@ -46,9 +46,9 @@ const Hero: React.FC = () => {
           <div className="absolute top-20 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-4000"></div>
           
           <div className="relative animate-fade-in">
-            <img 
-              src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-              alt="Happy Dog" 
+            <img
+              src="/hero.png"
+              alt="Happy Dog and Cat"
               className="relative rounded-3xl shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500 w-full object-cover h-[500px]"
             />
             {/* Floating Data Card */}
