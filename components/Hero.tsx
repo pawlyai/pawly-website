@@ -11,11 +11,11 @@ const Hero: React.FC = () => {
             🐾 Pet care guidance, powered by AI
           </div>
           <h1 className="text-5xl lg:text-6xl font-heading font-extrabold leading-tight mb-6 text-gray-900">
-            Always know they’re okay.<br />
-            <span className="text-pawly-orange">Ask Toki Tail, any time.</span>
+            Healthier Pets<br />
+            <span className="text-pawly-orange">Happier Tails</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
-            Toki Tail is your <strong>24/7 AI Care Companion</strong>. Instant answers to your wellness worries, personalized care advice, and peace of mind whenever you need it.
+            Toki Tail is the 24/7 AI care companion that truly knows your pet — their breed, their history, their little quirks. Ask anything, anytime, and get vet-informed guidance made just for them.
           </p>
           <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
             <a 
