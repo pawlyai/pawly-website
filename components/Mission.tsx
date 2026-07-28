@@ -119,7 +119,7 @@ const Mission: React.FC = () => {
         <h2 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-8">Have questions?</h2>
         <p className="text-xl md:text-2xl text-gray-700 leading-relaxed font-light">
           Please send an email to <br className="md:hidden" />
-          <a href="mailto:contact@pawlyai.com" className="text-pawly-orange hover:underline font-semibold">contact@pawlyai.com</a>
+          <a href="mailto:wu.han@lumo-technology.com" className="text-pawly-orange hover:underline font-semibold">contact@lumo-technology.com</a>
         </p>
       </div>
     </div>
