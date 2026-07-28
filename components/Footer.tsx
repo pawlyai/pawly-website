@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
         <div className="flex justify-center items-center mb-6">
           <Logo className="w-6 h-6 mr-2" />
           <span className="font-heading font-bold text-xl text-gray-800">
-            Pawly<span className="text-pawly-orange">AI</span>
+            Toki Tail
           </span>
         </div>
 
@@ -32,9 +32,9 @@ const Footer: React.FC = () => {
         </div>
 
         <p className="text-sm text-gray-500 mb-4 max-w-2xl mx-auto leading-relaxed">
-          Disclaimer: Pawly AI is an information and triage tool, not a replacement for professional veterinary diagnosis. In a medical emergency, always contact your local veterinarian immediately.
+          Disclaimer: Toki Tail is an information and triage tool, not a replacement for professional veterinary diagnosis. In a medical emergency, always contact your local veterinarian immediately.
         </p>
-        <p className="text-sm text-gray-400">© 2026 Pawly AI Inc. All rights reserved.</p>
+        <p className="text-sm text-gray-400">© 2026 Toki Tail Inc. All rights reserved.</p>
       </div>
     </footer>
   );

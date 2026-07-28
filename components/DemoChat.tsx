@@ -68,8 +68,8 @@ const DemoChat: React.FC = () => {
     <section id="demo" className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold mb-4">Chat with Pawly AI 🩺</h2>
-          <p className="text-gray-600">Experience our AI capabilities. See how Pawly handles triage, emergencies, and reminders.</p>
+          <h2 className="text-3xl lg:text-4xl font-heading font-bold mb-4">Chat with Toki Tail 🩺</h2>
+          <p className="text-gray-600">Experience our AI capabilities. See how Toki Tail handles triage, emergencies, and reminders.</p>
         </div>
 
         {/* Mobile Frame */}
@@ -90,7 +90,7 @@ const DemoChat: React.FC = () => {
                   <Bot className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-gray-800">Pawly Guardian</h4>
+                  <h4 className="font-bold text-sm text-gray-800">Toki Tail</h4>
                   <span className="text-xs text-pawly-green font-semibold flex items-center">
                     <span className="w-2 h-2 bg-pawly-green rounded-full mr-1 animate-pulse"></span>
                     Online & Ready

@@ -15,7 +15,7 @@ const Logo: React.FC<LogoProps> = ({ className = "w-8 h-8" }) => {
   return (
     <img 
       src="/logo.png" 
-      alt="Pawly Logo" 
+      alt="Toki Tail Logo"
       className={`object-contain ${className}`}
       onError={() => setError(true)}
     />
