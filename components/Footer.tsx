@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
     <footer className="bg-white py-12 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <div className="flex justify-center items-center mb-6">
-          <Logo className="w-6 h-6 mr-2" />
+          <Logo className="w-9 h-9 mr-2" />
           <span className="font-heading font-bold text-xl text-gray-800">
             Toki Tail
           </span>

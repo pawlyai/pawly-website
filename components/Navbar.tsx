@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center cursor-pointer">
-            <Logo className="w-8 h-8 mr-2" />
+            <Logo className="w-12 h-12 mr-2" />
             <span className="font-heading font-bold text-2xl tracking-tight text-gray-800">
               Toki Tail
             </span>
