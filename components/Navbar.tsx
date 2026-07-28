@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center cursor-pointer">
             <Logo className="w-8 h-8 mr-2" />
             <span className="font-heading font-bold text-2xl tracking-tight text-gray-800">
-              Pawly<span className="text-pawly-orange">AI</span>
+              Toki Tail
             </span>
           </Link>
           
