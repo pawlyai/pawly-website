@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
         <p className="text-sm text-gray-500 mb-4 max-w-2xl mx-auto leading-relaxed">
           Disclaimer: Toki Tail is an information and triage tool, not a replacement for professional veterinary diagnosis. In a medical emergency, always contact your local veterinarian immediately.
         </p>
-        <p className="text-sm text-gray-400">© 2026 Toki Tail Inc. All rights reserved.</p>
+        <p className="text-sm text-gray-400">© 2026 Lumo Technologies Pte. Ltd. All rights reserved.</p>
       </div>
     </footer>
   );
