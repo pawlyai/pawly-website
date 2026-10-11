@@ -72,8 +72,8 @@ const Navbar: React.FC = () => {
                 </Link>
               )
             ))}
-            <a 
-              href="https://t.me/Pawlyai_com_bot" 
+            <a
+              href="https://apps.apple.com/sg/app/tokitail/id6787365554"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-pawly-dark text-white px-6 py-2.5 rounded-full font-bold hover:bg-gray-700 transition shadow-lg transform hover:-translate-y-0.5 text-sm lg:text-base"
@@ -114,8 +114,8 @@ const Navbar: React.FC = () => {
               </Link>
             )
           ))}
-          <a 
-            href="https://t.me/Pawlyai_com_bot" 
+          <a
+            href="https://apps.apple.com/sg/app/tokitail/id6787365554"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-pawly-dark text-white px-6 py-3 rounded-full font-bold text-center block"
