@@ -7,6 +7,7 @@ import Features from './components/Features';
 import Philosophy from './components/Philosophy';
 import Footer from './components/Footer';
 import Mission from './components/Mission';
+import Download from './components/Download';
 
 const Home: React.FC = () => (
   <main>
@@ -24,6 +25,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/mission" element={<Mission />} />
+        <Route path="/download" element={<Download />} />
       </Routes>
       <Footer />
     </div>
