@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Apple,
   ScanLine,
   ShieldCheck,
   Smartphone,
   Sparkles,
-  Star,
   Zap,
   Bot,
   Heart,
@@ -42,8 +41,6 @@ const Download: React.FC = () => {
 
   const isMobile = platform === 'ios' || platform === 'android';
 
-  const stars = useMemo(() => Array.from({ length: 5 }, (_, i) => i), []);
-
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(APP_STORE_URL);
@@ -78,26 +75,9 @@ const Download: React.FC = () => {
               <span className="text-pawly-orange">anywhere you go.</span>
             </h1>
 
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
+            <p className="text-lg text-gray-600 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
               Your AI pet-care companion, right in your pocket. Triage symptoms, log health, and get vet-informed guidance — 24/7.
             </p>
-
-            {/* Social proof */}
-            <div className="flex items-center justify-center lg:justify-start gap-4 mb-10">
-              <div className="flex items-center gap-1">
-                {stars.map((i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                ))}
-                <span className="ml-2 font-bold text-gray-800 text-sm">4.9</span>
-              </div>
-              <div className="h-5 w-px bg-gray-300" />
-              <div className="flex -space-x-2">
-                <img className="h-7 w-7 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1517423568366-eb51fb5984db?auto=format&fit=facearea&facepad=2&w=120&h=120&q=80" alt="" />
-                <img className="h-7 w-7 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?auto=format&fit=facearea&facepad=2&w=120&h=120&q=80" alt="" />
-                <img className="h-7 w-7 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=120&h=120&q=80" alt="" />
-              </div>
-              <span className="text-sm text-gray-500 font-semibold">Loved by pet parents</span>
-            </div>
 
             {/* Download card */}
             <div className="bg-white/70 backdrop-blur-xl border border-gray-100 rounded-3xl shadow-2xl shadow-orange-100/40 p-6 sm:p-8 max-w-xl mx-auto lg:mx-0">
