@@ -72,14 +72,12 @@ const Navbar: React.FC = () => {
                 </Link>
               )
             ))}
-            <a
-              href="https://apps.apple.com/sg/app/tokitail/id6787365554"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/download"
               className="bg-pawly-dark text-white px-6 py-2.5 rounded-full font-bold hover:bg-gray-700 transition shadow-lg transform hover:-translate-y-0.5 text-sm lg:text-base"
             >
               Get Started
-            </a>
+            </Link>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -114,15 +112,13 @@ const Navbar: React.FC = () => {
               </Link>
             )
           ))}
-          <a
-            href="https://apps.apple.com/sg/app/tokitail/id6787365554"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/download"
             className="bg-pawly-dark text-white px-6 py-3 rounded-full font-bold text-center block"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Get Started
-          </a>
+          </Link>
         </div>
       )}
     </nav>
