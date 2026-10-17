@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "toki-quiz-gen"
+version = "0.1.0"
+description = "Spec file -> validated, self-contained Toki In-App quiz HTML"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["PyYAML>=6"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "Pillow>=10"]
+
+[project.scripts]
+toki-quiz-gen = "toki_quiz_gen.cli:main"
+toki-quiz-verify = "toki_quiz_gen.verify_logic:main"
+verify_logic = "toki_quiz_gen.verify_logic:main"
+autocheck = "toki_quiz_gen.autocheck:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+toki_quiz_gen = ["templates/*.html", "*.cjs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

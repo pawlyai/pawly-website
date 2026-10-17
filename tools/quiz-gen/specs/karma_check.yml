@@ -1,0 +1,176 @@
+# Legacy quiz (KarmaCheck) converted 1:1 from the shipped Toki_Quiz_KarmaCheck_InApp_EN_2026-10-08.html QUIZ object.
+# NOTE (PAW-166): dog Q5 stem now names the park so the dog side passes the species-imagery rule; no score changes. Shipped Drive HTML is unchanged.
+slug: KarmaCheck
+id: karma_check
+titleShort: Blessing or Lesson?
+eraTitle: KARMA CHECK
+h1: Is <span class="accent">{name}</span> a blessing or a lesson?
+sub: 5 questions, a little Eastern mysticism. I’ll reveal why {name} came into your life — and save a little to {name}’s profile.
+trending: ✨ NOW TRENDING
+startLabel: Reveal {name}’s karma
+tipTemplate: 'The {n} thing{s} on file ({dims}) are already answered — these 5 read {name}’s soul: debtor, mirror, or guardian.'
+calcLines: [Consulting the stars…, Reading the old-soul energy…, 'Debt, mirror, or blessing?', Revealing the karma…]
+scoreBase: 0
+meterEnds: {low: Here to test you, high: Here to bless you}
+dims: [Temperament & bond, Adaptability]
+dimKeys: [temperament, adaptability]
+DOG_QUESTIONS:
+- tag: Protective Energy
+  q: 'You wake from a nightmare at night. {name}:'
+  opts:
+  - t: Sleeping harder than you, even snoring
+    s: 1
+    prof: {k: protectiveness, v: low}
+  - t: Comes to sniff you, confirms you’re alive, goes back to sleep
+    s: 3
+    prof: {k: protectiveness, v: mid}
+  - t: As if they sensed it — already at your side, comforting you
+    s: 5
+    prof: {k: protectiveness, v: high}
+- tag: Reciprocity
+  q: 'You buy {name} a pricey treat or toy. They:'
+  opts:
+  - t: Snatch it and bolt — no thanks whatsoever
+    s: 1
+    prof: {k: reciprocity, v: low}
+  - t: Love it, forget it by tomorrow
+    s: 3
+    prof: {k: reciprocity, v: mid}
+  - t: Deeply content — even bring you their old favorite to “trade”
+    s: 5
+    prof: {k: reciprocity, v: high}
+- tag: Zen Level
+  q: 'Facing new furniture or a change at home, {name}:'
+  opts:
+  - t: Destroys it in protest
+    s: 1
+    prof: {k: adaptability, v: reactive}
+  - t: Hides and observes, needs time to adjust
+    s: 3
+    prof: {k: adaptability, v: cautious}
+  - t: Utterly zen, watching you fuss like an old monk
+    s: 5
+    prof: {k: adaptability, v: unflappable}
+- tag: Soul Sync
+  q: 'You sigh at the air from work stress. {name}:'
+  opts:
+  - t: Thinks you’re calling, runs over for food
+    s: 1
+    prof: {k: emotionalSync, v: low}
+  - t: Tilts their head, pure clueless innocence
+    s: 3
+    prof: {k: emotionalSync, v: mid}
+  - t: Looks deep into you and sighs back, as if sharing the load
+    s: 5
+    prof: {k: emotionalSync, v: high}
+- tag: Past-Life Memory
+  q: 'Watching the park from the window, {name}’s gaze is:'
+  opts:
+  - t: Locked on a bird, ready to go fight it
+    s: 1
+    prof: {k: preyDrive, v: high}
+  - t: Just people-watching the street
+    s: 3
+    prof: {k: preyDrive, v: mid}
+  - t: Ethereal, as if pondering the universe’s ultimate truth
+    s: 5
+    prof: {k: preyDrive, v: serene}
+CAT_QUESTIONS:
+- tag: Protective Energy
+  q: 'You wake from a nightmare at night. {name}:'
+  opts:
+  - t: Sleeping harder than you, dead to the world
+    s: 1
+    prof: {k: protectiveness, v: low}
+  - t: Comes to sniff you, confirms you’re alive, curls back up
+    s: 3
+    prof: {k: protectiveness, v: mid}
+  - t: As if they sensed it — already pressed to your side, purring
+    s: 5
+    prof: {k: protectiveness, v: high}
+- tag: Reciprocity
+  q: 'You buy {name} a pricey treat or toy. They:'
+  opts:
+  - t: Snatch it and bolt — no thanks whatsoever
+    s: 1
+    prof: {k: reciprocity, v: low}
+  - t: Love it, forget it by tomorrow
+    s: 3
+    prof: {k: reciprocity, v: mid}
+  - t: Deeply content — even bring you their old favorite as a “gift”
+    s: 5
+    prof: {k: reciprocity, v: high}
+- tag: Zen Level
+  q: 'Facing new furniture or a change at home, {name}:'
+  opts:
+  - t: Attacks it in protest
+    s: 1
+    prof: {k: adaptability, v: reactive}
+  - t: Hides and observes, needs time to adjust
+    s: 3
+    prof: {k: adaptability, v: cautious}
+  - t: Utterly zen, watching you fuss like an old monk
+    s: 5
+    prof: {k: adaptability, v: unflappable}
+- tag: Soul Sync
+  q: 'You sigh at the air from work stress. {name}:'
+  opts:
+  - t: Thinks you’re calling, trots over for food
+    s: 1
+    prof: {k: emotionalSync, v: low}
+  - t: Tilts their head, pure clueless innocence
+    s: 3
+    prof: {k: emotionalSync, v: mid}
+  - t: Looks deep into you and slow-blinks, as if sharing the load
+    s: 5
+    prof: {k: emotionalSync, v: high}
+- tag: Past-Life Memory
+  q: 'Watching out the window, {name}’s gaze is:'
+  opts:
+  - t: In full hunt-twitch, ready to pounce the bird
+    s: 1
+    prof: {k: preyDrive, v: high}
+  - t: Just people-watching the street
+    s: 3
+    prof: {k: preyDrive, v: mid}
+  - t: Ethereal, as if pondering the universe’s ultimate truth
+    s: 5
+    prof: {k: preyDrive, v: serene}
+BANDS:
+- min: 5
+  max: 11
+  theme: D
+  artwork: little-demon
+  name: The Little Demon
+  tagline: A debtor from a past life — here to collect.
+  chip: Little Demon
+  descDog: ['<div class="d-summary"><span class="label">THE KARMA</span><b>In a past life {name} owed you — and came back to collect, loudly.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>{name} brings the chaos; you provide the patience. Every zoomie is a small test of your calm.</div>', '<div class="d-body"><span class="lbl">The real read</span>A high-spirited, low-zen soul. The mischief is really a bid for your energy — it’s love, just the feral kind.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE KARMA</span><b>A past-life debtor, back to collect with 3am parkour.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>{name} knocks, pounces and patrols; your job is to breathe and not take the bait.</div>', <div class="d-body"><span class="lbl">The real read</span>Pure feral affection. More play and vertical space turn the “debt collection” into healthy burn.</div>]
+  traits: [chaos spirit, patience-tester, feral love, pure mischief]
+  tipDog: Practice 5 minutes of breathwork a day and don’t let {name}’s zoomies set your tempo. Channel the mischief into training games — a job gives the demon a purpose.
+  tipCat: Don’t let {name}’s 3am parkour set your tempo. More play burns and vertical space turn chaos into healthy exercise — and fewer offerings on your pillow.
+- min: 12
+  max: 18
+  theme: B
+  artwork: mirror-teacher
+  name: The Mirror Teacher
+  tagline: An equal soul — here to reflect you back to yourself.
+  chip: Mirror
+  descDog: ['<div class="d-summary"><span class="label">THE KARMA</span><b>You and {name} are equals — a soul contract of mutual growth.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>{name} mirrors your state: anxious you, frantic them; calm you, gentle them.</div>', '<div class="d-body"><span class="lbl">The real read</span>An emotionally attuned dog. Tend your own calm — walk on grass, slow down — and watch theirs follow.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE KARMA</span><b>You and {name} are on equal footing — a mirror for your inner weather.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>{name} reflects your mood with uncanny accuracy; a tense house makes a tense cat.</div>', '<div class="d-body"><span class="lbl">The real read</span>Keep your home calm and your routine steady — {name} reads your nervous system.</div>']
+  traits: [emotional mirror, attuned, equal soul, co-regulator]
+  tipDog: Try “grounding” together — walk {name} on grass, breathe, slow down. When you regulate your own stress, you regulate theirs.
+  tipCat: Keep your home calm and your routine steady — {name} reads your nervous system. A peaceful you is the best enrichment for a mirror cat.
+- min: 19
+  max: 25
+  theme: C
+  artwork: old-soul-blessing
+  name: The Old-Soul Blessing
+  tagline: A guardian repaying an old kindness — here to protect you.
+  chip: Blessing
+  descDog: [<div class="d-summary"><span class="label">THE KARMA</span><b>The legendary “repayment” dog — here to watch over you.</b></div>, '<div class="d-body"><span class="lbl">What it looks like</span>Steady, intuitive, somehow always there on your worst days. {name}’s presence quietly lowers your stress.</div>', '<div class="d-body"><span class="lbl">The real read</span>A deeply bonded, generous soul. Give {name} a sunny spot to recharge and return the devotion with steady, quiet time.</div>']
+  descCat: [<div class="d-summary"><span class="label">THE KARMA</span><b>The rare “repayment” cat — a quiet guardian with a healing aura.</b></div>, '<div class="d-body"><span class="lbl">What it looks like</span>Calm, intuitive, present in your hardest moments; just having {name} near settles you.</div>', '<div class="d-body"><span class="lbl">The real read</span>A serene, generous soul. Give {name} a sunny “Zen Zone” and make sure this gentle one feels cherished back.</div>']
+  traits: [old soul, healing aura, intuitive guardian, serene devotion]
+  tipDog: Give {name} a sunny “Zen Zone” to rest and recharge, and protect their calm. Return the devotion with steady routine and plenty of quiet togetherness.
+  tipCat: Give {name} a sunny “Zen Zone” to soak up the light, and keep their world peaceful. This gentle soul gives a lot — make sure they feel cherished back.
+disclaimer: '<b>Just for fun</b>: a playful piece of pet “mysticism” from 5 everyday habits.<br>For entertainment and sharing only — not a substitute for professional vet advice.'

@@ -1,0 +1,248 @@
+# Legacy quiz (SoulAge) converted 1:1 from the shipped Toki_Quiz_SoulAge_InApp_EN_2026-10-08.html QUIZ object.
+slug: SoulAge
+id: soul_age
+titleShort: Your Pet’s Soul Age
+eraTitle: SOUL AGE
+h1: How old is <span class="accent">{name}</span>’s soul?
+sub: Forget the birthday — 10 quick tells reveal the age {name} is *inside*. I’ll name it, and save a little to {name}’s profile.
+trending: ✨ NOW TRENDING
+startLabel: Reveal {name}’s soul age
+tipTemplate: The {n} thing{s} on file ({dims}) are already answered — these 10 read {name}’s inner vibe, old soul or eternal baby.
+calcLines: [Reading the inner years…, Counting the sighs and zoomies…, 'Old soul or baby? Checking…', Calling it…]
+scoreBase: 3
+scoreDisplay: 'Soul age: <b>{score}</b> years'
+meterEnds: {low: Newborn soul, high: Ancient soul}
+dims: [Energy & activity, Temperament]
+dimKeys: [activity, temperament]
+DOG_QUESTIONS:
+- tag: Sleep
+  q: 'At night, {name}:'
+  opts:
+  - t: Snoring on schedule by 9pm, immovable
+    s: 10
+    prof: {k: activityRhythm, v: early-settler}
+  - t: 3am parkour, suddenly wide awake
+    s: -5
+    prof: {k: activityRhythm, v: night-owl}
+- tag: New Toy
+  q: 'A pricey new toy:'
+  opts:
+  - t: Two sniffs and walks off — *that’s it?*
+    s: 8
+    prof: {k: playDrive, v: low}
+  - t: Loses their mind like it’s the first toy ever
+    s: -5
+    prof: {k: playDrive, v: high}
+- tag: The Call
+  q: 'You call {name}’s name across the park:'
+  opts:
+  - t: Slow turn, 3 seconds of deliberation
+    s: 10
+    prof: {k: biddability, v: aloof}
+  - t: Springs over instantly like a loaded spring
+    s: -3
+    prof: {k: biddability, v: eager}
+- tag: The Eyes
+  q: '{name}’s usual gaze:'
+  opts:
+  - t: Deep and world-weary, like they’ve seen all of dog-life
+    s: 12
+    prof: {k: demeanor, v: world-weary}
+  - t: Clear and gloriously empty — just food and the ball
+    s: 0
+    prof: {k: demeanor, v: bright-simple}
+- tag: New Thing
+  q: 'A new object appears (a delivery box):'
+  opts:
+  - t: One sniff, confirms it’s safe, walks away
+    s: 5
+    prof: {k: curiosity, v: low}
+  - t: Must climb in, shred it, claim it as territory
+    s: -5
+    prof: {k: curiosity, v: high}
+- tag: Provocation
+  q: 'Another dog barks outside. {name}:'
+  opts:
+  - t: Rolls their eyes, can’t be bothered
+    s: 15
+    prof: {k: reactivity, v: low}
+  - t: Must bark back through the window for half an hour
+    s: -8
+    prof: {k: reactivity, v: high}
+- tag: The Sigh
+  q: 'About sighing:'
+  opts:
+  - t: Frequent, world-weary sighs
+    s: 10
+    prof: {k: expressiveness, v: weary}
+  - t: Never sighs — just excited panting
+    s: -2
+    prof: {k: expressiveness, v: upbeat}
+- tag: On a Walk
+  q: '{name}’s walking mindset:'
+  opts:
+  - t: Stop-and-go, prefers watching the flowers and the distance
+    s: 8
+    prof: {k: activityLevel, v: low}
+  - t: Bulldozes forward, always hunting a new route
+    s: -10
+    prof: {k: activityLevel, v: high}
+- tag: Surprise
+  q: 'You drop a glass with a crash. {name}:'
+  opts:
+  - t: Unshakeable, doesn’t even lift an eyelid
+    s: 10
+    prof: {k: boldness, v: bold}
+  - t: Bolts around the room / dives under the sofa
+    s: -5
+    prof: {k: boldness, v: skittish}
+- tag: You Cry
+  q: 'You’re crying. {name}:'
+  opts:
+  - t: Quietly comes to lean on you, eyes full of understanding
+    s: 15
+    prof: {k: empathy, v: high}
+  - t: Thinks it’s a new game, bites your hair
+    s: -10
+    prof: {k: empathy, v: oblivious}
+CAT_QUESTIONS:
+- tag: Sleep
+  q: 'At night, {name}:'
+  opts:
+  - t: Settled in their spot by 9pm, immovable
+    s: 10
+    prof: {k: activityRhythm, v: early-settler}
+  - t: 3am parkour across your face, suddenly wide awake
+    s: -5
+    prof: {k: activityRhythm, v: night-owl}
+- tag: New Toy
+  q: 'A pricey new toy:'
+  opts:
+  - t: Two sniffs and walks off — *that’s it?*
+    s: 8
+    prof: {k: playDrive, v: low}
+  - t: Loses their mind like it’s the first toy ever
+    s: -5
+    prof: {k: playDrive, v: high}
+- tag: The Call
+  q: 'You call {name}’s name across the room:'
+  opts:
+  - t: Slow blink, 3 seconds deciding whether you’re worth it
+    s: 10
+    prof: {k: biddability, v: aloof}
+  - t: Trots right over, tail up
+    s: -3
+    prof: {k: biddability, v: eager}
+- tag: The Eyes
+  q: '{name}’s usual gaze:'
+  opts:
+  - t: Deep and world-weary, like they’ve seen all of cat-life
+    s: 12
+    prof: {k: demeanor, v: world-weary}
+  - t: Clear and gloriously empty — just food and the red dot
+    s: 0
+    prof: {k: demeanor, v: bright-simple}
+- tag: New Thing
+  q: 'A new object appears (a delivery box):'
+  opts:
+  - t: One sniff, confirms it’s safe, walks away
+    s: 5
+    prof: {k: curiosity, v: low}
+  - t: Must climb in and claim it as their new kingdom
+    s: -5
+    prof: {k: curiosity, v: high}
+- tag: Provocation
+  q: 'Another cat appears at the window. {name}:'
+  opts:
+  - t: Rolls their eyes, can’t be bothered
+    s: 15
+    prof: {k: reactivity, v: low}
+  - t: Must chatter and yowl at the glass for half an hour
+    s: -8
+    prof: {k: reactivity, v: high}
+- tag: The Sigh
+  q: 'About sighing:'
+  opts:
+  - t: Frequent, world-weary sighs
+    s: 10
+    prof: {k: expressiveness, v: weary}
+  - t: Never sighs — just excited chirps
+    s: -2
+    prof: {k: expressiveness, v: upbeat}
+- tag: Play Time
+  q: '{name}’s play mindset:'
+  opts:
+  - t: A couple of swats, then prefers to watch from the sill
+    s: 8
+    prof: {k: activityLevel, v: low}
+  - t: Full hunt mode, always chasing the next thing
+    s: -10
+    prof: {k: activityLevel, v: high}
+- tag: Surprise
+  q: 'You drop a glass with a crash. {name}:'
+  opts:
+  - t: Unshakeable, doesn’t even lift an eyelid
+    s: 10
+    prof: {k: boldness, v: bold}
+  - t: Bolts to the far room / dives under the bed
+    s: -5
+    prof: {k: boldness, v: skittish}
+- tag: You Cry
+  q: 'You’re crying. {name}:'
+  opts:
+  - t: Quietly comes to press against you, eyes full of understanding
+    s: 15
+    prof: {k: empathy, v: high}
+  - t: Thinks it’s a new game, bats at your tears
+    s: -10
+    prof: {k: empathy, v: oblivious}
+BANDS:
+- min: -50
+  max: 0
+  theme: D
+  artwork: eternal-baby
+  name: The Eternal Baby
+  tagline: Body grew up. Brain is still an adorable embryo.
+  chip: Eternal Baby
+  descDog: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} is forever a puppy — all joy, zero worries.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Boundless energy, no chill, and genuinely no concept of “calm down.” Every single day is the best day.</div>', '<div class="d-body"><span class="lbl">The real read</span>Don’t wait for {name} to “grow up” — this IS the personality. Feed the energy, don’t fight it.</div>']
+  descCat: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} is a forever-kitten — all play, zero worries.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Endless zoomies, pounces on nothing, 3am laps of the flat. {name} never got the memo about being a dignified cat.</div>', '<div class="d-body"><span class="lbl">The real read</span>This is simply who {name} is. Lean into play and enrichment instead of waiting for a maturity that isn’t coming.</div>']
+  traits: [forever young, boundless energy, zero worries, pure chaos joy]
+  tipDog: Lots of toys, lots of exercise, and go be feral with them. A tired {name} is a good {name}.
+  tipCat: Rotate toys, add vertical space, and schedule real play burns. An under-stimulated baby invents 3am games.
+- min: 1
+  max: 15
+  theme: A
+  artwork: chaotic-teen
+  name: The Chaotic Teen
+  tagline: Has ideas — not many. Wants independence, can’t skip dinner.
+  chip: Chaotic Teen
+  descDog: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} is a moody teenager — opinions, attitude, boundary-testing.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Selective hearing, the odd act of rebellion, pushing your buttons just to watch what happens.</div>', <div class="d-body"><span class="lbl">The real read</span>Prime training window. Consistency plus enough exercise keeps the teen phase off your furniture.</div>]
+  descCat: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} is a stroppy teenager — big feelings, selective cooperation.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Comes when it suits, knocks things off the shelf while holding eye contact, tests every limit you set.</div>', <div class="d-body"><span class="lbl">The real read</span>Channel it — a firm routine and real play outlets keep the rebellion from becoming the curtains.</div>]
+  traits: [moody, boundary-tester, spirited, a little rebellious]
+  tipDog: Keep training consistent, burn the energy daily, and don’t leave {name} bored — idle hands wreck sofas.
+  tipCat: Keep enrichment varied and the routine firm. A bored teen cat finds the most expensive thing to knock over.
+- min: 16
+  max: 45
+  theme: B
+  artwork: burned-out-adult
+  name: The Burned-out Adult
+  tagline: Nails the daily schedule. Starting to find you a bit childish.
+  chip: Burned-out Adult
+  descDog: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} is a tired working adult who’s seen some things.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>A precise routine, reads the room, picks their battles, the occasional “life is hard” sigh at your antics.</div>', '<div class="d-body"><span class="lbl">The real read</span>A settled, emotionally-literate dog. Respect the routine and {name} is the easiest company going.</div>']
+  descCat: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} is a world-weary adult, quietly done with your nonsense.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Runs a tight schedule, judges your choices, sighs at the chaos, retreats to the good chair.</div>', '<div class="d-body"><span class="lbl">The real read</span>A composed, boundaried cat. Keep the routine steady and the comfy spot undisturbed.</div>']
+  traits: [composed, reads the room, routine-driven, quietly done with your nonsense]
+  tipDog: Respect the boundaries and keep a comfy, predictable rhythm — plus enough exercise to stay trim as the metabolism slows.
+  tipCat: Give {name} a comfortable, undisturbed spot and a steady routine. Watch the waistline — a settled cat moves less.
+- min: 46
+  max: 106
+  theme: C
+  artwork: wise-elder
+  name: The Wise Elder
+  tagline: A hundred-year-old soul. Lives for sunshine and good food.
+  chip: Wise Elder
+  descDog: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} carries the soul of a serene old sage.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Unshakeable calm, zero drama, total indifference to the doorbell, and a deep love of sunbeams and dinner.</div>', <div class="d-body"><span class="lbl">The real read</span>The household’s steady heart. Comfort is everything now — protect the naps and keep the walks gentle.</div>]
+  descCat: ['<div class="d-summary"><span class="label">SOUL AGE</span><b>{name} is a hundred-year-old soul in a cat suit.</b></div>', <div class="d-body"><span class="lbl">What it looks like</span>Nothing rattles them; they watch the world drift by from the warmest spot and ask only for food and quiet.</div>, <div class="d-body"><span class="lbl">The real read</span>A deeply peaceful presence. Guard their rest and keep food and water easy to reach.</div>]
+  traits: [serene, unflappable, emotional anchor, sunbeam connoisseur]
+  tipDog: Don’t disturb the naps, keep gentle regular movement, and consider senior-friendly comforts (orthopedic bed, easy footing).
+  tipCat: Protect the sleep, keep food and water easy to reach, and watch for subtle senior changes (drinking, weight) — early vet checks matter.
+disclaimer: '<b>Just for fun</b>: a playful “soul age” from 10 everyday tells — not your pet’s real age or health.<br>For entertainment and sharing only — not a substitute for professional vet advice.'
