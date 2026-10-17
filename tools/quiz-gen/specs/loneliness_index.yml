@@ -1,0 +1,368 @@
+# Legacy quiz (LonelinessIndex) converted 1:1 from the shipped Toki_Quiz_LonelinessIndex_InApp_EN_2026-10-08.html QUIZ object.
+slug: LonelinessIndex
+id: loneliness_index
+titleShort: Your Pet’s Loneliness Index
+eraTitle: LONELINESS CHECK
+h1: How lonely is <span class="accent">{name}</span> when you’re away?
+sub: 10 honest questions about {name} when you leave and when you’re home. I’ll read the loneliness signals — and save what matters to {name}’s profile.
+trending: ✨ NOW TRENDING
+startLabel: Check {name}’s loneliness
+tipTemplate: The {n} thing{s} on file ({dims}) are already answered — these 10 pick up {name}’s real separation signals, gently.
+calcLines: [Reading the alone-time signals…, Checking appetite & sleep…, 'How attached, how anxious?', Scoring it…]
+scoreBase: 0
+scoreDisplay: 'Loneliness score: <b>{score}</b> / {hi}'
+meterEnds: {low: Secure & content, high: Lonely / anxious}
+dims: [Separation & emotional needs, Appetite & toilet habits]
+dimKeys: [separation, appetite, elimination]
+DOG_QUESTIONS:
+- tag: You Leave
+  q: 'You grab keys and coat to go out. {name}:'
+  opts:
+  - t: Glances up and keeps sleeping
+    s: 1
+    prof: {k: departureReaction, v: calm}
+  - t: Comes over for a nudge and a treat
+    s: 2
+    prof: {k: departureReaction, v: mild}
+  - t: Gets mournful, even blocks the door
+    s: 3
+    prof: {k: departureReaction, v: distressed}
+  - t: Frantically brings toys / spins in anxious circles
+    s: 4
+    prof: {k: departureReaction, v: panic}
+- tag: You’re Home
+  q: 'The moment you open the door:'
+  opts:
+  - t: A slow yawn, wakes up unhurried
+    s: 1
+    prof: {k: reunionIntensity, v: low}
+  - t: Normal wag and greeting, about a minute
+    s: 2
+    prof: {k: reunionIntensity, v: normal}
+  - t: Springs up like a spring, screams / leaps on you
+    s: 3
+    prof: {k: reunionIntensity, v: intense}
+  - t: Wrecked the house, or hysterical nonstop barking
+    s: 4
+    prof: {k: reunionIntensity, v: over-the-top}
+- tag: Home All Day
+  q: 'On a weekend when you’re home all day, {name}:'
+  opts:
+  - t: Plays alone, checks in occasionally
+    s: 1
+    prof: {k: proximityNeed, v: low}
+  - t: Stays in the same room at a safe distance
+    s: 2
+    prof: {k: proximityNeed, v: moderate}
+  - t: Needs body contact (leaning, on your lap)
+    s: 3
+    prof: {k: proximityNeed, v: high}
+  - t: Springs up like a shadow the instant you stand
+    s: 4
+    prof: {k: proximityNeed, v: velcro}
+- tag: Sleep
+  q: '{name}’s sleep pattern:'
+  opts:
+  - t: Regular sleep, bright and rested when you’re home
+    s: 1
+    prof: {k: sleepSecurity, v: secure}
+  - t: Sometimes over-sleeps by day, wants you at night
+    s: 2
+    prof: {k: sleepSecurity, v: mild}
+  - t: Sleeps almost all day, seems listless
+    s: 3
+    prof: {k: sleepSecurity, v: low}
+  - t: Only dares deep-sleep when you’re in; startles at any sound
+    s: 4
+    prof: {k: sleepSecurity, v: hypervigilant}
+- tag: Chewing
+  q: 'About “destruction” behavior:'
+  opts:
+  - t: Never — a model student
+    s: 1
+    prof: {k: destructiveness, v: none}
+  - t: Occasionally shreds a tissue, just for fun
+    s: 2
+    prof: {k: destructiveness, v: mild}
+  - t: Targets things with your scent (shoes, pillows)
+    s: 3
+    prof: {k: destructiveness, v: scent-targeted}
+  - t: Chronically damaged door frames / curtains / furniture
+    s: 4
+    prof: {k: destructiveness, v: severe}
+- tag: Ignored
+  q: 'When you’re on your phone and ignore {name}:'
+  opts:
+  - t: Wanders off to their own toy
+    s: 1
+    prof: {k: attentionSeeking, v: low}
+  - t: Sighs and lies down nearby
+    s: 2
+    prof: {k: attentionSeeking, v: mild}
+  - t: Nudges your hand, drops a ball on your phone
+    s: 3
+    prof: {k: attentionSeeking, v: active}
+  - t: Deliberately chews or pees to force attention
+    s: 4
+    prof: {k: housesoiling, v: attention-seeking}
+- tag: Appetite
+  q: '{name}’s appetite:'
+  opts:
+  - t: Never misses a meal, eats whatever you give
+    s: 1
+    prof: {k: appetite, v: robust}
+  - t: Eats when you’re out, but slowly
+    s: 2
+    prof: {k: appetite, v: slower-alone}
+  - t: Won’t eat unless you’re home
+    s: 3
+    prof: {k: appetite, v: owner-dependent}
+  - t: Shows pica — eats dirt, licks fur bald
+    s: 4
+    prof: {k: pica, v: present}
+- tag: Your Calls
+  q: 'When you’re on a phone / video call:'
+  opts:
+  - t: No reaction at all
+    s: 1
+    prof: {k: callJealousy, v: none}
+  - t: Tilts their head to listen
+    s: 2
+    prof: {k: callJealousy, v: mild}
+  - t: Vocalizes at the phone to join in
+    s: 3
+    prof: {k: callJealousy, v: active}
+  - t: Visibly dejected, even hides
+    s: 4
+    prof: {k: callJealousy, v: distressed}
+- tag: The Outdoors
+  q: 'Out at the park, {name}:'
+  opts:
+  - t: Curious, eagerly explores new things
+    s: 1
+    prof: {k: exploration, v: confident}
+  - t: Plays a while, then wants to go home
+    s: 2
+    prof: {k: exploration, v: moderate}
+  - t: Timid, constantly checks you’re in sight
+    s: 3
+    prof: {k: exploration, v: you-anchored}
+  - t: Lost interest in the world, only wants to cling to you
+    s: 4
+    prof: {k: exploration, v: shut-down}
+- tag: Shower Door
+  q: 'When you shower behind a closed door, {name}:'
+  opts:
+  - t: Waits outside, or doesn’t care
+    s: 1
+    prof: {k: barrierTolerance, v: high}
+  - t: Scratches the door now and then to check
+    s: 2
+    prof: {k: barrierTolerance, v: mild}
+  - t: Cries nonstop, as if you’re drowning in there
+    s: 3
+    prof: {k: barrierTolerance, v: low}
+  - t: Extreme distress — even loses bladder control at the door
+    s: 4
+    prof: {k: housesoiling, v: stress-elimination}
+CAT_QUESTIONS:
+- tag: You Leave
+  q: 'You grab keys and coat to go out. {name}:'
+  opts:
+  - t: Glances up and keeps sleeping
+    s: 1
+    prof: {k: departureReaction, v: calm}
+  - t: Comes over for a rub and a treat
+    s: 2
+    prof: {k: departureReaction, v: mild}
+  - t: Gets mournful, even blocks the door
+    s: 3
+    prof: {k: departureReaction, v: distressed}
+  - t: Frantically brings toys / paces and yowls
+    s: 4
+    prof: {k: departureReaction, v: panic}
+- tag: You’re Home
+  q: 'The moment you open the door:'
+  opts:
+  - t: A slow yawn, wakes up unhurried
+    s: 1
+    prof: {k: reunionIntensity, v: low}
+  - t: Normal mrrp and greeting, about a minute
+    s: 2
+    prof: {k: reunionIntensity, v: normal}
+  - t: Springs up, loud meowing, winds around your legs
+    s: 3
+    prof: {k: reunionIntensity, v: intense}
+  - t: Shredded things, or hysterical nonstop yowling
+    s: 4
+    prof: {k: reunionIntensity, v: over-the-top}
+- tag: Home All Day
+  q: 'On a weekend when you’re home all day, {name}:'
+  opts:
+  - t: Plays alone, checks in occasionally
+    s: 1
+    prof: {k: proximityNeed, v: low}
+  - t: Stays in the same room at a safe distance
+    s: 2
+    prof: {k: proximityNeed, v: moderate}
+  - t: Needs body contact (leaning, on your lap)
+    s: 3
+    prof: {k: proximityNeed, v: high}
+  - t: Springs up like a shadow the instant you stand
+    s: 4
+    prof: {k: proximityNeed, v: velcro}
+- tag: Sleep
+  q: '{name}’s sleep pattern:'
+  opts:
+  - t: Regular sleep, bright and rested when you’re home
+    s: 1
+    prof: {k: sleepSecurity, v: secure}
+  - t: Sometimes over-sleeps by day, wants you at night
+    s: 2
+    prof: {k: sleepSecurity, v: mild}
+  - t: Sleeps almost all day, seems listless
+    s: 3
+    prof: {k: sleepSecurity, v: low}
+  - t: Only dares deep-sleep when you’re in; startles at any sound
+    s: 4
+    prof: {k: sleepSecurity, v: hypervigilant}
+- tag: Scratching
+  q: 'About “destruction” behavior:'
+  opts:
+  - t: Never — a model student
+    s: 1
+    prof: {k: destructiveness, v: none}
+  - t: Occasionally shreds a tissue, just for fun
+    s: 2
+    prof: {k: destructiveness, v: mild}
+  - t: Targets things with your scent (clothes, bedding)
+    s: 3
+    prof: {k: destructiveness, v: scent-targeted}
+  - t: Chronically shredded sofa corners / curtains
+    s: 4
+    prof: {k: destructiveness, v: severe}
+- tag: Ignored
+  q: 'When you’re on your phone and ignore {name}:'
+  opts:
+  - t: Wanders off to their own toy
+    s: 1
+    prof: {k: attentionSeeking, v: low}
+  - t: Sighs and settles nearby
+    s: 2
+    prof: {k: attentionSeeking, v: mild}
+  - t: Headbutts your hand, sits on your phone
+    s: 3
+    prof: {k: attentionSeeking, v: active}
+  - t: Deliberately knocks things over or pees to force attention
+    s: 4
+    prof: {k: housesoiling, v: attention-seeking}
+- tag: Appetite
+  q: '{name}’s appetite:'
+  opts:
+  - t: Never misses a meal, eats whatever you give
+    s: 1
+    prof: {k: appetite, v: robust}
+  - t: Eats when you’re out, but slowly
+    s: 2
+    prof: {k: appetite, v: slower-alone}
+  - t: Won’t eat unless you’re home
+    s: 3
+    prof: {k: appetite, v: owner-dependent}
+  - t: Shows pica — eats litter / wool, licks fur bald
+    s: 4
+    prof: {k: pica, v: present}
+- tag: Your Calls
+  q: 'When you’re on a phone / video call:'
+  opts:
+  - t: No reaction at all
+    s: 1
+    prof: {k: callJealousy, v: none}
+  - t: Tilts their head to listen
+    s: 2
+    prof: {k: callJealousy, v: mild}
+  - t: Vocalizes at the phone to join in
+    s: 3
+    prof: {k: callJealousy, v: active}
+  - t: Visibly dejected, even hides
+    s: 4
+    prof: {k: callJealousy, v: distressed}
+- tag: The Window
+  q: 'Watching from the window, {name}:'
+  opts:
+  - t: Curious, eagerly watches birds and the street
+    s: 1
+    prof: {k: exploration, v: confident}
+  - t: Watches a while, then wanders off
+    s: 2
+    prof: {k: exploration, v: moderate}
+  - t: Timid, constantly checks you’re in sight
+    s: 3
+    prof: {k: exploration, v: you-anchored}
+  - t: Lost interest in the world, only wants to cling to you
+    s: 4
+    prof: {k: exploration, v: shut-down}
+- tag: Shower Door
+  q: 'When you shower behind a closed door, {name}:'
+  opts:
+  - t: Waits outside, or doesn’t care
+    s: 1
+    prof: {k: barrierTolerance, v: high}
+  - t: Scratches the door now and then to check
+    s: 2
+    prof: {k: barrierTolerance, v: mild}
+  - t: Cries nonstop, as if you’re drowning in there
+    s: 3
+    prof: {k: barrierTolerance, v: low}
+  - t: Extreme distress — even pees by the door
+    s: 4
+    prof: {k: housesoiling, v: stress-elimination}
+BANDS:
+- min: 10
+  max: 16
+  theme: A
+  artwork: secure-content
+  name: Secure & Content
+  tagline: '{name} is comfortable in their own company.'
+  chip: Secure
+  descDog: ['<div class="d-summary"><span class="label">THE READ</span><b>{name} handles alone-time well — a confident, securely-attached dog.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Calm goodbyes, relaxed reunions, eats happily whether you’re there or not, and self-settles.</div>', <div class="d-body"><span class="lbl">The real read</span>Exactly where you want to be. Keep the routine steady and leave a solo chew or two for alone-time.</div>]
+  descCat: ['<div class="d-summary"><span class="label">THE READ</span><b>{name} is comfortable in their own company — a secure cat.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Unbothered by your comings and goings, relaxed, eats and sleeps normally when alone.</div>', <div class="d-body"><span class="lbl">The real read</span>Ideal. Keep a window perch and a puzzle toy for solo time and the routine predictable.</div>]
+  traits: [secure, self-settling, resilient, easy-going]
+  tipDog: Keep the good routine, rotate a couple of solo toys, and keep goodbyes and hellos low-key so alone-time stays no big deal.
+  tipCat: Keep the good routine, offer a window perch and a puzzle toy for solo time, and keep comings and goings calm.
+- min: 17
+  max: 25
+  theme: B
+  artwork: mildly-attached
+  name: Mildly Attached
+  tagline: A little clingy — {name} would love more of you.
+  chip: Mildly Attached
+  descDog: ['<div class="d-summary"><span class="label">THE READ</span><b>{name} leans on you a little — small signs of missing you.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Eager reunions, a bit of shadowing, eats a touch slower alone. Nothing alarming — just a dog who’d prefer you around.</div>', '<div class="d-body"><span class="lbl">The real read</span>Easy to nudge back to secure. A stuffed chew as you leave, a worn-scent item, and keep goodbyes low-key.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE READ</span><b>{name} is a little clingy — would love more of you.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Greets you hard, follows you about, slightly off food when you travel. Sweet, not worrying.</div>', '<div class="d-body"><span class="lbl">The real read</span>Predictable feeding and play times plus a puzzle feeder give {name} a reassuring sense of control.</div>']
+  traits: [affectionate, slightly clingy, people-focused, sweet]
+  tipDog: Give {name} a puzzle feeder or stuffed chew right as you leave, plus a worn-scent item. Keep goodbyes boring — big emotional exits teach anxiety.
+  tipCat: Leave a puzzle feeder and a cozy perch, and keep a worn-scent item out. Predictable feeding and play times give {name} a sense of control.
+- min: 26
+  max: 33
+  theme: C
+  artwork: feeling-lonely
+  name: Elevated — Feeling Lonely
+  tagline: '{name} is showing real separation stress.'
+  chip: Elevated
+  descDog: ['<div class="d-summary"><span class="label">THE READ</span><b>{name} is finding alone-time genuinely hard.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Distress at departures, over-the-top reunions, scent-targeted chewing, an appetite that dips without you.</div>', '<div class="d-body"><span class="lbl">The real read</span>Addressable — rebuild confidence with short, gradual departures that end before panic, plus enrichment while you’re out. If it isn’t improving in a few weeks, loop in your vet.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE READ</span><b>{name} is showing real separation stress.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Mournful exits, over-grooming or hiding, off food alone, maybe litter-box changes.</div>', '<div class="d-body"><span class="lbl">The real read</span>Build security with fixed routines, more vertical space and hiding spots, and Feliway. Any litter-box or appetite change deserves a vet check — stress shows up fast in a cat.</div>']
+  traits: [anxious when alone, over-attached, stress signals, needs support]
+  tipDog: 'Start structured alone-time training: short, gradual departures that end *before* panic. Add enrichment for while you’re out, and a pet cam to spot patterns. If it’s not improving in a few weeks, loop in your vet.'
+  tipCat: Build security with fixed routines, more vertical space and hiding spots, a Feliway diffuser, and interactive play before you leave. Any litter-box or appetite change deserves a vet check — stress shows up in a cat’s body fast.
+- min: 34
+  max: 40
+  theme: D
+  artwork: needs-support
+  name: High — Likely Separation Anxiety
+  tagline: '{name} needs real support — and maybe a pro.'
+  chip: High
+  descDog: ['<div class="d-summary"><span class="label">THE READ</span><b>{name}’s signals point to significant separation anxiety.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Panic at departures, destruction, house-soiling, refusing food alone, maybe pica. This is distress, not misbehaviour.</div>', '<div class="d-body"><span class="lbl">The real read</span>Please loop in your vet or a veterinary behaviourist. Desensitisation plus enrichment is the core; a vet-prescribed medication can make the training work. <b>Pica, house-soiling or not eating are red flags to raise promptly.</b></div>']
+  descCat: ['<div class="d-summary"><span class="label">THE READ</span><b>{name}’s signals point to significant separation distress.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Panic, over-grooming, house-soiling, pica, or refusing food when alone. {name} can’t help it.</div>', '<div class="d-body"><span class="lbl">The real read</span>Please see your vet or a veterinary behaviourist, and rule out medical causes first (stress cystitis/FIC can mimic this). Routine, enrichment, Feliway and — if advised — medication help. <b>Pica or house-soiling needs a prompt visit.</b></div>']
+  traits: [separation anxiety, high distress, needs a plan, not misbehaving]
+  tipDog: Please loop in your vet or a veterinary behaviorist. A desensitization program (gradually longer, sub-threshold departures) plus environmental enrichment is the core; a vet-prescribed medication (e.g. an SSRI) can make the training work. <b>Pica, house-soiling, or not eating are red flags to raise with your vet promptly.</b>
+  tipCat: Please see your vet or a veterinary behaviorist. Rule out medical causes first — stress cystitis (FIC) and litter-box changes can mimic or accompany this. A plan of routine, enrichment, Feliway and (if advised) medication helps. <b>Pica, house-soiling, over-grooming, or not eating need a prompt vet visit.</b>
+disclaimer: '<b>A gentle screener, not a diagnosis</b>: a playful read of {name}’s alone-time signals from 10 everyday habits.<br>If you’re worried — especially about not eating, house-soiling, or self-harm — please talk to your vet. Not a substitute for professional advice.'

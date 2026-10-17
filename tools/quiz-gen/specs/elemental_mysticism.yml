@@ -1,0 +1,513 @@
+# Pilot quiz: merges the three thin source topics (past-life Zen level, Chinese zodiac, five elements).
+# Score axis: 1 = blazing/impulsive ... 4 = still/serene.  Bands follow the element cycle from Fire to Water.
+slug: ElementalMysticism
+id: elemental_mysticism
+titleShort: Elemental Mysticism
+eraTitle: ELEMENTAL MYSTICISM
+h1: What <span class="accent">element</span> is {name}?
+sub: 8 questions of Zen, zodiac and the five elements. I’ll read {name}’s spirit — and save a little to {name}’s profile.
+trending: ✨ NOW TRENDING
+startLabel: Read {name}’s element
+tipTemplate: 'The {n} thing{s} on file ({dims}) are already answered — these 8 read {name}’s spirit: fire, wood, earth, metal, or water.'
+calcLines:
+- Consulting the five elements…
+- Reading the zodiac…
+- Measuring the Zen level…
+- Revealing the element…
+scoreBase: 0
+meterEnds:
+  low: Blazing
+  high: Still as water
+dims:
+- Temperament & calm
+- Energy rhythm
+- Favorite spots
+dimKeys:
+- temperament
+- activity
+- environment
+artAlt:
+  dog: Dog styled as an elemental spirit
+  cat: Cat styled as an elemental spirit
+DOG_QUESTIONS:
+- tag: Zen Level
+  q: '{name} stares at an empty corner of the room. The look on their face:'
+  opts:
+  - t: Barks at it, hackles up, ready to investigate with teeth
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: Head tilt, then a slow creep over to inspect
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: One glance, a shrug, back to chewing
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: A calm, deep gaze, as if watching something only they can see
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Zen Level
+  q: 'You buy {name} a fancy new bed and a pile of toys. They:'
+  opts:
+  - t: Shred the packaging first, then everything inside
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: Sniff every item, pick a favorite, abandon the rest
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: Take the bed, ignore the toys, perfectly content
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: Care more about the patch of sun on the floor than any of it
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Zen Level
+  q: 'You sit quietly to breathe for five minutes. {name}:'
+  opts:
+  - t: Drops a ball in your lap — fetch obviously matters more
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: Lies nearby, watching your every move
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: Sits beside you and stays put the whole time
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: Sits opposite you, eyes half-closed, breathing in time with you
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Zodiac Sync
+  q: 'On the walk, {name} handles the leash like:'
+  opts:
+  - t: A horse out of the gate, leash pulled taut
+    s: 1
+    prof:
+      k: activity
+      v: blazing
+  - t: A monkey in a bazaar, zigzagging from smell to smell
+    s: 2
+    prof:
+      k: activity
+      v: reaching
+  - t: An ox at a steady plod, right at your side
+    s: 3
+    prof:
+      k: activity
+      v: rooted
+  - t: A sage who treats the leash as a polite suggestion
+    s: 4
+    prof:
+      k: activity
+      v: still
+- tag: Zodiac Sync
+  q: 'At the dog park, {name} is:'
+  opts:
+  - t: Chasing everything that moves, at full speed
+    s: 1
+    prof:
+      k: activity
+      v: blazing
+  - t: Investigating every bush and every new friend
+    s: 2
+    prof:
+      k: activity
+      v: reaching
+  - t: Holding a favorite spot and watching the action
+    s: 3
+    prof:
+      k: activity
+      v: rooted
+  - t: Greeting a few chosen friends, then settling under a tree
+    s: 4
+    prof:
+      k: activity
+      v: still
+- tag: Five Elements
+  q: Where does {name} choose to nap?
+  opts:
+  - t: Wherever they collapsed after the zoomies
+    s: 1
+    prof:
+      k: environment
+      v: blazing
+  - t: The garden grass, nose twitching at the breeze
+    s: 2
+    prof:
+      k: environment
+      v: reaching
+  - t: The cool kitchen floor, solid as a boulder
+    s: 3
+    prof:
+      k: environment
+      v: rooted
+  - t: Beside the water bowl, near the quiet trickle of the tap
+    s: 4
+    prof:
+      k: environment
+      v: still
+- tag: Five Elements
+  q: '{name}’s bark sounds like:'
+  opts:
+  - t: A fire alarm — loud, sudden and everywhere
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: An excited chatter that never quite stops
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: A deep, steady woof, only when it matters
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: Rarely heard — and when it is, everyone listens
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Past-Life Hint
+  q: 'You call {name} back at the park:'
+  opts:
+  - t: Hears you, then sprints the other way for one more lap
+    s: 1
+    prof:
+      k: activity
+      v: blazing
+  - t: Arrives eventually, after detouring to sniff three things
+    s: 2
+    prof:
+      k: activity
+      v: reaching
+  - t: Returns promptly, takes the treat, ready for the next thing
+    s: 3
+    prof:
+      k: activity
+      v: rooted
+  - t: Is already walking back to you, calm and unhurried
+    s: 4
+    prof:
+      k: activity
+      v: still
+CAT_QUESTIONS:
+- tag: Zen Level
+  q: '{name} stares at an empty corner of the room. The look on their face:'
+  opts:
+  - t: Puffed tail, hissing at nothing, ready to pounce
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: Ears forward, creeping closer for a sniff
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: One glance, a slow tail flick, back to grooming
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: A calm, unblinking gaze, as if watching something only they can see
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Zen Level
+  q: 'You buy {name} a fancy new bed and a pile of toys. They:'
+  opts:
+  - t: Shred the box and everything in it
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: Sniff every item, pick a favorite, ignore the rest
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: Claim the bed, bat the toys aside, serenely satisfied
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: Prefer the empty box and the sunbeam beside it
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Zen Level
+  q: 'You sit quietly to breathe for five minutes. {name}:'
+  opts:
+  - t: Drops a toy mouse in your lap — playtime, now
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: Circles your lap, kneads, and circles again
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: Settles beside you and stays put the whole time
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: Sits opposite you, eyes half-closed, offering a slow blink
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Zodiac Sync
+  q: 'On the cat tree, {name} treats the highest perch as:'
+  opts:
+  - t: A launch pad for 3am parkour
+    s: 1
+    prof:
+      k: activity
+      v: blazing
+  - t: One stop on a never-ending patrol
+    s: 2
+    prof:
+      k: activity
+      v: reaching
+  - t: A throne, occupied with quiet authority
+    s: 3
+    prof:
+      k: activity
+      v: rooted
+  - t: A meditation seat, held for hours without moving
+    s: 4
+    prof:
+      k: activity
+      v: still
+- tag: Zodiac Sync
+  q: 'At the window, {name}:'
+  opts:
+  - t: Chatters and lunges at every bird
+    s: 1
+    prof:
+      k: activity
+      v: blazing
+  - t: Tracks every movement, tail twitching
+    s: 2
+    prof:
+      k: activity
+      v: reaching
+  - t: Watches the street like a retired inspector
+    s: 3
+    prof:
+      k: activity
+      v: rooted
+  - t: Soaks up the sun, eyes half-closed, entirely at peace
+    s: 4
+    prof:
+      k: activity
+      v: still
+- tag: Five Elements
+  q: Where does {name} choose to nap?
+  opts:
+  - t: Mid-hallway, right where the zoomies ended
+    s: 1
+    prof:
+      k: environment
+      v: blazing
+  - t: A windowsill, with one eye on the leaves outside
+    s: 2
+    prof:
+      k: environment
+      v: reaching
+  - t: A dense, warm spot — the laundry pile or a heavy blanket
+    s: 3
+    prof:
+      k: environment
+      v: rooted
+  - t: A quiet shelf near the water fountain, undisturbed for hours
+    s: 4
+    prof:
+      k: environment
+      v: still
+- tag: Five Elements
+  q: '{name}’s voice sounds like:'
+  opts:
+  - t: A siren — loud, sudden and everywhere
+    s: 1
+    prof:
+      k: temperament
+      v: blazing
+  - t: A constant chatter of trills
+    s: 2
+    prof:
+      k: temperament
+      v: reaching
+  - t: A low, deliberate meow, only when it matters
+    s: 3
+    prof:
+      k: temperament
+      v: rooted
+  - t: Mostly silent — and when they speak, everyone listens
+    s: 4
+    prof:
+      k: temperament
+      v: still
+- tag: Past-Life Hint
+  q: '{name}’s litter-box routine is:'
+  opts:
+  - t: A sprint in, a sprint out, a spray of litter behind
+    s: 1
+    prof:
+      k: activity
+      v: blazing
+  - t: Interrupted mid-visit by something far more interesting
+    s: 2
+    prof:
+      k: activity
+      v: reaching
+  - t: Efficient and tidy, at the same time every day
+    s: 3
+    prof:
+      k: activity
+      v: rooted
+  - t: Ceremonial — a calm inspection, a thoughtful dig, no rush
+    s: 4
+    prof:
+      k: activity
+      v: still
+BANDS:
+- min: 8
+  max: 13
+  theme: D
+  artwork: fire-spirit
+  name: The Fire Spirit
+  tagline: All blaze, all heart — Horse and Snake energy.
+  chip: Fire Spirit
+  descDog:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} burns bright: a Fire spirit with Horse-and-Snake energy.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Full-speed laps, loud opinions, a leash that never stays slack. {name} lives in the present tense and expects you to keep up.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Fire is all warmth and momentum. The noise is enthusiasm, not defiance — channel it and {name} lights up the room.</div>
+  descCat:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is a Fire spirit: Horse-and-Snake energy with a tail.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>3am parkour, window-glass lunges and zero chill from the top of the perch. {name} turns the whole apartment into an arena.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Fire is warmth and momentum in a small body. Give the blaze a daily outlet and the house gets calmer — not quieter, calmer.</div>
+  traits:
+  - blazing energy
+  - main character
+  - loud and loyal
+  - never sits still
+  tipDog: Fire needs a daily outlet. Add a long off-peak walk and a game of fetch with a “drop it” pause in the middle — that tiny stillness is the practice.
+  tipCat: Fire needs a daily outlet. Two short, intense play sessions with a wand toy — ending with a snack — give the blaze somewhere to go.
+- min: 14
+  max: 18
+  theme: A
+  artwork: wood-spirit
+  name: The Wood Spirit
+  tagline: Always growing, always reaching — Tiger and Rabbit energy.
+  chip: Wood Spirit
+  descDog:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is a Wood spirit: curious, growing, always leaning toward the next thing.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Every bush on the walk is a bookshelf. {name} reads the neighbourhood nose-first and makes friends the same way.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Wood stretches toward light. That curiosity is {name}’s love language — feed it with new routes and new smells.</div>
+  descCat:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is a Wood spirit: curious, reaching, forever climbing.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Every perch is a branch and every sunny window a clearing. {name} patrols with purpose and checks in on you between rounds.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Wood grows toward whatever is new. Rotate toys and add vertical routes and {name} will keep unfolding.</div>
+  traits:
+  - endlessly curious
+  - explorer
+  - friendly sprout
+  - reaches for more
+  tipDog: Wood loves a new path. Swap one regular walk a week for a route {name} has never sniffed and let the nose lead for the first five minutes.
+  tipCat: Wood loves a new branch. Rotate toys weekly and add one new climbing spot or window view; watch {name} claim it by dinner.
+- min: 19
+  max: 23
+  theme: C
+  artwork: earth-spirit
+  name: The Earth Spirit
+  tagline: Steady, warm, unshakeable — Ox, Dragon, Goat and Dog energy.
+  chip: Earth Spirit
+  descDog:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is an Earth spirit: the steady centre of the household.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Same spot on the couch, same pace on the walk, same cheerful thump of the tail. {name} is the one thing that never changes in a changing week.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Earth holds everything together. {name} is your anchor — keep their routine predictable and they will keep you grounded.</div>
+  descCat:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is an Earth spirit: warm, reliable, immovable when it counts.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Dinner at the same time, a favorite blanket, a purr on schedule. {name} makes the whole home feel settled.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Earth is stability. Keep the litter, bowl and bed in their usual places and {name} will hold the centre of the room for you.</div>
+  traits:
+  - steady anchor
+  - creature of routine
+  - warm heart
+  - immovable when comfy
+  tipDog: Earth thrives on rhythm. Keep meals and walks at fixed times, and add one slow “sniffari” walk a week as a treat.
+  tipCat: Earth thrives on rhythm. Keep feeding, play and bedtime at fixed times and leave a warm, undisturbed spot for the afternoon nap.
+- min: 24
+  max: 27
+  theme: B
+  artwork: metal-spirit
+  name: The Metal Spirit
+  tagline: Clear, precise, quietly commanding — Monkey and Rooster energy.
+  chip: Metal Spirit
+  descDog:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is a Metal spirit: sharp-eyed, precise, and always on schedule.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Waits for the exact cue, notices every change in the room and has opinions about all of them. When {name} speaks, it counts.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Metal is clarity. {name} likes clean rules and clear signals — give them a puzzle and you will see the gears turn.</div>
+  descCat:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is a Metal spirit: precise, discerning, and impossible to fool.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>One slow blink says it all. {name} notices the moved chair, the new smell and the exact minute you are late with dinner.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Metal is clarity. Puzzle feeders and a tidy routine give {name} something worthy of that sharp mind.</div>
+  traits:
+  - sharp observer
+  - precise
+  - quietly commanding
+  - keeper of standards
+  tipDog: Metal loves a clear task. Try a scent-work game or a new trick every week and keep the cue words short and consistent.
+  tipCat: Metal loves a clear task. A puzzle feeder and a predictable evening routine suit this discerning mind.
+- min: 28
+  max: 32
+  theme: B
+  artwork: water-spirit
+  name: The Water Spirit
+  tagline: Deep, calm, ancient — Rat and Pig energy.
+  chip: Water Spirit
+  descDog:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is a Water spirit: deep, unhurried, and a little bit ancient.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Nothing rattles {name}. A quiet gaze, a slow walk, a long sigh next to you on the couch — as if the whole day has already been understood.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Water flows around obstacles. {name} brings that calm to you; protect their quiet corners and slow mornings.</div>
+  descCat:
+  - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is a Water spirit: still, deep, and gently all-knowing.</b></div>'
+  - <div class="d-body"><span class="lbl">What it looks like</span>Long stretches on a quiet shelf, a slow blink across the room, a calm that settles over the whole home.</div>
+  - <div class="d-body"><span class="lbl">The real read</span>Water is stillness with depth. {name} reads you better than you read yourself — keep their space peaceful and they will keep yours.</div>
+  traits:
+  - still waters
+  - old soul
+  - unshakeable calm
+  - quietly wise
+  tipDog: Water loves slow rituals. A quiet morning stroll, a long sniff-and-stand at the park and a calm evening wind-down are all {name} needs.
+  tipCat: Water loves slow rituals. Keep a peaceful perch by the window and a calm wind-down before bed; skip the loud toys.
+disclaimer: '<b>Just for fun</b>: a playful dose of Eastern elemental mysticism from 8 everyday habits.<br>For entertainment and sharing only — not a substitute for professional vet advice.'

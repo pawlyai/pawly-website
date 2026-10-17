@@ -1,0 +1,217 @@
+# Legacy quiz (WhoRunsTheHouse) converted 1:1 from the shipped Toki_Quiz_WhoRunsTheHouse_InApp_EN_2026-10-08.html QUIZ object.
+slug: WhoRunsTheHouse
+id: who_runs_house
+titleShort: Who Runs This House?
+eraTitle: BOND CHECK
+h1: Who really runs <span class="accent">{name}</span>’s house?
+sub: 5 quick, fun questions about how {name} treats you at home. I’ll call where you two really stand — and save a little to {name}’s profile.
+trending: ✨ NOW TRENDING
+startLabel: Find out who’s boss
+tipTemplate: The {n} thing{s} on file ({dims}) are already answered — these 5 are about the little power moves only you see.
+calcLines: [Reading the dynamic…, Counting the power moves…, 'Who serves whom? Checking…', Calling the verdict…]
+scoreBase: 0
+meterEnds: {low: Your loyal shadow, high: You’re the butler}
+dims: [Bond & attachment, Daily routine]
+dimKeys: [attachment, routine]
+DOG_QUESTIONS:
+- tag: The Welcome
+  q: You flop onto the sofa after a long day. {name}’s first move?
+  opts:
+  - t: Races over so thrilled they crash into you
+    s: 1
+    prof: {k: greeting, v: exuberant}
+  - t: Comes over, sniffs you, settles in like they’re here to listen
+    s: 3
+    prof: {k: greeting, v: calm-bonded}
+  - t: Sighs because you took *their* spot, stares till you move
+    s: 5
+    prof: {k: boundaries, v: assertive}
+  - t: Drops the leash/ball on you — *quit sulking, it’s work time*
+    s: 10
+    prof: {k: boundaries, v: runs-the-show}
+- tag: Treat Power
+  q: Who really controls the treats in this house?
+  opts:
+  - t: You do — they sit and wait for the cue
+    s: 1
+    prof: {k: impulseControl, v: high}
+  - t: One heartbroken look and you cave instantly
+    s: 3
+    prof: {k: impulseControl, v: persuasive}
+  - t: They raid your bag / nose open the cupboard themselves
+    s: 5
+    prof: {k: impulseControl, v: resourceful}
+  - t: They don’t deign to beg — they park and wait for the best piece
+    s: 10
+    prof: {k: impulseControl, v: entitled}
+- tag: Sleeping Spot
+  q: At night, where does {name} end up?
+  opts:
+  - t: On the floor or guarding the foot of the bed
+    s: 1
+    prof: {k: sleepLocation, v: separate}
+  - t: Shoulder to shoulder, or using your arm as a pillow
+    s: 3
+    prof: {k: sleepLocation, v: with-you}
+  - t: Dead center of the bed; you cling to the edge
+    s: 5
+    prof: {k: sleepLocation, v: bed-center}
+  - t: Their own custom luxury bed — you just change the sheets
+    s: 10
+    prof: {k: sleepLocation, v: own-throne}
+- tag: Attention
+  q: 'You’re on the phone gossiping. {name} is:'
+  opts:
+  - t: Playing with a ball, zero reaction
+    s: 1
+    prof: {k: attentionSeeking, v: low}
+  - t: Head tilted, like they know exactly who the villain is
+    s: 3
+    prof: {k: attentionSeeking, v: attuned}
+  - t: Staging a huge distraction to steal your attention
+    s: 5
+    prof: {k: attentionSeeking, v: demanding}
+  - t: Eyes saying *you’re the only one who finds this interesting*
+    s: 10
+    prof: {k: attentionSeeking, v: unbothered-boss}
+- tag: Big Change
+  q: If you moved to a brand-new city, who’d be more anxious?
+  opts:
+  - t: Them — you’re their whole world
+    s: 1
+    prof: {k: adaptability, v: you-dependent}
+  - t: Both — you’d cling to each other to cope
+    s: 3
+    prof: {k: adaptability, v: co-regulating}
+  - t: You — worrying if the light/floor/neighbors will upset them
+    s: 5
+    prof: {k: adaptability, v: pampered}
+  - t: Them? They rule everywhere. You handle the logistics
+    s: 10
+    prof: {k: adaptability, v: unflappable-boss}
+CAT_QUESTIONS:
+- tag: The Welcome
+  q: You flop onto the sofa after a long day. {name}’s first move?
+  opts:
+  - t: Trots over, chirps, and settles against your side
+    s: 1
+    prof: {k: greeting, v: warm}
+  - t: Appears, sniffs you, sits nearby like they’re listening
+    s: 3
+    prof: {k: greeting, v: calm-bonded}
+  - t: Slow-blinks with disdain because you took *their* cushion
+    s: 5
+    prof: {k: boundaries, v: assertive}
+  - t: Sits on your chest / the keyboard — *enough, serve me*
+    s: 10
+    prof: {k: boundaries, v: runs-the-show}
+- tag: Treat Power
+  q: Who really controls the treats in this house?
+  opts:
+  - t: You do — they wait politely for it
+    s: 1
+    prof: {k: impulseControl, v: high}
+  - t: One slow blink and you cave instantly
+    s: 3
+    prof: {k: impulseControl, v: persuasive}
+  - t: They have secret stashes and open the drawer themselves
+    s: 5
+    prof: {k: impulseControl, v: resourceful}
+  - t: They don’t deign to beg — they park by the treat cupboard and wait
+    s: 10
+    prof: {k: impulseControl, v: entitled}
+- tag: Sleeping Spot
+  q: At night, where does {name} end up?
+  opts:
+  - t: Their own spot nearby, or the foot of the bed
+    s: 1
+    prof: {k: sleepLocation, v: separate}
+  - t: Curled against you, or on your pillow
+    s: 3
+    prof: {k: sleepLocation, v: with-you}
+  - t: Dead center of the bed; you cling to the edge
+    s: 5
+    prof: {k: sleepLocation, v: bed-center}
+  - t: Their own plush throne — you just change the sheets
+    s: 10
+    prof: {k: sleepLocation, v: own-throne}
+- tag: Attention
+  q: 'You’re on the phone gossiping. {name} is:'
+  opts:
+  - t: Ignoring you completely, busy with their own thing
+    s: 1
+    prof: {k: attentionSeeking, v: low}
+  - t: Head tilted, like they know exactly who the villain is
+    s: 3
+    prof: {k: attentionSeeking, v: attuned}
+  - t: Knocking a cup off the table to steal your attention
+    s: 5
+    prof: {k: attentionSeeking, v: demanding}
+  - t: Eyes saying *you’re the only one who finds this interesting*
+    s: 10
+    prof: {k: attentionSeeking, v: unbothered-boss}
+- tag: Big Change
+  q: If you moved to a brand-new city, who’d be more anxious?
+  opts:
+  - t: Them — you’re their whole world
+    s: 1
+    prof: {k: adaptability, v: you-dependent}
+  - t: Both — you’d need each other to settle
+    s: 3
+    prof: {k: adaptability, v: co-regulating}
+  - t: You — worrying if the light/litter/neighbors will upset them
+    s: 5
+    prof: {k: adaptability, v: pampered}
+  - t: Them? They rule everywhere. You handle the logistics
+    s: 10
+    prof: {k: adaptability, v: unflappable-boss}
+BANDS:
+- min: 5
+  max: 12
+  theme: A
+  artwork: loyal-subject
+  name: The Loyal Subject
+  tagline: 'You’re the hero. {name} is your devoted #1.'
+  chip: Loyal Subject
+  descDog: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>You’re {name}’s hero — and {name} wears it on their wagging tail.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Eyes that find you before anything in the room, a heel that sticks, a whole-body wiggle when you so much as glance over. {name}’s sense of “all is well” is wired straight to your approval.</div>', '<div class="d-body"><span class="lbl">The real read</span>This isn’t a soft dog — it’s a dog who made you their anchor. Praise, not treats, is the currency that actually moves them.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>You’re {name}’s chosen human — rare in a cat, and quietly total.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Slow blinks aimed only at you, a follow to the bathroom door, the one lap they actually pick. A cat that bonds this hard to a single person is uncommon — and it’s all pointed at you.</div>', '<div class="d-body"><span class="lbl">The real read</span>Cats don’t hand out devotion; {name} chose it. Calm, predictable attention keeps that trust topped up — loud fuss just spends it.</div>']
+  traits: [devoted, eager to please, your shadow, discipline-coded]
+  tipDog: Lean into praise over treats — one proud “good job” lands harder than a snack. Give {name} little jobs (fetch the leash, sit for the door) so that devotion has somewhere to go.
+  tipCat: This is a rare, bonded cat — reward with calm attention and slow blinks. A fixed daily play ritual with you is their favourite kind of love.
+- min: 13
+  max: 28
+  theme: B
+  artwork: soulmates-besties
+  name: Soulmates / Besties
+  tagline: Equal partners. A glance is enough.
+  chip: Soulmates
+  descDog: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>You and {name} run as a pair — no boss, just a team.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>No constant commands, no tug-of-war. {name} reads your energy off-leash, matches your pace on a walk, and settles the moment you settle.</div>', '<div class="d-body"><span class="lbl">The real read</span>This is the easy middle of dog ownership — trust with slack in the line. {name} keeps choosing you without needing to be told to.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>You and {name} are equals who talk in slow blinks.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Companionable, not clingy — same room, own cushion, the odd head-bump to check in. {name} meets you halfway and asks for very little.</div>', '<div class="d-body"><span class="lbl">The real read</span>A cat this balanced is a gift: affection on tap, independence intact. The bond lasts because neither of you crowds it.</div>']
+  traits: [in sync, mutual trust, easy company, emotionally even]
+  tipDog: Try “silent companionship” — just being in the same room is your highest romance. Keep one shared ritual (an evening walk, a game) as your weekly anchor.
+  tipCat: Protect the bond with phone-free time — even 15 min of grooming or play is {name}’s recharge. Don’t over-handle; let {name} come to you.
+- min: 29
+  max: 42
+  theme: C
+  artwork: reluctant-roommates
+  name: The Reluctant Roommates
+  tagline: An independent soul who lives rent-free on your Wi-Fi.
+  chip: Roommates
+  descDog: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>{name} loves you — and also keeps a schedule of their own.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Comes when it suits, leans in on their terms, then trots off to supervise the window. With {name}, affection is granted, not demanded.</div>', <div class="d-body"><span class="lbl">The real read</span>An independent dog isn’t a distant one. The cuddle you *do* earn means more — and the real win is the day they pick you over the smell on the lawn.</div>]
+  descCat: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>{name} runs their own life — you’re the favourite flatmate.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Strong boundaries, selective affection, a clear sense that favours are granted, not owed. {name} appears on their own schedule, accepts worship, then returns to business.</div>', <div class="d-body"><span class="lbl">The real read</span>Textbook confident cat. Don’t chase it — a cat that doesn’t *need* you makes the moments it chooses you count double.</div>]
+  traits: [independent, strong boundaries, selective affection, self-possessed]
+  tipDog: Respect the space — don’t force the cuddle. Make yourself the source of the best stuff (walks, food, play) so {name} opts in to you.
+  tipCat: Give {name} a private high or hidden territory that’s off-limits to interruption. Swap the bowl for a puzzle/snuffle feeder so they get the “hunt” they crave.
+- min: 43
+  max: 50
+  theme: D
+  artwork: royal-butler
+  name: The Royal & The Butler
+  tagline: Give up. {name} is the power center — you’re staff.
+  chip: The Butler
+  descDog: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>Let’s be honest — {name} runs this house, and you fetch.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>The sofa, the first bite, the center of the room — all claimed like a birthright. {name} doesn’t ask; {name} assumes you’ll sort it.</div>', '<div class="d-body"><span class="lbl">The real read</span>A dog this entitled is one that trusts you completely to provide. Flattering, really — just keep enough structure that “the boss” still recalls at the park.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>You don’t own {name}. You staff {name}.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>The best warm spot, the premium bowl, attention on demand — all taken as royal due. {name} summons; you deliver.</div>', '<div class="d-body"><span class="lbl">The real read</span>Peak secure, entitled cat. Enjoy the honour of being chosen help — and keep the kingdom enriched so a bored monarch doesn’t redecorate the sofa.</div>']
+  traits: [the boss, fully entitled, utterly secure, born royalty]
+  tipDog: Keep a little structure so “the boss” still listens when it matters (recall, vet visits). Channel that confidence into training tricks — they love an audience.
+  tipCat: Enjoy it — but keep enrichment up so a bored monarch doesn’t turn to furniture. Vertical space + rotating toys keep the royal entertained.
+disclaimer: '<b>Just for fun</b>: a playful read of your dynamic from 5 everyday habits.<br>For entertainment and sharing only — not a substitute for professional vet advice.'

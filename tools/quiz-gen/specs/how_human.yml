@@ -1,0 +1,296 @@
+# Legacy quiz (HowHuman) converted 1:1 from the shipped Toki_Quiz_HowHuman_InApp_EN_2026-10-08.html QUIZ object.
+slug: HowHuman
+id: how_human
+titleShort: How Human Is Your Pet?
+eraTitle: HUMAN-O-METER
+h1: How human is <span class="accent">{name}</span>, really?
+sub: 10 tiny tells about how {name} acts at home. I’ll put a number on how “human” {name} has become — and save a little to {name}’s profile.
+trending: ✨ NOW TRENDING
+startLabel: Measure the human in {name}
+tipTemplate: The {n} thing{s} on file ({dims}) are already answered — these 10 are about {name}’s very human little quirks.
+calcLines: [Reading the human tells…, Counting the side-eyes…, Measuring the sighs…, Calling the verdict…]
+scoreBase: 0
+scoreDisplay: 'Human-o-meter: <b>{score}</b> / {hi}'
+meterEnds: {low: Pure pet, high: Basically a person}
+dims: [Personality & temperament, Food preferences]
+dimKeys: [temperament, eating]
+DOG_QUESTIONS:
+- tag: The Rant
+  q: 'You’re loudly venting to a friend. {name}:'
+  opts:
+  - t: Dead asleep, couldn’t care less
+    s: 1
+    prof: {k: attunement, v: low}
+  - t: Tilts their head, thinks you’re calling them
+    s: 3
+    prof: {k: attunement, v: mid}
+  - t: Stares at you like *yeah, that’s genuinely unhinged, I get it*
+    s: 5
+    prof: {k: attunement, v: high}
+- tag: The Sigh
+  q: How often does {name} sigh?
+  opts:
+  - t: Never — just happy panting
+    s: 1
+    prof: {k: expressiveness, v: low}
+  - t: Only a whine when dinner’s late
+    s: 3
+    prof: {k: expressiveness, v: mid}
+  - t: Frequent, heavy, world-weary sighs
+    s: 5
+    prof: {k: expressiveness, v: high}
+- tag: The Selfie
+  q: 'You open the front camera. {name} leans in and:'
+  opts:
+  - t: Licks the lens — all slobber
+    s: 1
+    prof: {k: selfAware, v: low}
+  - t: Stares blankly at themselves
+    s: 3
+    prof: {k: selfAware, v: mid}
+  - t: Finds the angle, locks eyes, tucks their chin for a side profile
+    s: 5
+    prof: {k: selfAware, v: high}
+- tag: You’re Emo
+  q: 'You’re low on the sofa (work / breakup). {name}:'
+  opts:
+  - t: Brings a ball, zero read of the room
+    s: 1
+    prof: {k: empathy, v: low}
+  - t: Sits quietly beside you
+    s: 3
+    prof: {k: empathy, v: mid}
+  - t: Rests their head on your chest and sighs with you
+    s: 5
+    prof: {k: empathy, v: high}
+- tag: The Posture
+  q: '{name}’s usual sitting posture:'
+  opts:
+  - t: Proper four-paws or curled in a ball
+    s: 1
+    prof: {k: humanPosture, v: low}
+  - t: Flopped on their side, limbs out
+    s: 3
+    prof: {k: humanPosture, v: mid}
+  - t: Slouched into the sofa like a tired man, belly out
+    s: 5
+    prof: {k: humanPosture, v: high}
+- tag: TV Night
+  q: 'You’re watching TV. {name} has claimed:'
+  opts:
+  - t: The floor rug
+    s: 1
+    prof: {k: spaceClaim, v: low}
+  - t: A corner of the sofa
+    s: 3
+    prof: {k: spaceClaim, v: mid}
+  - t: Dead center, watching the screen intently
+    s: 5
+    prof: {k: spaceClaim, v: high}
+- tag: Rain Check
+  q: 'You promised a walk but cancelled (rain). {name}:'
+  opts:
+  - t: Forgets in seconds, goes to play
+    s: 1
+    prof: {k: grudge, v: low}
+  - t: Guards the door and whines
+    s: 3
+    prof: {k: grudge, v: mid}
+  - t: Shoots you a pointed stare — or chews your expensive slipper
+    s: 5
+    prof: {k: grudge, v: high}
+- tag: Video Call
+  q: 'On a video call, {name}’s participation:'
+  opts:
+  - t: None — the people on screen are irrelevant
+    s: 1
+    prof: {k: social, v: low}
+  - t: Glances at the screen when they hear a voice
+    s: 3
+    prof: {k: social, v: mid}
+  - t: Shoves their whole face into the lens to “join”
+    s: 5
+    prof: {k: social, v: high}
+- tag: Privacy
+  q: '{name}’s stance on your privacy:'
+  opts:
+  - t: As long as there’s food, they don’t care where you are
+    s: 1
+    prof: {k: velcro, v: low}
+  - t: Likes to hang by your feet
+    s: 3
+    prof: {k: velcro, v: mid}
+  - t: Must supervise you in the bathroom — no secrets allowed
+    s: 5
+    prof: {k: velcro, v: high}
+- tag: The Veggie
+  q: 'You drop a piece of vegetable. {name}:'
+  opts:
+  - t: Sniffs and leaves — meat only
+    s: 1
+    prof: {k: dietPreference, v: meat-only}
+  - t: Gives it a tentative lick
+    s: 3
+    prof: {k: dietPreference, v: selective}
+  - t: Chokes it down *to keep you company*
+    s: 5
+    prof: {k: dietPreference, v: omnivore}
+CAT_QUESTIONS:
+- tag: The Rant
+  q: 'You’re loudly venting to a friend. {name}:'
+  opts:
+  - t: Dead asleep, couldn’t care less
+    s: 1
+    prof: {k: attunement, v: low}
+  - t: Tilts their head, thinks you’re calling them
+    s: 3
+    prof: {k: attunement, v: mid}
+  - t: Stares at you like *yeah, that’s genuinely unhinged, I get it*
+    s: 5
+    prof: {k: attunement, v: high}
+- tag: The Sigh
+  q: How often does {name} sigh?
+  opts:
+  - t: Never — just happy chirps
+    s: 1
+    prof: {k: expressiveness, v: low}
+  - t: Only a mrrp when dinner’s late
+    s: 3
+    prof: {k: expressiveness, v: mid}
+  - t: Frequent, heavy, world-weary sighs
+    s: 5
+    prof: {k: expressiveness, v: high}
+- tag: The Selfie
+  q: 'You open the front camera. {name} leans in and:'
+  opts:
+  - t: Paws at the screen — all smudges
+    s: 1
+    prof: {k: selfAware, v: low}
+  - t: Stares blankly at themselves
+    s: 3
+    prof: {k: selfAware, v: mid}
+  - t: Finds the angle, locks eyes, tucks their chin for a side profile
+    s: 5
+    prof: {k: selfAware, v: high}
+- tag: You’re Emo
+  q: 'You’re low on the sofa (work / breakup). {name}:'
+  opts:
+  - t: Meows for food, zero read of the room
+    s: 1
+    prof: {k: empathy, v: low}
+  - t: Sits quietly beside you
+    s: 3
+    prof: {k: empathy, v: mid}
+  - t: Rests against your chest and purrs with you
+    s: 5
+    prof: {k: empathy, v: high}
+- tag: The Posture
+  q: '{name}’s usual sitting posture:'
+  opts:
+  - t: Proper loaf or curled in a ball
+    s: 1
+    prof: {k: humanPosture, v: low}
+  - t: Flopped on their side, limbs out
+    s: 3
+    prof: {k: humanPosture, v: mid}
+  - t: Slouched into the sofa like a tired man, belly out
+    s: 5
+    prof: {k: humanPosture, v: high}
+- tag: TV Night
+  q: 'You’re watching TV. {name} has claimed:'
+  opts:
+  - t: The floor, somewhere out of the way
+    s: 1
+    prof: {k: spaceClaim, v: low}
+  - t: A corner of the sofa
+    s: 3
+    prof: {k: spaceClaim, v: mid}
+  - t: Dead center, watching the screen intently
+    s: 5
+    prof: {k: spaceClaim, v: high}
+- tag: Rain Check
+  q: 'You promised window-and-play time but cancelled. {name}:'
+  opts:
+  - t: Forgets in seconds, goes to nap
+    s: 1
+    prof: {k: grudge, v: low}
+  - t: Sits by the window and mutters
+    s: 3
+    prof: {k: grudge, v: mid}
+  - t: Shoots you a pointed stare — or knocks your pen off the desk
+    s: 5
+    prof: {k: grudge, v: high}
+- tag: Video Call
+  q: 'On a video call, {name}’s participation:'
+  opts:
+  - t: None — the people on screen are irrelevant
+    s: 1
+    prof: {k: social, v: low}
+  - t: Glances at the screen when they hear a voice
+    s: 3
+    prof: {k: social, v: mid}
+  - t: Shoves their whole face into the lens to “join”
+    s: 5
+    prof: {k: social, v: high}
+- tag: Privacy
+  q: '{name}’s stance on your privacy:'
+  opts:
+  - t: As long as there’s food, they don’t care where you are
+    s: 1
+    prof: {k: velcro, v: low}
+  - t: Likes to hang near you
+    s: 3
+    prof: {k: velcro, v: mid}
+  - t: Must supervise you in the bathroom — no secrets allowed
+    s: 5
+    prof: {k: velcro, v: high}
+- tag: The Veggie
+  q: 'You drop a piece of vegetable. {name}:'
+  opts:
+  - t: Sniffs and leaves — meat only
+    s: 1
+    prof: {k: dietPreference, v: meat-only}
+  - t: Gives it a tentative lick
+    s: 3
+    prof: {k: dietPreference, v: selective}
+  - t: Nibbles it *to keep you company*
+    s: 5
+    prof: {k: dietPreference, v: omnivore}
+BANDS:
+- min: 10
+  max: 22
+  theme: A
+  artwork: pure-pet
+  name: Pure Pet · 10% human
+  tagline: A happy, simple soul — you do the worrying, they do the cute.
+  chip: Pure Pet
+  descDog: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>{name}’s a gloriously simple soul: walk, snack, nap, you, repeat.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>No schemes, no side-eye, no grudges. {name} meets every walk like the first one and forgives everything in seconds.</div>', '<div class="d-body"><span class="lbl">The real read</span>The purest companionship there is — uncomplicated joy. {name} does cute; you do the thinking.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>{name}’s a gloriously simple soul: sunbeam, snack, nap, repeat.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>No politics, no plotting. {name} lives fully in the moment — a toy, a warm spot, a lap, and all is right with the world.</div>', '<div class="d-body"><span class="lbl">The real read</span>The purest kind of cat: easy, present, unbothered. {name} does serene; you do the worrying.</div>']
+  traits: [pure soul, lives in the moment, no baggage, easy joy]
+  tipDog: Keep it simple and physical — walks, fetch, sniff-time. {name} doesn’t need mind games, just you and a routine.
+  tipCat: Keep it simple — a wand toy, a sunny spot, a predictable rhythm. {name} is happiest when life is calm and uncomplicated.
+- min: 23
+  max: 35
+  theme: B
+  artwork: evolving-roommate
+  name: The Evolving Roommate · 50% human
+  tagline: Already cracked the code to managing you.
+  chip: Evolving
+  descDog: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>{name} has cracked which sad face gets the treat.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Strategic puppy eyes, a well-timed sigh, a paw on your knee at exactly the right moment. {name} is studying you.</div>', '<div class="d-body"><span class="lbl">The real read</span>A smart, socially-tuned dog mid-evolution. Stay consistent — clear rules keep the “negotiator phase” from running the house.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>{name} has learned exactly which meow gets results.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Strategic 6am wake-ups, a stare held until you cave, affection dispensed only when it pays. {name} is training you.</div>', '<div class="d-body"><span class="lbl">The real read</span>A clever cat negotiating for more power. Keep boundaries firm — a bored, smart cat invents louder leverage.</div>']
+  traits: [clever negotiator, emotionally savvy, opinion-forming, your little manager]
+  tipDog: Channel that brain — training, puzzle feeders, a new trick a week. A smart dog with a job is a happy dog.
+  tipCat: Channel that brain — puzzle feeders, clicker games, rotating toys. A clever cat that’s bored invents its own (louder) games.
+- min: 36
+  max: 50
+  theme: D
+  artwork: reincarnated-bestie
+  name: The Reincarnated Bestie · 100% human
+  tagline: Stop calling them a pet. Save them a paycheck.
+  chip: Basically human
+  descDog: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>this isn’t a dog, it’s a roommate with fur.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Opinions, moods, a favourite seat, a grudge when you cancel the walk. {name} probably worries about this household more than you do.</div>', '<div class="d-body"><span class="lbl">The real read</span>A deeply expressive, people-oriented soul — and one that feels your moods hard. Keep your own stress in check; {name} absorbs it.</div>']
+  descCat: ['<div class="d-summary"><span class="label">THE VERDICT</span><b>you don’t have a cat, you have a tiny person in a fur coat.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Opinions, aesthetics, a pointed stare when you disappoint them, a whole emotional inner life. {name} sets the household mood.</div>', '<div class="d-body"><span class="lbl">The real read</span>An unusually expressive cat that mirrors your state. A steady you makes a steady {name}.</div>']
+  traits: [furry human, full of opinions, emotionally fluent, runs the household]
+  tipDog: 'Give {name} rich social and mental life — they thrive on being *included*, not just walked. Watch for stress-matching: your calm is their calm.'
+  tipCat: Give {name} agency — choices, perches, inclusion in daily life. This emotionally-tuned cat mirrors your mood, so a steady you makes a steady them.
+disclaimer: '<b>Just for fun</b>: a playful “human-o-meter” from 10 everyday habits.<br>For entertainment and sharing only — not a substitute for professional vet advice.'

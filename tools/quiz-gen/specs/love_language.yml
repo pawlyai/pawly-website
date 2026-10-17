@@ -1,0 +1,428 @@
+# Legacy quiz (LoveLanguage) converted 1:1 from the shipped Toki_Quiz_LoveLanguage_InApp_EN_2026-10-08.html QUIZ object.
+# NOTE (PAW-166): dog Q9 stem now names the park so the dog side passes the species-imagery rule; no score changes. Shipped Drive HTML is unchanged.
+slug: LoveLanguage
+id: love_language
+titleShort: Your Pet’s Love Language
+eraTitle: LOVE LANGUAGE
+h1: What’s <span class="accent">{name}</span>’s love language?
+sub: 12 everyday moments reveal how {name} really bonds with you. I’ll name their love language — and save it to {name}’s profile.
+trending: ✨ NOW TRENDING
+startLabel: Find {name}’s love language
+tipTemplate: The {n} thing{s} on file ({dims}) are already answered — these 12 read how {name} loves and attaches.
+calcLines: [Reading the bond…, Measuring the attachment…, 'Secure, aloof, velcro or chaos?', Naming the love language…]
+scoreBase: 0
+meterEnds: {low: Calm & secure, high: High-energy chaos}
+dims: [Attachment & bonding, Energy level]
+dimKeys: [attachment, energy]
+DOG_QUESTIONS:
+- tag: Work Mode
+  q: 'You switch on Do-Not-Disturb to work. {name} is:'
+  opts:
+  - t: Tucked under the desk as your footrest
+    s: 1
+    prof: {k: proximitySeeking, v: calm-close}
+  - t: In another room, gorgeous and uninterested
+    s: 2
+    prof: {k: proximitySeeking, v: independent}
+  - t: On your lap trying to co-author every email
+    s: 3
+    prof: {k: proximitySeeking, v: demanding}
+  - t: Zooming around trying to demolish the wall
+    s: 4
+    prof: {k: proximitySeeking, v: restless}
+- tag: Quick Errand
+  q: 'You step out for a 5-minute package pickup. {name}:'
+  opts:
+  - t: Waits calmly by the door
+    s: 1
+    prof: {k: separationReaction, v: calm}
+  - t: Didn’t even notice, rolled over
+    s: 2
+    prof: {k: separationReaction, v: unbothered}
+  - t: Shrieks like you’ve left for a mission abroad
+    s: 3
+    prof: {k: separationReaction, v: distress}
+  - t: Seizes the chance to knock your drink off the desk
+    s: 4
+    prof: {k: separationReaction, v: acts-out}
+- tag: The Guest
+  q: 'A stranger-friend visits. {name}:'
+  opts:
+  - t: Polite sniff, confirms, sits calmly
+    s: 1
+    prof: {k: strangerSociability, v: polite}
+  - t: Vanishes — the guest doubts you own a pet
+    s: 2
+    prof: {k: strangerSociability, v: avoidant}
+  - t: Rubs all over the newcomer, defecting on the spot
+    s: 3
+    prof: {k: strangerSociability, v: over-friendly}
+  - t: Treats the guest’s shoelaces as a chew toy
+    s: 4
+    prof: {k: strangerSociability, v: nippy}
+- tag: Eye Contact
+  q: 'You lock eyes lovingly. {name}:'
+  opts:
+  - t: Slow-blinks back, pink bubbles in the air
+    s: 1
+    prof: {k: affectionStyle, v: serene}
+  - t: Turns away, refuses eye contact
+    s: 2
+    prof: {k: affectionStyle, v: reserved}
+  - t: Rushes over to kiss your face
+    s: 3
+    prof: {k: affectionStyle, v: smothering}
+  - t: Reads it as a challenge, ready to wrestle
+    s: 4
+    prof: {k: affectionStyle, v: rowdy}
+- tag: Bedtime
+  q: 'At night, {name}’s coordinates:'
+  opts:
+  - t: Foot of the bed, standing guard
+    s: 1
+    prof: {k: sleepProximity, v: guardian}
+  - t: Their own den — independent icon
+    s: 2
+    prof: {k: sleepProximity, v: own-den}
+  - t: Pressed to your neck / under the covers
+    s: 3
+    prof: {k: sleepProximity, v: glued}
+  - t: Sprawled across your head, shoving you off
+    s: 4
+    prof: {k: sleepProximity, v: bed-hog}
+- tag: You Cry
+  q: 'You cry. {name}’s first reaction:'
+  opts:
+  - t: Quietly brings their favorite toy
+    s: 1
+    prof: {k: comfortResponse, v: gift-giver}
+  - t: Watches from afar — *humans are fragile*
+    s: 2
+    prof: {k: comfortResponse, v: detached}
+  - t: Frantically licks your tears to “fix” you
+    s: 3
+    prof: {k: comfortResponse, v: frantic}
+  - t: Does a zoomie to cheer you up (or just chaos)
+    s: 4
+    prof: {k: comfortResponse, v: clown}
+- tag: Road Trip
+  q: 'On a car trip, {name}:'
+  opts:
+  - t: Watches the window like an arthouse film
+    s: 1
+    prof: {k: noveltyCoping, v: calm}
+  - t: Asleep on boarding, wake me at arrival
+    s: 2
+    prof: {k: noveltyCoping, v: chill}
+  - t: Must grip your arm the whole way
+    s: 3
+    prof: {k: noveltyCoping, v: needs-contact}
+  - t: Tries to jump into the driver’s seat
+    s: 4
+    prof: {k: noveltyCoping, v: wild}
+- tag: Kitchen
+  q: 'You’re busy in the kitchen. {name}:'
+  opts:
+  - t: Safe distance, waiting for a “dropped snack”
+    s: 1
+    prof: {k: foodProximity, v: patient}
+  - t: Waiting in the living room — *dinner will call me*
+    s: 2
+    prof: {k: foodProximity, v: aloof}
+  - t: Wrapped around your ankles like a charm
+    s: 3
+    prof: {k: foodProximity, v: underfoot}
+  - t: Tries to jump up to “help cook”
+    s: 4
+    prof: {k: foodProximity, v: counter-surfer}
+- tag: Recall
+  q: 'You call {name}’s name from across the park:'
+  opts:
+  - t: Sprints over, brakes failing
+    s: 1
+    prof: {k: recall, v: instant}
+  - t: Ear twitches, body immovable
+    s: 2
+    prof: {k: recall, v: selective}
+  - t: Already behind you before you finished
+    s: 3
+    prof: {k: recall, v: ever-present}
+  - t: Runs the opposite way, sure it’s bath time
+    s: 4
+    prof: {k: recall, v: bolter}
+- tag: New Toy
+  q: 'A brand-new toy:'
+  opts:
+  - t: Plays gently, puts it away with care
+    s: 1
+    prof: {k: playStyle, v: gentle}
+  - t: One sniff — *that’s it?*
+    s: 2
+    prof: {k: playStyle, v: unimpressed}
+  - t: Inseparable 24/7, new obsession
+    s: 3
+    prof: {k: playStyle, v: obsessive}
+  - t: Disassembled and destroyed in 10 minutes
+    s: 4
+    prof: {k: playStyle, v: destroyer}
+- tag: New Date
+  q: 'You bring home a new date. {name}:'
+  opts:
+  - t: Reads your vibe — you like them, they like them
+    s: 1
+    prof: {k: jealousy, v: attuned}
+  - t: Ignores them, the person is irrelevant
+    s: 2
+    prof: {k: jealousy, v: indifferent}
+  - t: Jealous — wedges between you two
+    s: 3
+    prof: {k: jealousy, v: jealous}
+  - t: Steals their sock as a warning
+    s: 4
+    prof: {k: jealousy, v: territorial}
+- tag: Rainy Day
+  q: 'Rainy day, stuck inside. {name}:'
+  opts:
+  - t: Quietly curls up for a movie
+    s: 1
+    prof: {k: energyOutlet, v: settled}
+  - t: Perfect excuse to be a homebody
+    s: 2
+    prof: {k: energyOutlet, v: homebody}
+  - t: Suspects you wet the windows on purpose, deeply aggrieved
+    s: 3
+    prof: {k: energyOutlet, v: needy}
+  - t: Nowhere to burn energy → demolition begins
+    s: 4
+    prof: {k: energyOutlet, v: destructive}
+CAT_QUESTIONS:
+- tag: Work Mode
+  q: 'You switch on Do-Not-Disturb to work. {name} is:'
+  opts:
+  - t: Curled quietly under the desk near your feet
+    s: 1
+    prof: {k: proximitySeeking, v: calm-close}
+  - t: In another room, gorgeous and uninterested
+    s: 2
+    prof: {k: proximitySeeking, v: independent}
+  - t: Sitting on the keyboard, co-authoring every line
+    s: 3
+    prof: {k: proximitySeeking, v: demanding}
+  - t: Zooming around trying to demolish the shelf
+    s: 4
+    prof: {k: proximitySeeking, v: restless}
+- tag: Quick Errand
+  q: 'You step out for a 5-minute package pickup. {name}:'
+  opts:
+  - t: Waits calmly by the door
+    s: 1
+    prof: {k: separationReaction, v: calm}
+  - t: Didn’t even notice, rolled over
+    s: 2
+    prof: {k: separationReaction, v: unbothered}
+  - t: Yowls like you’ve left for a mission abroad
+    s: 3
+    prof: {k: separationReaction, v: distress}
+  - t: Seizes the chance to knock your drink off the desk
+    s: 4
+    prof: {k: separationReaction, v: acts-out}
+- tag: The Guest
+  q: 'A stranger-friend visits. {name}:'
+  opts:
+  - t: Polite sniff, confirms, sits calmly
+    s: 1
+    prof: {k: strangerSociability, v: polite}
+  - t: Vanishes — the guest doubts you own a cat
+    s: 2
+    prof: {k: strangerSociability, v: avoidant}
+  - t: Rubs all over the newcomer, defecting on the spot
+    s: 3
+    prof: {k: strangerSociability, v: over-friendly}
+  - t: Treats the guest’s shoelaces as a toy
+    s: 4
+    prof: {k: strangerSociability, v: nippy}
+- tag: Eye Contact
+  q: 'You lock eyes lovingly. {name}:'
+  opts:
+  - t: Slow-blinks back, pink bubbles in the air
+    s: 1
+    prof: {k: affectionStyle, v: serene}
+  - t: Turns away, refuses eye contact
+    s: 2
+    prof: {k: affectionStyle, v: reserved}
+  - t: Rushes over to headbutt your face
+    s: 3
+    prof: {k: affectionStyle, v: smothering}
+  - t: Reads it as a challenge, ready to pounce
+    s: 4
+    prof: {k: affectionStyle, v: rowdy}
+- tag: Bedtime
+  q: 'At night, {name}’s coordinates:'
+  opts:
+  - t: Foot of the bed, keeping watch
+    s: 1
+    prof: {k: sleepProximity, v: guardian}
+  - t: Their own plush den — independent icon
+    s: 2
+    prof: {k: sleepProximity, v: own-den}
+  - t: Pressed to your neck / under the covers
+    s: 3
+    prof: {k: sleepProximity, v: glued}
+  - t: Sprawled across your head, shoving you off
+    s: 4
+    prof: {k: sleepProximity, v: bed-hog}
+- tag: You Cry
+  q: 'You cry. {name}’s first reaction:'
+  opts:
+  - t: Quietly brings their favorite toy
+    s: 1
+    prof: {k: comfortResponse, v: gift-giver}
+  - t: Watches from afar — *humans are fragile*
+    s: 2
+    prof: {k: comfortResponse, v: detached}
+  - t: Frantically headbutts and purrs to “fix” you
+    s: 3
+    prof: {k: comfortResponse, v: frantic}
+  - t: Does a zoomie to cheer you up (or just chaos)
+    s: 4
+    prof: {k: comfortResponse, v: clown}
+- tag: Carrier Trip
+  q: 'On a carrier trip, {name}:'
+  opts:
+  - t: Watches the window like an arthouse film
+    s: 1
+    prof: {k: noveltyCoping, v: calm}
+  - t: Asleep on boarding, wake me at arrival
+    s: 2
+    prof: {k: noveltyCoping, v: chill}
+  - t: Must press against you the whole way
+    s: 3
+    prof: {k: noveltyCoping, v: needs-contact}
+  - t: Tries to claw out of the carrier
+    s: 4
+    prof: {k: noveltyCoping, v: wild}
+- tag: Kitchen
+  q: 'You’re busy in the kitchen. {name}:'
+  opts:
+  - t: Safe distance, waiting for a “dropped snack”
+    s: 1
+    prof: {k: foodProximity, v: patient}
+  - t: Waiting in the living room — *dinner will call me*
+    s: 2
+    prof: {k: foodProximity, v: aloof}
+  - t: Wrapped around your ankles like a charm
+    s: 3
+    prof: {k: foodProximity, v: underfoot}
+  - t: Jumps on the counter to “help cook”
+    s: 4
+    prof: {k: foodProximity, v: counter-surfer}
+- tag: Recall
+  q: 'You call {name}’s name from afar:'
+  opts:
+  - t: Trots over, tail up
+    s: 1
+    prof: {k: recall, v: instant}
+  - t: Ear twitches, body immovable
+    s: 2
+    prof: {k: recall, v: selective}
+  - t: Already behind you before you finished
+    s: 3
+    prof: {k: recall, v: ever-present}
+  - t: Runs the opposite way, sure it’s bath time
+    s: 4
+    prof: {k: recall, v: bolter}
+- tag: New Toy
+  q: 'A brand-new toy:'
+  opts:
+  - t: Plays gently, grooms after
+    s: 1
+    prof: {k: playStyle, v: gentle}
+  - t: One sniff — *that’s it?*
+    s: 2
+    prof: {k: playStyle, v: unimpressed}
+  - t: Inseparable 24/7, new obsession
+    s: 3
+    prof: {k: playStyle, v: obsessive}
+  - t: Gutted and de-stuffed in 10 minutes
+    s: 4
+    prof: {k: playStyle, v: destroyer}
+- tag: New Date
+  q: 'You bring home a new date. {name}:'
+  opts:
+  - t: Reads your vibe — you like them, they like them
+    s: 1
+    prof: {k: jealousy, v: attuned}
+  - t: Ignores them, the person is irrelevant
+    s: 2
+    prof: {k: jealousy, v: indifferent}
+  - t: Jealous — wedges between you two
+    s: 3
+    prof: {k: jealousy, v: jealous}
+  - t: Steals their sock as a warning
+    s: 4
+    prof: {k: jealousy, v: territorial}
+- tag: Rainy Day
+  q: 'Rainy day, stuck inside. {name}:'
+  opts:
+  - t: Quietly curls up for a movie
+    s: 1
+    prof: {k: energyOutlet, v: settled}
+  - t: Perfect excuse to be a homebody
+    s: 2
+    prof: {k: energyOutlet, v: homebody}
+  - t: Suspects you wet the windows on purpose, deeply aggrieved
+    s: 3
+    prof: {k: energyOutlet, v: needy}
+  - t: Nowhere to burn energy → shelf-clearing begins
+    s: 4
+    prof: {k: energyOutlet, v: destructive}
+BANDS:
+- min: 12
+  max: 20
+  theme: B
+  artwork: secure-soulmate
+  name: The Secure Soulmate
+  tagline: Emotionally steady, high-EQ, heartbreakingly well-adjusted.
+  chip: Secure
+  descDog: ['<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>Quiet devotion — {name} loves deeply and holds it lightly.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Calm greetings, easy independence, affection on a steady low flame. Bonded, never needy.</div>', '<div class="d-body"><span class="lbl">The real read</span>The gold standard of attachment. {name} feels safe, so they don’t have to prove it — protect it with real quality time.</div>']
+  descCat: ['<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>Quiet devotion — {name}’s love runs deep and undemanding.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>A slow blink from across the room, company without clinginess, affection offered on an even keel.</div>', <div class="d-body"><span class="lbl">The real read</span>A securely attached cat is a quiet gift. Phone-free time and a steady rhythm keep the bond topped up.</div>]
+  traits: [secure, high-EQ, steady, deeply bonded]
+  tipDog: Protect the bond with quality time — a weekly phone-free walk or grooming session is {name}’s recharge. A set “reward signal” makes them feel chosen.
+  tipCat: Protect the bond with phone-free time — even 15 min of grooming or play. A consistent “reward cue” (a special whistle) makes {name} feel favored.
+- min: 21
+  max: 29
+  theme: A
+  artwork: independent-icon
+  name: The Independent Icon
+  tagline: Strong boundaries, CEO energy, a soul entirely their own.
+  chip: Independent
+  descDog: ['<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>Love on their terms — the closeness {name} gives is chosen, not needed.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Selective affection, a clear personal bubble, a “favours are granted” air. Confident and self-contained.</div>', '<div class="d-body"><span class="lbl">The real read</span>Independence isn’t coldness. Respect the bubble, be the source of the good stuff, and {name} opts in to you.</div>']
+  descCat: ['<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>Love on their terms — {name}’s a self-possessed icon.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Appears when it suits, keeps a bubble, grants attention like a favour. Smart, aloof, unbothered.</div>', <div class="d-body"><span class="lbl">The real read</span>A cat that doesn’t need you makes the closeness it does give mean more. Private territory + a puzzle feeder earn its respect.</div>]
+  traits: [independent, strong boundaries, self-possessed, clever]
+  tipDog: Don’t force the cuddle. Give {name} a private territory and a “job”; swap the bowl for a snuffle feeder so they get the hunt they crave.
+  tipCat: Give {name} a private high or hidden territory that’s off-limits to interruption, and a puzzle feeder for the “hunt.” Let them come to you.
+- min: 30
+  max: 38
+  theme: C
+  artwork: velcro-bestie
+  name: The Velcro Bestie
+  tagline: Low on security, high on devotion — their whole world is you.
+  chip: Velcro
+  descDog: ['<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>All-in attachment — {name} has pinned their whole heart on you.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Shadowing you room to room, distress when you leave, affection turned all the way up.</div>', '<div class="d-body"><span class="lbl">The real read</span>Sweet, but it can tip into real anxiety. Build {name}’s confidence that “alone” is safe — short departures, a worn-scent shirt; if they panic or won’t eat alone, ask your vet.</div>']
+  descCat: ['<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>All-in attachment — {name}’s whole world is you.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Follows you everywhere, cries when you go, melts into every lap moment.</div>', '<div class="d-body"><span class="lbl">The real read</span>Rare and intense in a cat. Change-sensitive — keep routines fixed, add perches and Feliway, and see a vet for any litter-box or urinary change (stress cystitis).</div>']
+  traits: [velcro, deeply devoted, sensitive, your shadow]
+  tipDog: '⚠ #1 profile for separation anxiety. Do short daily departure drills (coat on, sit 5 min, take it off); leave a worn, your-scent shirt; if {name} panics, destroys, or won’t eat alone, ask your vet — an SSRI can help alongside training.'
+  tipCat: ⚠ Change-sensitive cats can develop stress cystitis (FIC — straining/blood in urine). Keep a fixed routine, add a Feliway diffuser and extra safe perches, and see a vet for any litter-box or urinary change.
+- min: 39
+  max: 48
+  theme: D
+  artwork: chaos-agent
+  name: The Chaos Agent
+  tagline: Surplus energy, demolition expert, household comedian.
+  chip: Chaos
+  descDog: ['<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>Love expressed as pure, high-octane chaos.</b></div>', '<div class="d-body"><span class="lbl">What it looks like</span>Zoomies, launched toys, the living room as a racetrack — full-send or dead-asleep, nothing in between.</div>', '<div class="d-body"><span class="lbl">The real read</span>Destruction is energy with nowhere to go. Burn brain and body: scent games, a new trick a day, hard daily exercise.</div>']
+  descCat: [<div class="d-summary"><span class="label">LOVE LANGUAGE</span><b>Love expressed as 3am parkour and knocked-over cups.</b></div>, '<div class="d-body"><span class="lbl">What it looks like</span>Curtain climbs, shelf clearances, a sprint across your face at dawn. The chaos is an invitation to play.</div>', '<div class="d-body"><span class="lbl">The real read</span>Under-stimulated, not bad. Vertical space, 20 min of wand play a day, and rotating toys turn mayhem into healthy burn.</div>']
+  traits: [high-energy, demolition expert, comedian, full-send]
+  tipDog: 'Burn brain + body: 10 min of scent/hide games ≈ 1 hr walk; teach one new trick a day; hard exercise daily. A tired {name} is a civilized {name}.'
+  tipCat: Add vertical space, 20 min of wand play a day, and rotate toys. Prey-simulation and puzzle feeders turn 3am parkour into healthy burn.
+disclaimer: '<b>Just for fun</b>: a playful read of {name}’s attachment style from 12 everyday moments.<br>For entertainment and sharing only — not a substitute for professional vet advice.'
