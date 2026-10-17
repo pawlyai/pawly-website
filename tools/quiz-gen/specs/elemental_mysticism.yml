@@ -449,7 +449,7 @@ BANDS:
   theme: C
   artwork: earth-spirit
   name: The Earth Spirit
-  tagline: Steady, warm, unshakeable — Ox, Dragon, Goat and Dog energy.
+  tagline: Steady, warm, unshakeable — Ox, Dragon and Goat energy.
   chip: Earth Spirit
   descDog:
   - '<div class="d-summary"><span class="label">THE ELEMENT</span><b>{name} is an Earth spirit: the steady centre of the household.</b></div>'

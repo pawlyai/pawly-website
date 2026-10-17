@@ -114,7 +114,8 @@ def check_no_score_leak(quiz: dict) -> Result:
                 m = SCORE_LEAK_RE.search(o["t"])
                 if m:
                     problems.append(f"{species} Q{i} option {j} leaks scoring ({m.group()!r}): {o['t']}")
-    return Result("no-score-leak", not problems, f"scanned {n} options, no scoring hints", problems)
+    summary = f"scanned {n} options, no scoring hints" if not problems else f"scanned {n} options, {len(problems)} leak(s)"
+    return Result("no-score-leak", not problems, summary, problems)
 
 
 def check_species_imagery(quiz: dict) -> Result:
