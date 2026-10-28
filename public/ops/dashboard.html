@@ -324,7 +324,8 @@ const DEFINITIONS = [
 const CHARTS={}; let CID=0;
 function bigChart(vals,{unit='',target=null,xlabels=[]}={}){
   const W=340,H=210,pl=40,pr=14,ptop=16,pb=36,iw=W-pl-pr,ih=H-ptop-pb;
-  const allv=target!=null?vals.concat([target]):vals; let mn=Math.min(...allv),mx=Math.max(...allv);
+  const far=target!=null&&target>3*Math.max(...vals,1); /* 目标远高于数据时不拉伸坐标轴,只在角落注明 */
+  const allv=(target!=null&&!far)?vals.concat([target]):vals; let mn=Math.min(...allv),mx=Math.max(...allv);
   const pad=(mx-mn||1)*0.12; mn-=pad; mx+=pad; if(mn<0&&Math.min(...vals)>=0) mn=0;
   const X=i=> pl+(vals.length===1?iw/2:i*iw/(vals.length-1));
   const Y=v=> ptop+ih-(v-mn)/(mx-mn)*ih;
@@ -340,7 +341,8 @@ function bigChart(vals,{unit='',target=null,xlabels=[]}={}){
     xlab+=`<text x="${X(i).toFixed(1)}" y="${H-20}" text-anchor="middle" font-size="9" fill="#6B7280" font-weight="700">${a}</text>`
         +(b?`<text x="${X(i).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="8.5" fill="#9CA3AF">${b}</text>`:''); });
   const dlab=pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="#FF9F43"/><text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" text-anchor="middle" font-size="9" font-weight="700" fill="#374151">${Math.round(vals[i]*10)/10}</text>`).join('');
-  let tgt=''; if(target!=null){ const ty=Y(target);
+  let tgt=''; if(far){ tgt=`<text x="${pl+iw}" y="${ptop+8}" text-anchor="end" font-size="9" fill="#6B7280">目标 ${target}${unit}(远高于图内数值,未画线)</text>`; }
+  else if(target!=null){ const ty=Y(target);
     tgt=`<line x1="${pl}" y1="${ty.toFixed(1)}" x2="${pl+iw}" y2="${ty.toFixed(1)}" stroke="#9CA3AF" stroke-width="1.3" stroke-dasharray="4 3"/>`
       +`<text x="${pl+iw}" y="${(ty-4).toFixed(1)}" text-anchor="end" font-size="9" fill="#6B7280">目标 ${target}${unit}</text>`; }
   const end=pts[pts.length-1];
@@ -400,7 +402,8 @@ const NOTE_NOSRC={
 };
 /* 取一个指标:{pending}|{s(8周,含未满周), c(已完整周), v(最近一个有值的完整周), note} */
 function M(id){ const m=API.metrics[id];
-  if(!m||m.status!=='ok') return {pending:true, note:NOTE_NOSRC[id]||'暂无数据来源'};
+  if(!m||m.status!=='ok'){ const rev=['mrr','arpu','paid_rate','nrr','grr'].includes(id)&&API.notes&&API.notes.revenue;
+    return {pending:true, note:rev||NOTE_NOSRC[id]||'暂无数据来源'}; }
   const s=m.series.map(x=>x==null?null:+x), c=s.slice(0,-1), nn=c.filter(x=>x!=null);
   return {pending:false, s, c, nn, v:nn.length?nn[nn.length-1]:null, note:m.note||''}; }
 /* 卡片用的指标对象 */
@@ -498,9 +501,9 @@ function renderProgramme(){ $('programme').innerHTML=[kpiCard(K('报名人数','
 const TRENDS=[['北极星 WAP-MI','wap_mi','',1000],['14 天留存','retention_d14','%',12],['D7 留存','retention_d7','%',22],['付费率','paid_rate','%',5],['MRR','mrr','$',null],['DAU','dau','',null],['WAU','wau','',null],['DAU/MAU 粘性','stickiness','%',20]];
 function renderTrends(){ const grid=$('trendGrid'); grid.innerHTML='';
   TRENDS.forEach(([label,id,unit,target])=>{ const m=M(id);
-    if(m.pending){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card">${pcard(label,m.note)}</div>`); return; }
+    if(m.pending){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card" style="align-self:start">${pcard(label,m.note)}</div>`); return; }
     const pts=m.s.map((v,i)=>[v,weekName(i)+(i===m.s.length-1?'*':'')+'|'+API.weeks[i].start.slice(5,10).replace('-','/')]).filter(p=>p[0]!=null);
-    if(pts.length<2){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card">${pcard(label,'有值的周数不足,画不出趋势')}</div>`); return; }
+    if(pts.length<2){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card" style="align-self:start">${pcard(label,'有值的周数不足,画不出趋势')}</div>`); return; }
     const vals=pts.map(p=>r1(p[0])), xl=pts.map(p=>p[1]), cur=m.v==null?'—':fmtN(m.v), st=target!=null&&m.v!=null?statusOf(m.v,target):'na';
     grid.insertAdjacentHTML('beforeend',`<div class="chart-card"><div class="chart-head"><span class="ct">${label}</span><span class="cv">${cur}<small> ${unit}</small>${trendChip(m.nn)}</span></div>
       ${bigChart(vals,{unit,target,xlabels:xl})}<div style="margin-top:6px">${target!=null?`<span class="pill ${PILL[st][0]}">${PILL[st][1]} · 目标 ≥ ${target}${unit}</span>`:'<span class="k-sub">观测项</span>'}</div></div>`); }); }
@@ -533,7 +536,6 @@ async function load(){ const note=$('srcNote'); note.textContent='数据读取�
     renderAll();
   }catch(e){ note.innerHTML=`数据加载失败:${String(e.message||e)} <button class="btn" id="retry" style="margin-left:8px;padding:3px 10px;border:1px solid #93C5FD;border-radius:8px;background:#fff;cursor:pointer">重试</button>`; $('retry').onclick=load; } }
 
-/* 把内容高度告诉外层页面(同源 iframe),外层据此撑开 iframe */
 (function(){ const send=()=>{ try{ parent.postMessage({opsDashHeight:document.documentElement.scrollHeight},location.origin); }catch(e){} };
   if(window.ResizeObserver) new ResizeObserver(send).observe(document.body); window.addEventListener('load',send); })();
 load();
