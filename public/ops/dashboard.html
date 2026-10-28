@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toki Tail · 指标与数据看板</title>
+<style>
+  :root{
+    --bg:#F7F8FA; --card:#fff; --ink:#111; --muted:#6B7280; --line:#E5E7EB;
+    --brand:#FF9F43; --brand-d:#AE5500; --brand-l:#FFF3E6;
+    --green:#15803D; --green-bg:#DCFCE7; --amber:#B45309; --amber-bg:#FEF3C7; --red:#B91C1C; --red-bg:#FEE2E2;
+    --blue:#2563EB; --blue-bg:#DBEAFE;
+    --radius:14px; --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 72px}
+  header.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:6px}
+  .logo{width:36px;height:36px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:20px}
+  h1{font-size:20px;font-weight:800}
+  .meta{color:var(--muted);font-size:13px}
+  .note-banner{background:var(--amber-bg);color:var(--amber);border:1px solid #FCD34D;border-radius:10px;
+       padding:10px 14px;font-size:13px;margin:14px 0 16px}
+  .note-banner b{font-weight:700}
+
+  /* controls */
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);
+       border-radius:12px;padding:10px 12px;margin-bottom:8px;box-shadow:var(--shadow);position:sticky;top:8px;z-index:5}
+  .ctl-group{display:flex;align-items:center;gap:6px}
+  .ctl-label{font-size:12px;color:var(--muted);font-weight:600}
+  .seg{display:inline-flex;background:#F1F5F9;border-radius:999px;padding:3px;gap:2px}
+  .seg button{border:0;background:transparent;font-size:12px;font-weight:600;color:var(--muted);
+       padding:5px 12px;border-radius:999px;cursor:pointer;transition:.12s}
+  .seg button.on{background:#fff;color:var(--brand-d);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .viewtabs{margin-left:auto;display:inline-flex;background:var(--brand-l);border-radius:999px;padding:3px;gap:2px}
+  .viewtabs button{border:0;background:transparent;font-size:13px;font-weight:700;color:var(--brand-d);
+       padding:6px 16px;border-radius:999px;cursor:pointer}
+  .viewtabs button.on{background:var(--brand);color:#fff}
+
+  h2{font-size:15px;font-weight:800;margin:24px 0 12px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h2 .hint{font-weight:500;font-size:12px;color:var(--muted)}
+  .subtabs{display:flex;gap:8px;margin:10px 0 4px;flex-wrap:wrap}
+  .subtabs button{border:1px solid var(--line);background:#fff;font-size:13px;font-weight:600;color:var(--muted);
+       padding:6px 14px;border-radius:999px;cursor:pointer}
+  .subtabs button.on{border-color:var(--brand);color:var(--brand-d);background:var(--brand-l)}
+
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+  .card.pending{opacity:.62;background:repeating-linear-gradient(135deg,#fff,#fff 10px,#FafafA 10px,#FafafA 20px)}
+  .badge-pending{font-size:10px;font-weight:800;color:var(--muted);background:#F1F5F9;border:1px dashed #CBD5E1;padding:1px 7px;border-radius:999px}
+  .kpi .k-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+  .kpi .k-val{font-size:26px;font-weight:800;line-height:1}
+  .kpi .k-val small{font-size:14px;font-weight:600;color:var(--muted)}
+  .kpi .k-sub{font-size:12px;color:var(--muted);margin-top:6px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:8px}
+  .ok{background:var(--green-bg);color:var(--green)} .warn{background:var(--amber-bg);color:var(--amber)} .bad{background:var(--red-bg);color:var(--red)}
+  .trend{font-size:12px;font-weight:700;margin-left:6px}
+  .up{color:var(--green)} .down{color:var(--red)}
+  .spark{display:block;margin-top:8px}
+
+  .ns{display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px}
+  .ns .big{font-size:44px;font-weight:800;line-height:1}
+  .ns .big small{font-size:18px;color:var(--muted);font-weight:600}
+  .barwrap{flex:1;min-width:220px}
+  .bar{height:12px;background:var(--line);border-radius:999px;overflow:hidden;margin-top:8px}
+  .bar i{display:block;height:100%;background:var(--brand);border-radius:999px}
+  .breakdown{display:flex;gap:16px;flex-wrap:wrap;margin-top:4px}
+  .bd{font-size:12px;color:var(--muted)} .bd b{font-size:16px;color:var(--ink);display:block}
+  .bd.pos b{color:var(--green)} .bd.neg b{color:var(--red)}
+
+  .funnel .f-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .f-name{width:180px;flex-shrink:0;font-size:13px;font-weight:600}
+  .f-bar{flex:1;height:30px;background:#F1F5F9;border-radius:8px;position:relative;overflow:hidden}
+  .f-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),#FFC078);border-radius:8px}
+  .f-bar span{position:absolute;top:0;left:10px;line-height:30px;font-size:12px;font-weight:700;color:#3b2a12}
+  .f-conv{width:150px;flex-shrink:0;font-size:12px;text-align:right}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:700;font-size:12px}
+  td.first,th.first{text-align:left}
+  .cohort td.cell{font-weight:700;border-radius:4px}
+  .mini{height:8px;background:#F1F5F9;border-radius:999px;overflow:hidden;min-width:60px;display:inline-block;vertical-align:middle}
+  .mini i{display:block;height:100%;background:var(--brand)}
+
+  /* waterfall */
+  .wf{display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:6px}
+  .wf .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+  .wf .wbar{width:80%;border-radius:5px 5px 0 0}
+  .wf .wlab{font-size:10px;color:var(--muted);margin-top:4px;text-align:center;line-height:1.2}
+  .wf .wval{font-size:11px;font-weight:700;margin-bottom:3px}
+
+  .risk{border-left:4px solid var(--line);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px}
+  .risk.crit{border-left-color:var(--red)} .risk.off{border-left-color:var(--amber)} .risk.atr{border-left-color:#EAB308}
+  .risk h3{font-size:14px;font-weight:800;margin-bottom:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .sev{font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px}
+  .sev.crit{background:var(--red-bg);color:var(--red)} .sev.off{background:var(--amber-bg);color:var(--amber)} .sev.atr{background:#FEF9C3;color:#854D0E}
+  .risk .num{font-size:12px;color:var(--muted);margin-bottom:8px}
+  .worse{color:var(--red);font-weight:700}
+  .risk .fix{font-size:13px} .risk .fix b{color:var(--brand-d)}
+  .risk ul{margin:6px 0 0 18px} .risk li{margin-bottom:3px;font-size:13px}
+  .empty{color:var(--green);font-weight:700;background:var(--green-bg);padding:12px 16px;border-radius:10px}
+  .note{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+  footer{margin-top:32px;color:var(--muted);font-size:12px;line-height:1.7;border-top:1px solid var(--line);padding-top:16px}
+  /* trends */
+  .gran{display:inline-flex;background:#F1F5F9;border-radius:999px;padding:3px;gap:2px;margin:2px 0 12px}
+  .gran button{border:0;background:transparent;font-size:13px;font-weight:600;color:var(--muted);padding:6px 18px;border-radius:999px;cursor:pointer}
+  .gran button.on{background:#fff;color:var(--brand-d);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .chart-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+  .chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
+  .chart-head .ct{font-size:14px;font-weight:800}
+  .chart-head .cv{font-size:22px;font-weight:800} .chart-head .cv small{font-size:12px;color:var(--muted);font-weight:600}
+  .chart-wrap{position:relative}
+  .chart-wrap svg{display:block;width:100%;height:auto}
+  .hoverlay{cursor:crosshair}
+  .tip{position:absolute;pointer-events:none;background:#111;color:#fff;font-size:11px;font-weight:700;
+       padding:4px 8px;border-radius:6px;white-space:nowrap;opacity:0;transform:translate(-50%,-150%);transition:opacity .08s;z-index:3}
+  /* defs */
+  .defs-tbl{width:100%;border-collapse:collapse;font-size:13px}
+  .defs-tbl th,.defs-tbl td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  .defs-tbl th{color:var(--muted);font-weight:700;font-size:12px;background:#FAFBFC}
+  .defs-tbl td.m{font-weight:700;white-space:nowrap}
+  .defs-tbl code{background:#F1F5F9;padding:1px 5px;border-radius:4px;font-size:12px}
+  .defs-group td{font-weight:800;font-size:13px;color:var(--brand-d);background:var(--brand-l)}
+  .hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo">🐾</div>
+    <div style="flex:1;min-width:200px">
+      <h1>Toki Tail · 指标与数据看板</h1>
+      <div class="meta" id="meta"></div>
+    </div>
+  </header>
+
+  <div class="note-banner" id="srcNote" style="background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE">数据读取中…</div>
+
+  <!-- 全局控件 -->
+  <div class="controls">
+    <div class="ctl-group"><span class="ctl-label">时间</span>
+      <div class="seg" id="rangeSeg">
+        <button data-r="4">近4周</button><button data-r="8" class="on">近8周</button>
+      </div>
+    </div>
+    <div class="viewtabs" id="viewTabs">
+      <button data-v="exec" class="on">Exec 概览</button><button data-v="ops">Ops 运营</button><button data-v="trends">趋势</button><button data-v="defs">定义</button>
+    </div>
+  </div>
+  
+  <!-- ============ EXEC OVERVIEW ============ -->
+  <section id="view-exec">
+    <h2>⭐ 北极星 <span class="hint">周活跃且完成 ≥1 次有效健康互动的宠物数 (WAP-MI) · 聊天按用户名下宠物归属</span></h2>
+    <div class="card"><div class="ns" id="northstar"></div></div>
+
+    <h2>💰 单位经济 <span class="hint">融资 Data Room 口径</span></h2>
+    <div class="grid g4" id="econExec"></div>
+    <h2 style="margin-top:16px">MRR 变动瀑布 <span class="hint">new / expansion / contraction / churn</span></h2>
+    <div class="card"><div class="wf" id="mrrwf"></div></div>
+
+    <h2 style="margin-top:16px">📈 留存 <span class="hint">早期留存最关键 · D1 / D7 / D14 / D30 · 14 天为门槛</span></h2>
+    <div class="grid g4" id="retExec"></div>
+    <h2>📣 渠道概览 <span class="hint">CAC / 渠道 LTV</span></h2>
+    <div class="card" id="chExec"></div>
+
+    <h2>🛡️ 产品安全 <span class="hint">硬门槛,越线即严重</span></h2>
+    <div class="grid g4" id="safetyExec"></div>
+  </section>
+
+  <!-- ============ OPS ============ -->
+  <section id="view-ops" class="hide">
+    <div class="subtabs" id="opsTabs">
+      <button data-t="growth" class="on">增长</button>
+      <button data-t="money">变现</button>
+      <button data-t="product">产品 / AI</button>
+    </div>
+
+    <!-- 增长 -->
+    <div id="ops-growth">
+      <h2>🔻 激活漏斗 <span class="hint">安装 → 价值时刻(首次健康问答),9 步</span></h2>
+      <div class="card funnel" id="funnel"></div>
+      <h2>📈 留存 Cohort <span class="hint">按注册周;活跃=开 App + ≥1 有效互动</span></h2>
+      <div class="card" id="cohort" style="overflow-x:auto"></div>
+      <h2>📣 渠道 / 营销归因 <span class="hint">campaign → 注册 → 激活 → 留存 → 付费 · 下钻 start_param/content_id/vet_id</span></h2>
+      <div class="card" id="channels" style="overflow-x:auto"></div>
+      <h2>🔁 参与深度 Engagement</h2>
+      <div class="grid g4" id="engage"></div>
+      <h2 style="margin-top:14px">功能采用率 Feature Adoption <span class="hint">WAU 中用过该功能的比例</span></h2>
+      <div class="card" id="adoption"></div>
+      <h2>🌱 传播 Referral <span class="hint">测试是主获客钩子</span></h2>
+      <div class="grid g4" id="referral"></div>
+
+      <h2>🔔 通知 / 触达 <span class="hint">授权 → 送达 → 打开 → 行动 → 回流 · 分 Reminder / Proactive</span></h2>
+      <div class="note-banner" style="margin:0 0 12px"><b>⚠ 优先埋点</b> — 目前没有推送发送/送达事件,送达率与打开率分母缺失。</div>
+      <div class="grid g4" id="notifFunnel"></div>
+      <h2 style="margin-top:14px">按类型 <span class="hint">Reminder(用户自设)/ Proactive(系统主动)/ 退订</span></h2>
+      <div class="grid g4" id="notifType"></div>
+    </div>
+
+    <!-- 变现 -->
+    <div id="ops-money" class="hide">
+      <h2>💰 单位经济(全) <span class="hint">趋势 + 目标</span></h2>
+      <div class="grid g4" id="econAll"></div>
+      <h2>🔄 订阅结构</h2>
+      <div class="grid g3" id="subStruct"></div>
+    </div>
+
+    <!-- 产品 / AI -->
+    <div id="ops-product" class="hide">
+      <h2>🛡️ 产品安全(全) <span class="hint">红旗/答案质量为硬门槛</span></h2>
+      <div class="grid g4" id="safetyAll"></div>
+      <h2>🏥 Programme 专项 <span class="hint">减肥 / 新手 / 自查</span></h2>
+      <div class="grid g4" id="programme"></div>
+      <div class="note">Agent/Chat 质量、AI 成本与模型、情感黏性钩子 = 后续增量(P2),事件到位再补。</div>
+    </div>
+  </section>
+
+  <!-- ============ 趋势 ============ -->
+  <section id="view-trends" class="hide">
+    <h2>📉 核心指标趋势 <span class="hint">折线 + 目标线(虚线)· 悬停看每点数值</span></h2>
+    <div class="grid g2" id="trendGrid"></div>
+    <div class="note">每点标出具体数值;横轴为「周号 / 该周周一日期」(ISO 周,新加坡时间),带 * 的最后一周未满。没有点的周=该周无法计算(如 cohort 未到龄)。虚线=目标。</div>
+  </section>
+
+  <!-- ============ 定义 ============ -->
+  <section id="view-defs" class="hide">
+    <h2>📖 指标定义 <span class="hint">口径 / 公式 / 目标 / 来源事件 · 对齐《数据分析框架》</span></h2>
+    <div class="card" style="overflow-x:auto"><table class="defs-tbl" id="defsTbl"></table></div>
+  </section>
+
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let RANGE=8;
+
+function slice(arr){ return arr ? arr.slice(-RANGE) : arr; }
+function sparkline(arr,{color='#FF9F43',w=110,h=30,fill=true}={}){
+  if(!arr||!arr.length) return '';
+  const a=slice(arr), mn=Math.min(...a), mx=Math.max(...a), rng=(mx-mn)||1, pad=3;
+  const pts=a.map((v,i)=>{ const x=pad+i*(w-2*pad)/(a.length-1); const y=h-pad-(v-mn)/rng*(h-2*pad); return [x,y]; });
+  const line=pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const area=`${pad},${h-pad} `+line+` ${(w-pad)},${h-pad}`;
+  return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    ${fill?`<polygon points="${area}" fill="${color}22"/>`:''}
+    <polyline points="${line}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="2.6" fill="${color}"/></svg>`;
+}
+function wowPct(arr){ const a=slice(arr); if(!a||a.length<2) return null; const p=a[a.length-2], c=a[a.length-1]; if(!p) return null; return Math.round((c-p)/p*1000)/10; }
+function trendChip(arr,lowerBetter=false){ const w=wowPct(arr); if(w==null) return '';
+  const good = lowerBetter? w<=0 : w>=0; const cls=good?'up':'down'; const ar=w>=0?'▲':'▼';
+  return `<span class="trend ${cls}">${ar}${Math.abs(w)}% WoW</span>`; }
+
+function statusOf(v,t,{lowerBetter=false,gate=false}={}){
+  if(t==null||v==null||isNaN(v)) return 'na';
+  const good = lowerBetter ? v<=t : v>=t;
+  if(good) return 'ok';
+  if(gate) return 'crit';
+  const ratio = lowerBetter ? t/v : v/t;
+  return ratio>=0.9 ? 'atr' : 'off';
+}
+
+const PILL={ok:['ok','达标'],atr:['warn','接近'],off:['bad','未达'],crit:['bad','⚠ 严重'],na:['','—']};
+function heat(v){ if(v==null) return '#F8FAFC'; // cohort 单元热力
+  const t=Math.max(0,Math.min(1,v/50)); const r=255,g=Math.round(243-t*120),b=Math.round(230-t*180); return `rgb(${r},${g},${b})`; }
+
+
+const DEFINITIONS = [
+  ['group','北极星 & 激活'],
+  ['WAP-MI(北极星)','周活跃且完成≥1次有效健康互动的宠物数','distinct pet | 本周 app_open 且 ≥1 有效互动','≥1000','app_open + (chat/checkin/记录)'],
+  ['有效健康互动','一次健康问答/评估、一次打卡、或一条记录写入','—','—','chat_message_sent / checkin_completed / record_written'],
+  ['价值时刻(Aha)','注册用户完成首次「健康问答」的比例(任意涉及宠物健康的问答即算,不要求结构化评估)','first_health_qa / account_created','≥60%','first_health_qa(首条健康相关问答)'],
+  ['time-to-value','注册 → 首次评估的时长','ts(assessment)−ts(register)','越短越好','—'],
+  ['group','留存'],
+  ['留存 Dn','按注册周 cohort,第 n 天回访且≥1有效互动','活跃(注册周,Dn) / 注册周规模','14d ≥12%','app_open + 有效互动'],
+  ['活跃','当日/当周开 App 且 ≥1 有效互动(纯开 App 不算)','—','—','—'],
+  ['group','单位经济(融资口径)'],
+  ['付费率','付费用户 / 活跃用户','subscription_activated / active','≥5%','subscription_activated'],
+  ['Trial→Paid','Trial 用户转付费比例','paid / trial_started','≥55%','trial_started→subscription_activated'],
+  ['ARPU','每用户月均收入','MRR / 活跃用户','观测','—'],
+  ['MRR','月度经常性收入','Σ 订阅月费','观测','subscription_*'],
+  ['LTV','用户生命周期价值','ARPU × 平均留存月数(粗算)','观测','—'],
+  ['CAC','获客成本','渠道花费 / 注册数','观测','spend / account_created'],
+  ['LTV/CAC','单位经济健康度','LTV / CAC','≥3x','—'],
+  ['回本周期 Payback','收回 CAC 所需月数','CAC / ARPU','≤12mo','—'],
+  ['NRR / GRR','净 / 毛收入留存','(期初+扩展−缩减−流失)/期初;GRR 不含扩展','NRR≥100% / GRR≥90%','—'],
+  ['多宠 attach','有 ≥2 只宠物的付费账户比例','multi-pet paid / paid','观测','—'],
+  ['group','参与 & 传播'],
+  ['DAU/WAU/MAU','日 / 周 / 月活跃用户数','distinct active user','观测','app_open + 有效互动'],
+  ['DAU/MAU 粘性','日活占月活比','DAU / MAU','≥20%','—'],
+  ['功能采用率','WAU 中用过该功能的比例','用过功能的 WAU / WAU','观测','feature_used'],
+  ['分享率','测试完成 → 分享的比例','content_shared / quiz_completed','≥20%','quiz_completed / content_shared'],
+  ['K-factor','病毒系数','邀请数 × 被邀转化率','≥0.3','—'],
+  ['group','通知 / 触达'],
+  ['通知授权率','获得 push 权限的比例','granted / requested','观测','notif_permission_*'],
+  ['送达率 ⚠','推送成功送达的比例(⚠ 目前无数据,第一优先埋)','delivered / sent','观测','notif_sent / notif_delivered'],
+  ['打开率 CTR','送达后被打开/点击的比例','opened / delivered','观测','notif_opened'],
+  ['行动率','打开后完成目标动作的比例','acted / opened','观测','notif_acted'],
+  ['通知 → 回流','通知拉回并产生 ≥1 有效互动','回流有效互动 / delivered','观测','notif_opened → 有效互动'],
+  ['Reminder 完成率','用户自设提醒被执行的比例','reminder_done / reminder_fired','观测','reminder_fired / reminder_done'],
+  ['Proactive 回应率','主动推送被回应的比例','proactive_responded / proactive_sent','≥25%','proactive_*'],
+  ['退订 / 关通知率','关闭通知或退订的比例(越低越好)','disabled / active','越低越好','notif_disabled'],
+  ['group','渠道归因'],
+  ['渠道 CAC','单渠道获客成本','渠道花费 / 渠道注册','<SGD5','—'],
+  ['渠道 LTV','单渠道 LTV 粗算','30d留存 × ARPU × 12','观测','—'],
+  ['下钻 join key','归因关联键','start_param(campaign×variant) / content_id(素材) / vet_id(兽医分成)','—','marketing_campaign 表'],
+  ['group','产品安全(硬门槛 🔒)'],
+  ['红旗升级执行率','红旗会话中真正引导就医的比例','escalated / redflag_triggered','≥99% 🔒','redflag_triggered / escalated'],
+  ['答案准确率 / 敏感度','Regression Test 通过率','评测集通过率','准确≥90% · 敏感≥99% 🔒','regression harness'],
+  ['proactive 回应率','主动推送被回应比例','proactive_responded / proactive_sent','≥25%','proactive_*'],
+  ['记忆调用率','相关会话中引用长期记忆的比例','memory_recall_used / 相关会话','≥80%','memory_recall_used'],
+  ['group','Programme(Phase 1.5,待采集)'],
+  ['报名 / 完成 / 依从 / target_met','programme 报名率、完成率、打卡依从、达标率','各自比例','待定','programme_*(待采集)'],
+];
+
+
+const CHARTS={}; let CID=0;
+function bigChart(vals,{unit='',target=null,xlabels=[]}={}){
+  const W=340,H=210,pl=40,pr=14,ptop=16,pb=36,iw=W-pl-pr,ih=H-ptop-pb;
+  const far=target!=null&&target>3*Math.max(...vals,1); /* 目标远高于数据时不拉伸坐标轴,只在角落注明 */
+  const allv=(target!=null&&!far)?vals.concat([target]):vals; let mn=Math.min(...allv),mx=Math.max(...allv);
+  const pad=(mx-mn||1)*0.12; mn-=pad; mx+=pad; if(mn<0&&Math.min(...vals)>=0) mn=0;
+  const X=i=> pl+(vals.length===1?iw/2:i*iw/(vals.length-1));
+  const Y=v=> ptop+ih-(v-mn)/(mx-mn)*ih;
+  const cid='c'+(++CID), pts=vals.map((v,i)=>[X(i),Y(v)]);
+  const line=pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const area=`${pl},${ptop+ih} `+line+` ${pl+iw},${ptop+ih}`;
+  let grid=''; const ticks=4;
+  for(let t=0;t<=ticks;t++){ const gy=ptop+ih-t/ticks*ih, gv=mn+(mx-mn)*t/ticks;
+    grid+=`<line x1="${pl}" y1="${gy.toFixed(1)}" x2="${pl+iw}" y2="${gy.toFixed(1)}" stroke="#EEF1F5" stroke-width="1"/>`
+        +`<text x="${pl-6}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#9CA3AF">${Math.round(gv*10)/10}</text>`; }
+  /* 每个点标出具体数值(点上方),横轴每点标出「周号 / 周一日期」 */
+  let xlab=''; xlabels.forEach((l,i)=>{ if(!l) return; const [a,b]=String(l).split('|');
+    xlab+=`<text x="${X(i).toFixed(1)}" y="${H-20}" text-anchor="middle" font-size="9" fill="#6B7280" font-weight="700">${a}</text>`
+        +(b?`<text x="${X(i).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="8.5" fill="#9CA3AF">${b}</text>`:''); });
+  const dlab=pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="#FF9F43"/><text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" text-anchor="middle" font-size="9" font-weight="700" fill="#374151">${Math.round(vals[i]*10)/10}</text>`).join('');
+  let tgt=''; if(far){ tgt=`<text x="${pl+iw}" y="${ptop+8}" text-anchor="end" font-size="9" fill="#6B7280">目标 ${target}${unit}(远高于图内数值,未画线)</text>`; }
+  else if(target!=null){ const ty=Y(target);
+    tgt=`<line x1="${pl}" y1="${ty.toFixed(1)}" x2="${pl+iw}" y2="${ty.toFixed(1)}" stroke="#9CA3AF" stroke-width="1.3" stroke-dasharray="4 3"/>`
+      +`<text x="${pl+iw}" y="${(ty-4).toFixed(1)}" text-anchor="end" font-size="9" fill="#6B7280">目标 ${target}${unit}</text>`; }
+  const end=pts[pts.length-1];
+  CHARTS[cid]={pts,vals,xlabels,unit,W,H};
+  return `<div class="chart-wrap"><div class="tip" id="tip-${cid}"></div>
+    <svg viewBox="0 0 ${W} ${H}">
+      ${grid}${tgt}
+      <polygon points="${area}" fill="#FF9F4322"/>
+      <polyline points="${line}" fill="none" stroke="#FF9F43" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      ${xlab}${dlab}
+      <line id="cx-${cid}" y1="${ptop}" y2="${ptop+ih}" stroke="#FF9F43" stroke-width="1" opacity="0"/>
+      <circle id="cd-${cid}" r="3.5" fill="#FF9F43" opacity="0"/>
+      <circle cx="${end[0].toFixed(1)}" cy="${end[1].toFixed(1)}" r="3.2" fill="#FF9F43"/>
+      <rect x="${pl}" y="${ptop}" width="${iw}" height="${ih}" fill="transparent" class="hoverlay" data-cid="${cid}"/>
+    </svg></div>`;
+}
+
+// hover crosshair + tooltip
+document.addEventListener('mousemove',e=>{ const ov=e.target.closest&&e.target.closest('.hoverlay'); if(!ov) return;
+  const cid=ov.dataset.cid,C=CHARTS[cid]; if(!C) return; const svg=ov.ownerSVGElement,r=svg.getBoundingClientRect();
+  const vx=(e.clientX-r.left)/r.width*C.W; let idx=0,best=1e9;
+  C.pts.forEach((p,i)=>{ const d=Math.abs(p[0]-vx); if(d<best){best=d;idx=i;} });
+  const p=C.pts[idx],cx=$('cx-'+cid),cd=$('cd-'+cid),tip=$('tip-'+cid);
+  cx.setAttribute('x1',p[0]);cx.setAttribute('x2',p[0]);cx.setAttribute('opacity','0.45');
+  cd.setAttribute('cx',p[0]);cd.setAttribute('cy',p[1]);cd.setAttribute('opacity','1');
+  tip.textContent=`${C.vals[idx]}${C.unit}`; tip.style.left=(p[0]/C.W*r.width)+'px'; tip.style.top=(p[1]/C.H*r.height)+'px'; tip.style.opacity='1';
+});
+document.addEventListener('mouseout',e=>{ const ov=e.target.closest&&e.target.closest('.hoverlay'); if(!ov) return;
+  const cid=ov.dataset.cid,cx=$('cx-'+cid),cd=$('cd-'+cid),tip=$('tip-'+cid);
+  if(cx)cx.setAttribute('opacity','0'); if(cd)cd.setAttribute('opacity','0'); if(tip)tip.style.opacity='0'; });
+
+
+function renderDefs(){ const rows=DEFINITIONS.map(d=> d[0]==='group'
+    ? `<tr class="defs-group"><td colspan="5">${d[1]}</td></tr>`
+    : `<tr><td class="m">${d[0]}</td><td>${d[1]}</td><td><code>${d[2]}</code></td><td>${d[3]}</td><td style="color:var(--muted);font-size:12px">${d[4]}</td></tr>`
+  ).join('');
+  $('defsTbl').innerHTML=`<tr><th>指标</th><th>定义</th><th>公式 / 口径</th><th>目标</th><th>来源事件</th></tr>${rows}`;
+}
+
+
+/* ================== 数据层:真实数据来自 /v1/ops/dashboard ================== */
+const TOKEN_KEY='tkg:ops:token';
+const API_BASE=(()=>{ try{ if(window.parent&&window.parent!==window&&window.parent.OPS_API_BASE) return window.parent.OPS_API_BASE; }catch(e){} return window.OPS_API_BASE||'/api/analytics/v1/ops'; })();
+let API=null;   // 接口原始返回
+let VIEW='exec';
+const r1=v=>v==null?null:Math.round(v*10)/10;
+const fmtN=v=>v==null?'—':(Math.abs(v)>=1000?Math.round(v).toLocaleString():String(r1(v)));
+const NOTE_NOSRC={
+  cac:'无投放花费数据(渠道花费未入库)', ltv_cac:'依赖 CAC,暂无花费数据', ltv:'依赖留存与付费,样本不足,暂不估算', payback:'依赖 CAC,暂无花费数据',
+  trial_to_paid:'线上暂无 trial 事件', multi_pet_attach:'需要付费账户与宠物数关联,暂未接入', churn_reason:'退订原因暂未采集',
+  referral_k_factor:'邀请链路暂无埋点', share_rate:'content_shared / quiz_completed 暂无埋点', funnel_consent:'暂无「同意条款」埋点',
+  funnel_assessment:'暂无 first_health_qa / assessment_delivered 埋点', funnel_trial:'线上暂无 trial 事件', notif_sent:'无推送发送事件', notif_delivered:'无推送送达事件',
+  proactive_responded:'proactive_responded 暂无埋点', reminder_done:'reminder_fired / reminder_done 暂无埋点', red_flag_escalation:'redflag_triggered / escalated 暂无埋点',
+  answer_accuracy:'Regression harness 结果未入库', memory_recall:'memory_recall_used 暂无埋点', channel_spend:'渠道花费未入库',
+  programme_completed:'programme_completed 暂无数据', programme_task:'programme_task_completed 暂无数据', mrr:'暂无 Apple 付费订阅', arpu:'暂无 Apple 付费订阅',
+  paid_rate:'暂无 Apple 付费订阅', nrr:'暂无 Apple 付费订阅', grr:'暂无 Apple 付费订阅'
+};
+/* 取一个指标:{pending}|{s(8周,含未满周), c(已完整周), v(最近一个有值的完整周), note} */
+function M(id){ const m=API.metrics[id];
+  if(!m||m.status!=='ok'){ const rev=['mrr','arpu','paid_rate','nrr','grr'].includes(id)&&API.notes&&API.notes.revenue;
+    return {pending:true, note:rev||NOTE_NOSRC[id]||'暂无数据来源'}; }
+  const s=m.series.map(x=>x==null?null:+x), c=s.slice(0,-1), nn=c.filter(x=>x!=null);
+  return {pending:false, s, c, nn, v:nn.length?nn[nn.length-1]:null, note:m.note||''}; }
+/* 卡片用的指标对象 */
+function K(label,id,o={}){ const m=M(id);
+  if(m.pending) return {label, pending:true, note:o.note||m.note, gate:o.gate, t:o.t};
+  return {label, v:r1(m.v), unit:o.unit||'', t:o.t??null, lowerBetter:o.lowerBetter, gate:o.gate, trend:m.nn, note:o.note||m.note}; }
+
+function pcard(label,note){ return `<div class="card pending kpi"><div class="k-label"><span>${label}</span><span class="badge-pending">待接入</span></div>
+  <div class="k-val" style="color:var(--muted)">—</div><div class="k-sub">${note||''}</div></div>`; }
+function kpiCard(m){ if(m.pending) return pcard(m.label+(m.gate?' 🔒':''), m.note);
+  const st=statusOf(m.v,m.t,{lowerBetter:m.lowerBetter,gate:m.gate});
+  return `<div class="card kpi"><div class="k-label"><span>${m.label}${m.gate?' 🔒':''}</span></div>
+    <div class="k-val">${fmtN(m.v)}<small> ${m.unit||''}</small>${trendChip(m.trend,m.lowerBetter)}</div>
+    ${sparkline(m.trend&&m.trend.length>1?m.trend:null,{})}
+    <div class="k-sub">${m.t!=null?`目标 ${m.lowerBetter?'≤':'≥'} ${m.t}${m.unit||''}${m.gate?' · 硬门槛':''}`:'观测项'}${m.note?` · <span title="${m.note}">ⓘ</span>`:''}</div>
+    ${m.t!=null?`<span class="pill ${PILL[st][0]}">${PILL[st][1]}</span>`:''}</div>`; }
+
+/* ================== 各域渲染 ================== */
+function weekName(i){ return API.weeks[i].label.replace(/^\d+-/,''); }
+function renderNorthStar(){ const m=M('wap_mi'), T=1000;
+  if(m.pending){ $('northstar').innerHTML=`<div class="k-label">WAP-MI</div><div class="big" style="color:var(--muted)">待接入</div>`; return; }
+  const val=m.v==null?0:m.v, pct=Math.min(100,Math.round(val/T*100)), st=statusOf(val,T), cur=m.s[m.s.length-1];
+  $('northstar').innerHTML=`
+    <div><div class="k-label">WAP-MI · 周活跃有效互动宠物数 · ${weekName(m.c.length-1)}(上一完整周)</div>
+      <div class="big">${fmtN(val)} <small>/ ${T.toLocaleString()} 目标</small>${trendChip(m.nn)}</div>
+      <span class="pill ${PILL[st][0]}">${PILL[st][1]} · 完成 ${pct}%</span>
+      <div class="breakdown"><div class="bd"><b>${fmtN(cur)}</b>本周(未满)</div></div>
+      <div class="note" style="margin-top:8px;max-width:520px">${m.note}</div></div>
+    <div class="barwrap"><div class="k-label">周趋势 & 距目标</div>${sparkline(m.nn.length>1?m.nn:null,{w:240,h:44})}
+      <div class="bar"><i style="width:${pct}%"></i></div></div>`; }
+function renderEcon(target){
+  const E={ ltvcac:K('LTV/CAC','ltv_cac',{unit:'x',t:3}), cac:K('CAC','cac',{unit:'$'}), ltv:K('LTV','ltv',{unit:'$'}),
+    mrr:K('MRR','mrr',{unit:'$'}), paidRate:K('付费率','paid_rate',{unit:'%',t:5}), payback:K('回本周期','payback',{unit:'mo',t:12,lowerBetter:true}),
+    nrr:K('NRR','nrr',{unit:'%',t:100}), arpu:K('ARPU','arpu',{unit:'$/WAU'}) };
+  const keys=target==='exec'?['ltvcac','cac','ltv','mrr','paidRate','payback','nrr','arpu']:Object.keys(E);
+  $(target==='exec'?'econExec':'econAll').innerHTML=keys.map(k=>kpiCard(E[k])).join(''); }
+function renderMRR(){ const w=API.mrr_waterfall;
+  if(!w||w.status!=='ok'){ $('mrrwf').innerHTML=pcard('MRR 变动瀑布','暂无 Apple 付费订阅'); return; }
+  const steps=[['期初',w.start,'#94A3B8'],['新增',w.new,'#15803D'],['流失',w.churn,'#B91C1C'],['期末',w.end,'#FF9F43']];
+  const mx=Math.max(w.start,w.end,w.new,Math.abs(w.churn),0.01)*1.15;
+  $('mrrwf').innerHTML=steps.map(([lab,v,c])=>{ const h=Math.abs(v)/mx*100, abs=(lab==='期初'||lab==='期末');
+    return `<div class="col"><div class="wval" style="color:${c}">${abs?'':(v>=0?'+':'')}${r1(v)}</div><div class="wbar" style="height:${h}%;background:${c}"></div><div class="wlab">${lab}<br>${w.unit}</div></div>`; }).join('')
+    +`<div class="note" style="flex-basis:100%">${w.note||''}</div>`; }
+function renderRetExec(){ const T={1:45,7:22,14:12,30:8}, L={1:'D1 · 次日',7:'D7 · 7 天',14:'D14 · 门槛',30:'D30 · 长期'};
+  const rows=API.cohorts.filter(r=>r.size>0).slice(-RANGE);
+  /* 把所有已到龄的注册周合并起来算(个位数用户的单个 cohort 会让百分比乱跳) */
+  const pooled=n=>{ let got=0,den=0; rows.forEach(r=>{ const v=r['d'+n]; if(v!=null){ got+=Math.round(v*r.size/100); den+=r.size; } }); return {got,den,pct:den?got*100/den:null}; };
+  $('retExec').innerHTML=[1,7,14,30].map(n=>{ const p=pooled(n), m=M('retention_d'+n);
+    if(p.pct==null) return pcard(L[n], '没有到龄的注册周 cohort');
+    const st=statusOf(p.pct,T[n]);
+    return `<div class="card kpi"><div class="k-label"><span>${L[n]}</span>${n===14?'🔒门槛':''}</div>
+      <div class="k-val">${fmtN(p.pct)}<small> %</small></div>${sparkline(m.nn.length>1?m.nn:null,{})}
+      <div class="k-sub">${p.got} / ${p.den} 人 · 近 ${RANGE} 周已到龄 cohort 合并 · 目标 ≥ ${T[n]}%</div><span class="pill ${PILL[st][0]}">${PILL[st][1]}</span></div>`; }).join('')
+    +`<div class="note" style="grid-column:1/-1">按注册周 cohort:第 N 天有 ≥1 次有效互动(问答/打卡)的占比。人数很少,所以把已到龄的注册周合并计算,并标出分子/分母;每周的明细见 Ops → 留存 Cohort。</div>`; }
+function renderChExec(){ $('chExec').innerHTML=pcard('渠道 CAC / LTV','渠道花费未入库;营销链接的 utm 归因见「增长运营」其它环节'); }
+function renderChannels(){ $('channels').innerHTML=pcard('渠道 / 营销归因','没有花费数据,无法算 CAC / LTV/CAC;utm_source / utm_campaign 在线上事件里尚未出现'); }
+function safetyList(all){ const L=[K('红旗升级执行率','red_flag_escalation',{unit:'%',t:99,gate:true}), K('答案准确率','answer_accuracy',{unit:'%',t:90}),
+    K('答案敏感度','answer_accuracy',{unit:'%',t:99,gate:true}), K('记忆调用率','memory_recall',{unit:'%',t:80})];
+  if(all) L.push(K('红旗展示次数','red_flag',{unit:'次',note:'red_flag_shown 事件次数(仅计数,不是升级执行率)'})); return L; }
+function renderSafety(target){ $(target==='exec'?'safetyExec':'safetyAll').innerHTML=safetyList(target!=='exec').map(kpiCard).join(''); }
+
+const FUNNEL=[['open','打开 App',null],['register','注册(新用户登录)',null],['consent','同意条款',95],['profile','建档完成',80],['firstchat','首次聊天',70],
+  ['assessment','价值时刻 · 首次健康问答',60],['habit','形成习惯(打卡≥3)',55],['trial','开启 Trial',null],['paid','付费',50]];
+function renderFunnel(){ const steps=FUNNEL.map(([id,label,t])=>({id,label,t,m:M('funnel_'+id)}));
+  const base=(steps[0].m.v)||0; let html='', prev=null;
+  steps.forEach((s,i)=>{ if(s.m.pending){ html+=`<div class="f-row"><div class="f-name">${s.label}</div><div class="f-bar"><i style="width:0"></i><span style="color:var(--muted)">待接入</span></div><div class="f-conv"><span class="muted" style="color:var(--muted)">${s.m.note}</span></div></div>`; return; }
+    const v=s.m.v||0, w=base?Math.min(100,Math.round(v/base*100)):0; let conv='';
+    if(prev&&prev.v>0){ const c=Math.round(v/prev.v*100), st=statusOf(c,s.t); conv=`${c}%↓${s.t!=null?` <span class="pill ${PILL[st][0]}" style="margin:0">目标${s.t}%·${PILL[st][1]}</span>`:''}`; }
+    html+=`<div class="f-row"><div class="f-name">${s.label}</div><div class="f-bar"><i style="width:${w}%"></i><span>${fmtN(v)}</span></div><div class="f-conv">${conv}</div></div>`;
+    prev={v}; });
+  $('funnel').innerHTML=html+`<div class="note">数值为 ${weekName(API.weeks.length-2)}(上一完整周)各步的去重用户数,不是严格同批 cohort 漏斗,转化率仅供参考;「待接入」的步骤没有埋点。</div>`; }
+function renderCohort(){ const rows=API.cohorts.filter(r=>r.size>0).slice(-RANGE);
+  const cell=v=>`<td class="cell" style="background:${heat(v)}">${v==null?'<span style="color:#CBD5E1">·</span>':r1(v)+'%'}</td>`;
+  $('cohort').innerHTML=rows.length?`<table class="cohort"><tr><th class="first">注册周</th><th>规模</th><th>D1</th><th>D7</th><th>D14</th><th>D30</th></tr>
+    ${rows.map(r=>`<tr><td class="first">${r.week.replace(/^\d+-/,'')}</td><td style="color:var(--muted)">${r.size}</td>${cell(r.d1)}${cell(r.d7)}${cell(r.d14)}${cell(r.d30)}</tr>`).join('')}</table>
+    <div class="note">按注册周展开;空格=尚未到龄。活跃=第 N 天有 ≥1 次有效互动(问答/打卡)。cohort 只有个位数用户,单个人就会让百分比跳变。14 天为 Phase 1 关键门槛(目标 12%)。</div>`:pcard('留存 Cohort','暂无注册周数据'); }
+function renderEngage(){ $('engage').innerHTML=[K('DAU','dau',{note:'一周内每日有效用户的平均值'}),K('WAU','wau'),K('MAU','mau'),K('DAU/MAU 粘性','stickiness',{unit:'%',t:20}),K('App 打开次数','sessions'),K('打卡次数','checkins')].map(kpiCard).join(''); }
+function renderAdoption(){ const F=[['拍照分析','feature_photo_analysis'],['快捷入口','feature_shortcut'],['Programme 报名','feature_programme'],['能不能吃(未收录)','feature_can_it_eat'],['月度报告','feature_monthly_report']];
+  $('adoption').innerHTML=F.map(([name,id])=>{ const m=M(id), pend=m.pending, v=pend?0:(m.v||0);
+    return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:9px"><div style="width:130px;font-size:13px;font-weight:600">${name}${pend?' <span class="badge-pending">待接入</span>':''}</div>
+      <div class="f-bar" style="height:22px"><i style="width:${pend?0:Math.min(100,v)}%;background:${pend?'#E5E7EB':'linear-gradient(90deg,var(--brand),#FFC078)'}"></i><span>${pend?'—':r1(v)+'%'}</span></div></div>`; }).join('')
+    +`<div class="note">占 ${weekName(API.weeks.length-2)} WAU 的比例;WAU 只有个位数到十几人。</div>`; }
+function renderNotif(){
+  $('notifFunnel').innerHTML=[ kpiCard(K('① 通知授权率','push_grant_rate',{unit:'%',note:'push 权限授予 / 询问'})), pcard('② 送达率 ⚠',NOTE_NOSRC.notif_delivered),
+    kpiCard(K('③ 通知打开次数','notif_opened',{unit:'人',note:'notification_opened 去重用户;无发送事件,算不出 CTR'})), pcard('④ 行动率','打开后完成目标动作,暂无埋点'), pcard('⑤ 回流有效互动','依赖送达/打开分母,暂未接入') ].join('');
+  $('notifType').innerHTML=[ pcard('Reminder 完成率',NOTE_NOSRC.reminder_done), kpiCard(K('Proactive 展示次数','proactive_shown',{unit:'次',note:'proactive_nudge_shown'})),
+    pcard('Proactive 回应率',NOTE_NOSRC.proactive_responded), pcard('退订 / 关通知率','暂无埋点') ].join(''); }
+function renderReferral(){ $('referral').innerHTML=[pcard('分享率',NOTE_NOSRC.share_rate),pcard('K-factor',NOTE_NOSRC.referral_k_factor),pcard('邀请数','邀请链路暂无埋点'),pcard('兽医推荐','vet_id 归因链路待接入')].join(''); }
+function renderSubStruct(){ const mix=API.plan_mix, tot=mix&&mix.status!=='pending_integration'?Object.values(mix).reduce((a,b)=>a+b,0):0;
+  const planCard=tot?`<div class="card"><div class="k-label">Plan 结构(在订 Apple 订阅)</div>${Object.entries(mix).map(([n,v])=>`<div style="display:flex;align-items:center;gap:10px;margin-top:8px"><div style="width:96px;font-size:12px">${n}</div><div class="f-bar" style="height:18px"><i style="width:${Math.round(v/tot*100)}%"></i><span>${v} 个</span></div></div>`).join('')}</div>`:pcard('Plan 结构','当前没有在订的 Apple 付费订阅');
+  $('subStruct').innerHTML=[kpiCard(K('Trial→Paid','trial_to_paid',{unit:'%',t:55})),kpiCard(K('多宠 attach','multi_pet_attach',{unit:'%'})),kpiCard(K('GRR','grr',{unit:'%',t:90})),planCard,pcard('Churn 原因',NOTE_NOSRC.churn_reason)].join(''); }
+function renderProgramme(){ $('programme').innerHTML=[kpiCard(K('报名人数','programme_enrolled',{unit:'人'})),kpiCard(K('完成数','programme_completed',{unit:''})),kpiCard(K('任务完成数','programme_task',{unit:''})),pcard('依从 / target_met','暂无采集')].join(''); }
+
+/* ================== 趋势图 ================== */
+const TRENDS=[['北极星 WAP-MI','wap_mi','',1000],['14 天留存','retention_d14','%',12],['D7 留存','retention_d7','%',22],['付费率','paid_rate','%',5],['MRR','mrr','$',null],['DAU','dau','',null],['WAU','wau','',null],['DAU/MAU 粘性','stickiness','%',20]];
+function renderTrends(){ const grid=$('trendGrid'); grid.innerHTML='';
+  TRENDS.forEach(([label,id,unit,target])=>{ const m=M(id);
+    if(m.pending){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card" style="align-self:start">${pcard(label,m.note)}</div>`); return; }
+    const pts=m.s.map((v,i)=>[v,weekName(i)+(i===m.s.length-1?'*':'')+'|'+API.weeks[i].start.slice(5,10).replace('-','/')]).filter(p=>p[0]!=null);
+    if(pts.length<2){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card" style="align-self:start">${pcard(label,'有值的周数不足,画不出趋势')}</div>`); return; }
+    const vals=pts.map(p=>r1(p[0])), xl=pts.map(p=>p[1]), cur=m.v==null?'—':fmtN(m.v), st=target!=null&&m.v!=null?statusOf(m.v,target):'na';
+    grid.insertAdjacentHTML('beforeend',`<div class="chart-card"><div class="chart-head"><span class="ct">${label}</span><span class="cv">${cur}<small> ${unit}</small>${trendChip(m.nn)}</span></div>
+      ${bigChart(vals,{unit,target,xlabels:xl})}<div style="margin-top:6px">${target!=null?`<span class="pill ${PILL[st][0]}">${PILL[st][1]} · 目标 ≥ ${target}${unit}</span>`:'<span class="k-sub">观测项</span>'}</div></div>`); }); }
+
+/* ================== 全局渲染 & 交互 ================== */
+function renderAll(){ if(!API) return;
+  renderNorthStar(); renderEcon('exec'); renderMRR(); renderRetExec(); renderChExec(); renderSafety('exec');
+  renderFunnel(); renderCohort(); renderChannels(); renderEngage(); renderAdoption(); renderReferral(); renderNotif();
+  renderEcon('all'); renderSubStruct(); renderSafety('all'); renderProgramme(); renderTrends(); renderDefs(); }
+function bindSeg(seg, attr, cb){ seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  seg.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); cb(b.dataset[attr]); }); }
+bindSeg($('rangeSeg'),'r', v=>{ RANGE=+v; renderAll(); });
+$('viewTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  $('viewTabs').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); VIEW=b.dataset.v;
+  ['exec','ops','trends','defs'].forEach(v=>$('view-'+v).classList.toggle('hide',v!==VIEW)); });
+$('opsTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  $('opsTabs').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); const t=b.dataset.t;
+  ['growth','money','product'].forEach(x=>$('ops-'+x).classList.toggle('hide',x!==t)); });
+
+async function load(){ const note=$('srcNote'); note.textContent='数据读取中…';
+  const token=sessionStorage.getItem(TOKEN_KEY);
+  if(!token){ note.innerHTML='还没有运营访问令牌。请先在上层页面输入令牌后再打开本页。'; return; }
+  try{ const r=await fetch(API_BASE+'/dashboard',{headers:{Authorization:'Bearer '+token}});
+    if(r.status===401){ note.innerHTML='令牌无效或已失效,请在上层页面重新输入令牌。'; return; }
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    API=(await r.json()).data; RANGE=Math.min(RANGE,API.weeks.length);
+    const w0=API.weeks[0], w1=API.weeks[API.weeks.length-1];
+    $('meta').textContent=`${w0.label} → ${w1.label}(${w1.label} 未满)· 新加坡时间 · 读自线上库(只读)`;
+    note.innerHTML=`数据来自线上事件库 + 宠物库 + 订阅库(只读)。标 <span class="badge-pending">待接入</span> 的指标暂无数据来源,不用占位数字代替。线上用户量还小(WAU 为个位数到十几),百分比波动大。`;
+    renderAll();
+  }catch(e){ note.innerHTML=`数据加载失败:${String(e.message||e)} <button class="btn" id="retry" style="margin-left:8px;padding:3px 10px;border:1px solid #93C5FD;border-radius:8px;background:#fff;cursor:pointer">重试</button>`; $('retry').onclick=load; } }
+
+(function(){ const send=()=>{ try{ parent.postMessage({opsDashHeight:document.documentElement.scrollHeight},location.origin); }catch(e){} };
+  if(window.ResizeObserver) new ResizeObserver(send).observe(document.body); window.addEventListener('load',send); })();
+load();
+$('foot').innerHTML=`指标口径见「定义」页(对齐《数据分析框架》)。WAP-MI:聊天事件不带 pet_id,按用户名下当时未删除的宠物归属;写记录(record_written)暂无埋点,未计入。`;
+
+</script>
+</body>
+</html>
