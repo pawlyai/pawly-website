@@ -224,7 +224,7 @@
   <section id="view-trends" class="hide">
     <h2>📉 核心指标趋势 <span class="hint">折线 + 目标线(虚线)· 悬停看每点数值</span></h2>
     <div class="grid g2" id="trendGrid"></div>
-    <div class="note">每点一周(ISO 周,新加坡时间),最后一周未满。空缺=该周无法计算(如 cohort 未到龄)。虚线=目标。</div>
+    <div class="note">每点标出具体数值;横轴为「周号 / 该周周一日期」(ISO 周,新加坡时间),带 * 的最后一周未满。没有点的周=该周无法计算(如 cohort 未到龄)。虚线=目标。</div>
   </section>
 
   <!-- ============ 定义 ============ -->
@@ -323,7 +323,7 @@ const DEFINITIONS = [
 
 const CHARTS={}; let CID=0;
 function bigChart(vals,{unit='',target=null,xlabels=[]}={}){
-  const W=340,H=190,pl=40,pr=14,ptop=16,pb=24,iw=W-pl-pr,ih=H-ptop-pb;
+  const W=340,H=210,pl=40,pr=14,ptop=16,pb=36,iw=W-pl-pr,ih=H-ptop-pb;
   const allv=target!=null?vals.concat([target]):vals; let mn=Math.min(...allv),mx=Math.max(...allv);
   const pad=(mx-mn||1)*0.12; mn-=pad; mx+=pad; if(mn<0&&Math.min(...vals)>=0) mn=0;
   const X=i=> pl+(vals.length===1?iw/2:i*iw/(vals.length-1));
@@ -335,7 +335,11 @@ function bigChart(vals,{unit='',target=null,xlabels=[]}={}){
   for(let t=0;t<=ticks;t++){ const gy=ptop+ih-t/ticks*ih, gv=mn+(mx-mn)*t/ticks;
     grid+=`<line x1="${pl}" y1="${gy.toFixed(1)}" x2="${pl+iw}" y2="${gy.toFixed(1)}" stroke="#EEF1F5" stroke-width="1"/>`
         +`<text x="${pl-6}" y="${(gy+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#9CA3AF">${Math.round(gv*10)/10}</text>`; }
-  let xlab=''; xlabels.forEach((l,i)=>{ if(l) xlab+=`<text x="${X(i).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#9CA3AF">${l}</text>`; });
+  /* 每个点标出具体数值(点上方),横轴每点标出「周号 / 周一日期」 */
+  let xlab=''; xlabels.forEach((l,i)=>{ if(!l) return; const [a,b]=String(l).split('|');
+    xlab+=`<text x="${X(i).toFixed(1)}" y="${H-20}" text-anchor="middle" font-size="9" fill="#6B7280" font-weight="700">${a}</text>`
+        +(b?`<text x="${X(i).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="8.5" fill="#9CA3AF">${b}</text>`:''); });
+  const dlab=pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="#FF9F43"/><text x="${p[0].toFixed(1)}" y="${(p[1]-7).toFixed(1)}" text-anchor="middle" font-size="9" font-weight="700" fill="#374151">${Math.round(vals[i]*10)/10}</text>`).join('');
   let tgt=''; if(target!=null){ const ty=Y(target);
     tgt=`<line x1="${pl}" y1="${ty.toFixed(1)}" x2="${pl+iw}" y2="${ty.toFixed(1)}" stroke="#9CA3AF" stroke-width="1.3" stroke-dasharray="4 3"/>`
       +`<text x="${pl+iw}" y="${(ty-4).toFixed(1)}" text-anchor="end" font-size="9" fill="#6B7280">目标 ${target}${unit}</text>`; }
@@ -346,7 +350,7 @@ function bigChart(vals,{unit='',target=null,xlabels=[]}={}){
       ${grid}${tgt}
       <polygon points="${area}" fill="#FF9F4322"/>
       <polyline points="${line}" fill="none" stroke="#FF9F43" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-      ${xlab}
+      ${xlab}${dlab}
       <line id="cx-${cid}" y1="${ptop}" y2="${ptop+ih}" stroke="#FF9F43" stroke-width="1" opacity="0"/>
       <circle id="cd-${cid}" r="3.5" fill="#FF9F43" opacity="0"/>
       <circle cx="${end[0].toFixed(1)}" cy="${end[1].toFixed(1)}" r="3.2" fill="#FF9F43"/>
@@ -495,7 +499,7 @@ const TRENDS=[['北极星 WAP-MI','wap_mi','',1000],['14 天留存','retention_d
 function renderTrends(){ const grid=$('trendGrid'); grid.innerHTML='';
   TRENDS.forEach(([label,id,unit,target])=>{ const m=M(id);
     if(m.pending){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card">${pcard(label,m.note)}</div>`); return; }
-    const pts=m.s.map((v,i)=>[v,(weekName(i)+(i===m.s.length-1?'*':''))]).filter(p=>p[0]!=null);
+    const pts=m.s.map((v,i)=>[v,weekName(i)+(i===m.s.length-1?'*':'')+'|'+API.weeks[i].start.slice(5,10).replace('-','/')]).filter(p=>p[0]!=null);
     if(pts.length<2){ grid.insertAdjacentHTML('beforeend',`<div class="chart-card">${pcard(label,'有值的周数不足,画不出趋势')}</div>`); return; }
     const vals=pts.map(p=>r1(p[0])), xl=pts.map(p=>p[1]), cur=m.v==null?'—':fmtN(m.v), st=target!=null&&m.v!=null?statusOf(m.v,target):'na';
     grid.insertAdjacentHTML('beforeend',`<div class="chart-card"><div class="chart-head"><span class="ct">${label}</span><span class="cv">${cur}<small> ${unit}</small>${trendChip(m.nn)}</span></div>
