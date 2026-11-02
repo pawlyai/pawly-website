@@ -586,15 +586,17 @@ function tkGen(tab) {
   const fld = (k, l, ph, full, ta) => '<div' + (full ? ' class="full"' : '') + '><label>' + l + '</label>' + (ta ? '<textarea ' + K(k) + ' placeholder="' + esc(ph) + '">' + esc(d[k]) + '</textarea>' : '<input ' + K(k) + ' value="' + esc(d[k]) + '" placeholder="' + esc(ph) + '">') + '</div>';
   const sel = (k, l, opts) => '<div><label>' + l + '</label><select ' + K(k) + '>' + opts.map(o => { const v = Array.isArray(o) ? o[0] : o, t = Array.isArray(o) ? o[1] : o; return '<option value="' + esc(v) + '"' + (String(v) === String(d[k]) ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select></div>';
   const ctaOpts = TK_CTA[tab].concat(TK_CTA[tab].indexOf(d.cta) < 0 && d.cta ? [d.cta] : []);
-  const form = '<div class="f">' + sel('type', '产出类型', TK_TYPES[tab]) + sel('pic', 'PIC(工单命名用)', PICS) +
-    sel('cmd', 'bot 命令(按产出类型自动带出,可改)', TK_CMD) + sel('prio', '优先级', TK_PRIO) + sel('rel', '合并后发版 / 部署', TK_REL) + (d.rel === 'release' ? fld('relVer', '版本号', '如 1.2.1') : fld('tags', '额外标签(空格分隔,可选)', '如 halloween campaign')) +
-    fld('topic', '运营 topic <span style="color:var(--crit)">*</span>', '一句话说清要做什么', true) +
-    '<div class="full"><label>' + (fix ? '涉及' : inapp ? '投放位置' : '发布平台') + ' <span style="color:var(--crit)">*</span>' + (fix ? '' : ' <span class="muted" style="font-weight:400">(每个自动生成一条追踪链接)</span>') + '</label><div class="chips">' + tkPlatOpts(d.type).map(p => '<span class="chip' + (d.platforms.indexOf(p) >= 0 ? ' on' : '') + '" data-tka="plat" data-tab="' + tab + '" data-v="' + esc(p) + '">' + esc(p) + '</span>').join('') + '</div></div>' +
+  /* 只留 5 项必填/常用:产出类型、优先级、topic、平台、需求描述。其余都有默认值,收进「更多选项」。 */
+  const plat = '<div class="full"><label>' + (fix ? '涉及' : inapp ? '投放位置' : '发布平台') + ' <span style="color:var(--crit)">*</span>' + (fix ? '' : ' <span class="muted" style="font-weight:400">(已按类型预选,每个自动生成一条追踪链接)</span>') + '</label><div class="chips">' + tkPlatOpts(d.type).map(p => '<span class="chip' + (d.platforms.indexOf(p) >= 0 ? ' on' : '') + '" data-tka="plat" data-tab="' + tab + '" data-v="' + esc(p) + '">' + esc(p) + '</span>').join('') + '</div></div>';
+  const more = sel('pic', 'PIC(工单命名用)', PICS) + sel('cmd', 'bot 命令(按产出类型自动带出)', TK_CMD) + sel('rel', '合并后发版 / 部署', TK_REL) + (d.rel === 'release' ? fld('relVer', '版本号', '如 1.2.1') : fld('tags', '额外标签(空格分隔)', '如 halloween campaign')) +
     (fix ? '' : sel('species', '物种', ['猫+狗', '猫', '狗']) + sel('region', '地区', ['US', 'SG', 'CA', '全部']) + sel('lang', '语言', [['EN', '英文'], ['ZH', '中文'], ['BOTH', '中英双语']]) + fld('audience', '目标人群', '例如:第一次养狗的 US 年轻主人')) +
-    fld('desc', '需求描述 <span style="color:var(--crit)">*</span>', '背景、现在的问题(可以直接引用上面的数据)、想达到的效果、语气', true, true) +
     fld('must', '必须包含 <span class="muted" style="font-weight:400">(一行一条)</span>', '', false, true) + fld('mustnot', '不能出现 <span class="muted" style="font-weight:400">(一行一条)</span>', '', false, true) +
-    '<div><label>' + (fix ? '完成标志' : 'CTA 去哪') + '</label><select ' + K('cta') + '>' + ctaOpts.map(c => '<option' + (c === d.cta ? ' selected' : '') + '>' + esc(c) + '</option>').join('') + '</select></div>' + fld('success', '成功标准 <span class="muted" style="font-weight:400">(可选)</span>', '例如:CTR > 2%') +
-    fld('refs', '参考素材 / 数据 <span class="muted" style="font-weight:400">(一行一条,可选;图片 / 文件请带 caption 单独发,会挂成附件)</span>', '', true, true) + fld('due', '截止日期', '例如 11/05') + (fix ? '' : fld('slug', '链接短名(英文,可选)', '如 heartworm-check')) + '</div>';
+    '<div><label>' + (fix ? '完成标志' : 'CTA 去哪') + '</label><select ' + K('cta') + '>' + ctaOpts.map(c => '<option' + (c === d.cta ? ' selected' : '') + '>' + esc(c) + '</option>').join('') + '</select></div>' + fld('success', '成功标准', '例如:CTR > 2%') +
+    fld('refs', '参考素材 / 数据 <span class="muted" style="font-weight:400">(一行一条;图片 / 文件请带 caption 单独发,会挂成附件)</span>', '', true, true) + fld('due', '截止日期', '例如 11/05') + (fix ? '' : fld('slug', '链接短名(英文)', '如 heartworm-check'));
+  const form = '<div class="f">' + sel('type', '产出类型', TK_TYPES[tab]) + sel('prio', '优先级', TK_PRIO) +
+    fld('topic', '运营 topic <span style="color:var(--crit)">*</span>', '一句话说清要做什么', true) + plat +
+    fld('desc', '需求描述 <span style="color:var(--crit)">*</span>', '背景、现在的问题(可以直接引用上面的数据)、想达到的效果', true, true) +
+    '<details class="full" data-tkmore="' + tab + '"' + (s.moreOpen ? ' open' : '') + ' style="border:1px dashed var(--line);border-radius:10px;padding:8px 10px"><summary class="small" style="cursor:pointer;font-weight:700">更多选项(都有默认值,不填也能发)</summary><div class="f" style="margin-top:10px">' + more + '</div></details></div>';
   const out = '<div class="row" style="justify-content:space-between;margin-bottom:8px"><b class="small">🎫 发给 Tokitail triage bot 的消息' + (s.edited ? ' <span class="pill p-amber">已手动修改</span>' : '') + '</b><div class="seg"><button class="' + (s.view === 'md' ? 'on' : '') + '" data-tka="view" data-tab="' + tab + '" data-v="md">正文</button><button class="' + (s.view === 'json' ? 'on' : '') + '" data-tka="view" data-tab="' + tab + '" data-v="json">JSON</button></div></div>' +
     (miss.length ? '<div class="note warn" style="margin:0 0 8px">还没填:' + miss.join('、') + '</div>' : '') +
     '<div class="lbl">第一行 · 命令 + 标题</div><div class="row" style="background:var(--brand-50);border:1px solid var(--brand-100);border-radius:10px;padding:8px 10px;margin-bottom:8px"><b id="tkTtl-' + tab + '" class="mono" style="flex:1;word-break:break-all;color:var(--navy);font-size:12.5px">' + esc(tkCmdLine(d)) + '</b><button class="btn sm" data-tka="copyTitle" data-tab="' + tab + '">复制第一行</button></div><div class="lbl">换行后 · 描述</div>' +
@@ -623,6 +625,7 @@ function tkPrefill(tab, patch) {
   if (!patch.cmd) s.d.cmd = TK_CMD_DEF[s.d.type] || '/feature'; if (patch.rel === undefined) s.d.rel = tkRelDef(s.d.type);
   s.edited = false; s.cur = null; saveTKD(); go(tab, 'tk-' + tab); toast('已根据数据填好工单,确认后复制整条消息发给 bot');
 }
+document.addEventListener('toggle', e => { const t = e.target; if (t && t.dataset && t.dataset.tkmore) tkS(t.dataset.tkmore).moreOpen = t.open; }, true);
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-tka]'); if (!el) return;
   const a = el.dataset.tka, tab = el.dataset.tab, s = tkS(tab), id = el.dataset.id, x = id ? TKH.find(h => h.id === id) : null;
