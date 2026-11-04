@@ -374,8 +374,8 @@ function vAcquire() {
   let t;
   if (isPending(u)) t = '<div class="empty">' + PEND + '</div>';
   else if (!u || !u.length) t = '<div class="empty">本周没有带 UTM 的事件</div>';
-  else t = '<div class="tw"><table class="t"><thead><tr><th>utm_source</th><th>utm_campaign</th><th class="n">事件数</th><th class="n">人数</th></tr></thead><tbody>' + u.map(r => '<tr><td>' + pill(r.utm_source || '(空)', 'p-blue') + '</td><td>' + esc(r.utm_campaign || '(空)') + '</td><td class="n">' + fmt(r.events) + '</td><td class="n">' + fmt(r.distinct_users) + '</td></tr>').join('') + '</tbody></table></div>';
-  h += card('acq-links', '🔗 营销链接表现 · utm_source × utm_campaign', '来自本周带 UTM 参数的事件。', '', t);
+  else t = '<div class="tw"><table class="t"><thead><tr><th>utm_source</th><th>utm_campaign</th><th class="n">访问</th><th class="n">会话</th><th class="n">开始测验</th><th class="n">完成测验</th><th class="n">注册</th><th class="n">分享</th><th class="n">事件数</th></tr></thead><tbody>' + u.map(r => '<tr><td>' + pill(r.utm_source || '(空)', r.utm_source === '(direct)' ? 'p-gray' : 'p-blue') + '</td><td>' + esc(r.utm_campaign || '(空)') + '</td><td class="n">' + fmt(r.visits) + '</td><td class="n">' + fmt(r.sessions) + '</td><td class="n">' + fmt(r.quiz_started) + '</td><td class="n">' + fmt(r.quiz_completed) + '</td><td class="n">' + fmt(r.signups) + '</td><td class="n">' + fmt(r.shares) + '</td><td class="n">' + fmt(r.events) + '</td></tr>').join('') + '</tbody></table></div>';
+  h += card('acq-links', '🔗 营销链接表现 · utm_source × utm_campaign', 'go.toki-tail.com 下所有页面(/era、/walk-plan…)自动上报;没带 utm_source 的访问显示为 (direct)。网页访客未登录,看会话数而不是人数。', '', t);
   h += funnelCard(['quiz']);
   h += extCard(['social_followers', 'social_views']);
   h += zone('ops', '生成运营工单', '数据里看到问题 → 填工单 → 复制到 Multica 建单');
