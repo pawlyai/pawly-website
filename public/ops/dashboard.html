@@ -195,8 +195,11 @@
       <h2>🌱 传播 Referral <span class="hint">测试是主获客钩子</span></h2>
       <div class="grid g4" id="referral"></div>
 
+      <h2>📨 Proactive 主动触达表现 <span class="hint">发了多少 → 推送到没到 → 打开率 → 打开后做了什么 · 按类别</span></h2>
+      <div id="proactive"></div>
+
       <h2>🔔 通知 / 触达 <span class="hint">授权 → 送达 → 打开 → 行动 → 回流 · 分 Reminder / Proactive</span></h2>
-      <div class="note-banner" style="margin:0 0 12px"><b>⚠ 优先埋点</b> — 目前没有推送发送/送达事件,送达率与打开率分母缺失。</div>
+      <div class="note-banner" style="margin:0 0 12px">推送发送 / 送达 / 打开的数字见上方「Proactive 主动触达表现」;这里补授权率与其它通知。</div>
       <div class="grid g4" id="notifFunnel"></div>
       <h2 style="margin-top:14px">按类型 <span class="hint">Reminder(用户自设)/ Proactive(系统主动)/ 退订</span></h2>
       <div class="grid g4" id="notifType"></div>
@@ -395,7 +398,7 @@ const NOTE_NOSRC={
   trial_to_paid:'线上暂无 trial 事件', multi_pet_attach:'需要付费账户与宠物数关联,暂未接入', churn_reason:'退订原因暂未采集',
   referral_k_factor:'邀请链路暂无埋点', share_rate:'content_shared / quiz_completed 暂无埋点', funnel_consent:'暂无「同意条款」埋点',
   funnel_assessment:'暂无 first_health_qa / assessment_delivered 埋点', funnel_trial:'线上暂无 trial 事件', notif_sent:'无推送发送事件', notif_delivered:'无推送送达事件',
-  proactive_responded:'proactive_responded 暂无埋点', reminder_done:'reminder_fired / reminder_done 暂无埋点', red_flag_escalation:'redflag_triggered / escalated 暂无埋点',
+  proactive_responded:'回应类型线上从未写入', reminder_done:'reminder_fired / reminder_done 暂无埋点', red_flag_escalation:'redflag_triggered / escalated 暂无埋点',
   answer_accuracy:'Regression harness 结果未入库', memory_recall:'memory_recall_used 暂无埋点', channel_spend:'渠道花费未入库',
   programme_completed:'programme_completed 暂无数据', programme_task:'programme_task_completed 暂无数据', mrr:'暂无 Apple 付费订阅', arpu:'暂无 Apple 付费订阅',
   paid_rate:'暂无 Apple 付费订阅', nrr:'暂无 Apple 付费订阅', grr:'暂无 Apple 付费订阅'
@@ -486,11 +489,41 @@ function renderAdoption(){ const F=[['拍照分析','feature_photo_analysis'],['
     return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:9px"><div style="width:130px;font-size:13px;font-weight:600">${name}${pend?' <span class="badge-pending">待接入</span>':''}</div>
       <div class="f-bar" style="height:22px"><i style="width:${pend?0:Math.min(100,v)}%;background:${pend?'#E5E7EB':'linear-gradient(90deg,var(--brand),#FFC078)'}"></i><span>${pend?'—':r1(v)+'%'}</span></div></div>`; }).join('')
     +`<div class="note">占 ${weekName(API.weeks.length-2)} WAU 的比例;WAU 只有个位数到十几人。</div>`; }
-function renderNotif(){
-  $('notifFunnel').innerHTML=[ kpiCard(K('① 通知授权率','push_grant_rate',{unit:'%',note:'push 权限授予 / 询问'})), pcard('② 送达率 ⚠',NOTE_NOSRC.notif_delivered),
-    kpiCard(K('③ 通知打开次数','notif_opened',{unit:'人',note:'notification_opened 去重用户;无发送事件,算不出 CTR'})), pcard('④ 行动率','打开后完成目标动作,暂无埋点'), pcard('⑤ 回流有效互动','依赖送达/打开分母,暂未接入') ].join('');
-  $('notifType').innerHTML=[ pcard('Reminder 完成率',NOTE_NOSRC.reminder_done), kpiCard(K('Proactive 展示次数','proactive_shown',{unit:'次',note:'proactive_nudge_shown'})),
-    pcard('Proactive 回应率',NOTE_NOSRC.proactive_responded), pcard('退订 / 关通知率','暂无埋点') ].join(''); }
+const SKIP_LABEL={daily_cap:'当日次数已达上限',superseded_by_newer:'被更新的消息取代',superseded_by_urgent:'被紧急消息取代',premise_resolved:'触发条件已消失',user_responded:'用户已自行处理'};
+const rate=(a,b)=>(b>0&&a<=b)?Math.round(a*1000/b)/10:null, /* >100% 说明按类别对账不一致,不显示 */ rtxt=(a,b)=>{const r=rate(a,b);return r==null?'—':r+'%';};
+function renderProactive(){ const P=API.proactive, host=$('proactive');
+  if(!P||P.status!=='ok'){ host.innerHTML=pcard('Proactive 主动触达表现','通知库未接入'); return; }
+  const T=P.totals, reach=T.pushed+T.no_device+T.failed;
+  const kp=(l,v,sub)=>`<div class="card kpi"><div class="k-label"><span>${l}</span></div><div class="k-val">${fmtN(v)}</div><div class="k-sub">${sub||''}</div></div>`;
+  let h='<div class="grid g4">'+kp('发送(8 周)',T.sent,'proactive_events 里 state=sent')
+    +kp('推送成功',T.pushed,`占发送 ${rtxt(T.pushed,T.sent)} · 无设备 ${T.no_device} · 失败 ${T.failed}`)
+    +kp('被打开',T.opened,`打开率 ${rtxt(T.opened,T.pushed)}(打开 ÷ 推送成功)`)
+    +kp('打开后 30 分钟内互动',T.engaged,`占打开 ${rtxt(T.engaged,T.opened)}(问答或打卡)`)+'</div>';
+  h+='<div class="card" style="overflow-x:auto;margin-top:10px"><table><tr><th class="first">类别</th><th>发送</th><th>推送成功</th><th>无设备</th><th>失败</th><th>推送触达率</th><th>打开</th><th>打开率</th><th>30分钟内互动</th><th>互动率</th></tr>'
+    +P.categories.map(c=>{const t=c.totals,r=t.pushed+t.no_device+t.failed;
+      return `<tr><td class="first">${c.label}<div style="color:var(--muted);font-size:11px">${c.note}</div></td><td>${t.sent}</td><td>${t.pushed}</td><td>${t.no_device}</td><td>${t.failed}</td><td>${rtxt(t.pushed,r)}</td><td>${t.opened}</td><td>${rtxt(t.opened,t.pushed)}</td><td>${t.engaged}</td><td>${rtxt(t.engaged,t.opened)}</td></tr>`;}).join('')
+    +`<tr style="font-weight:700"><td class="first">合计</td><td>${T.sent}</td><td>${T.pushed}</td><td>${T.no_device}</td><td>${T.failed}</td><td>${rtxt(T.pushed,reach)}</td><td>${T.opened}</td><td>${rtxt(T.opened,T.pushed)}</td><td>${T.engaged}</td><td>${rtxt(T.engaged,T.opened)}</td></tr></table>`
+    +`<div class="note">打开率显示「—」表示该类别打开数大于推送成功数(按类别对账不一致,如周报还有别的发送路径)。「推送触达率」= 推送成功 ÷(成功+无设备+失败):没有设备令牌的用户收不到推送,是触达的最大损耗。打开数只有类别、没有消息 ID,所以按类别、按周对账,数字可能与发送不严格一一对应。</div></div>`;
+  /* 每周趋势:发送 / 打开,带数值和日期 */
+  const wk=(f)=>API.weeks.map((w,i)=>[P.categories.reduce((s,c)=>s+c.weeks[i][f],0),weekName(i)+(i===API.weeks.length-1?'*':'')+'|'+w.start.slice(5,10).replace('-','/')]);
+  const chart=(title,f)=>{const pts=wk(f);return `<div class="chart-card"><div class="chart-head"><span class="ct">${title}</span></div>${bigChart(pts.map(p=>p[0]),{unit:'',target:null,xlabels:pts.map(p=>p[1])})}</div>`;};
+  h+='<div class="grid g2" style="margin-top:10px">'+chart('每周发送的 proactive(全类别)','sent')+chart('每周被打开(全类别)','opened')+'</div>';
+  /* 跳过原因 + 打开后落点 */
+  const sk=Object.entries(P.skipped||{}).sort((a,b)=>b[1]-a[1]);
+  h+='<div class="grid g2" style="margin-top:10px"><div class="card"><div class="k-label">没发出去的原因(8 周)</div>'+(sk.length?sk.map(([k,v])=>`<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:13px"><span>${SKIP_LABEL[k]||k}</span><b>${v}</b></div>`).join(''):'<div class="note">无</div>')+'</div>'
+    +'<div class="card"><div class="k-label">打开后第一个进入的页面(2 分钟内)</div>'+(P.categories.filter(c=>c.landing&&c.landing.length).map(c=>`<div style="margin-top:8px;font-size:12px"><b>${c.label}</b>: ${c.landing.map(l=>`${l.screen} ×${l.count}`).join(' · ')}</div>`).join('')||'<div class="note">暂无打开记录</div>')
+    +'</div></div>';
+  h+='<div class="grid g4" style="margin-top:10px">'+pcard('用户对 proactive 的回应类型','user_response_type 线上从未写入,没有数据')+pcard('用户评价 / 满意度','没有点赞 / 评分 / 反馈事件')+'</div>';
+  h+='<div class="note">'+P.notes.join(' ')+'</div>';
+  host.innerHTML=h; }
+function renderNotif(){ const P=API.proactive, ok=P&&P.status==='ok', T=ok?P.totals:null;
+  $('notifFunnel').innerHTML=[ kpiCard(K('① 通知授权率','push_grant_rate',{unit:'%',note:'push 权限授予 / 询问'})),
+    ok?kpiCard({label:'② 推送触达率',v:r1(rate(T.pushed,T.pushed+T.no_device+T.failed)),unit:'%',note:'推送成功 ÷(成功+无设备+失败),proactive 8 周'}):pcard('② 推送触达率','通知库未接入'),
+    ok?kpiCard({label:'③ 打开率 CTR',v:r1(rate(T.opened,T.pushed)),unit:'%',note:'打开 ÷ 推送成功,按类别对账'}):kpiCard(K('③ 通知打开次数','notif_opened',{unit:'人'})),
+    pcard('④ 行动率','打开后完成目标动作,暂无埋点'),
+    ok?kpiCard({label:'⑤ 回流有效互动率',v:r1(rate(T.engaged,T.opened)),unit:'%',note:'打开后 30 分钟内问答或打卡 ÷ 打开'}):pcard('⑤ 回流有效互动','通知库未接入') ].join('');
+  $('notifType').innerHTML=[ pcard('Reminder 完成率',NOTE_NOSRC.reminder_done), ok?kpiCard({label:'Proactive 发送量(8 周)',v:T.sent,unit:'条',note:'proactive_events state=sent;不是 A/B 曝光'}):pcard('Proactive 发送量','通知库未接入'),
+    pcard('Proactive 回应率','回应类型(user_response_type)线上从未写入'), pcard('退订 / 关通知率','暂无埋点') ].join(''); }
 function renderReferral(){ $('referral').innerHTML=[pcard('分享率',NOTE_NOSRC.share_rate),pcard('K-factor',NOTE_NOSRC.referral_k_factor),pcard('邀请数','邀请链路暂无埋点'),pcard('兽医推荐','vet_id 归因链路待接入')].join(''); }
 function renderSubStruct(){ const mix=API.plan_mix, tot=mix&&mix.status!=='pending_integration'?Object.values(mix).reduce((a,b)=>a+b,0):0;
   const planCard=tot?`<div class="card"><div class="k-label">Plan 结构(在订 Apple 订阅)</div>${Object.entries(mix).map(([n,v])=>`<div style="display:flex;align-items:center;gap:10px;margin-top:8px"><div style="width:96px;font-size:12px">${n}</div><div class="f-bar" style="height:18px"><i style="width:${Math.round(v/tot*100)}%"></i><span>${v} 个</span></div></div>`).join('')}</div>`:pcard('Plan 结构','当前没有在订的 Apple 付费订阅');
@@ -511,7 +544,7 @@ function renderTrends(){ const grid=$('trendGrid'); grid.innerHTML='';
 /* ================== 全局渲染 & 交互 ================== */
 function renderAll(){ if(!API) return;
   renderNorthStar(); renderEcon('exec'); renderMRR(); renderRetExec(); renderChExec(); renderSafety('exec');
-  renderFunnel(); renderCohort(); renderChannels(); renderEngage(); renderAdoption(); renderReferral(); renderNotif();
+  renderFunnel(); renderCohort(); renderChannels(); renderEngage(); renderAdoption(); renderReferral(); renderProactive(); renderNotif();
   renderEcon('all'); renderSubStruct(); renderSafety('all'); renderProgramme(); renderTrends(); renderDefs(); }
 function bindSeg(seg, attr, cb){ seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{
   seg.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); cb(b.dataset[attr]); }); }
