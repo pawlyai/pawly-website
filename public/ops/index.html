@@ -232,15 +232,16 @@ function isoLabel(mon) {
 }
 function buildWeeks(period) {
   const mon = period.start.slice(0, 10), out = [];
-  for (let i = 0; i < 8; i++) { const d = new Date(mon + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() - 7 * i); const s = d.toISOString().slice(0, 10); out.push({ label: isoLabel(s), mon: s }); }
-  return out;   // 最新在前
+  // period 是默认的「上一完整周」;i = -1 是进行中的本周,否则今天刚发生的事件(例如刚做完的测验)在页面上永远看不到。
+  for (let i = -1; i < 8; i++) { const d = new Date(mon + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() - 7 * i); const s = d.toISOString().slice(0, 10); out.push({ label: isoLabel(s), mon: s, live: i < 0 }); }
+  return out;   // 最新在前,第 0 项是进行中的本周
 }
 async function loadWeek(label) {
   D.loading = true; D.err = ''; render();
   try {
     const q = label ? '?week=' + encodeURIComponent(label) : '';
     D.agg = await api('/aggregate' + q);
-    if (!D.weeks.length) { D.weeks = buildWeeks(D.agg.period); D.wi = 0; }
+    if (!D.weeks.length) { D.weeks = buildWeeks(D.agg.period); D.wi = 1; }
     const prevLabel = isoLabel(new Date(Date.parse(D.agg.period.start.slice(0, 10) + 'T00:00:00Z') - 7 * 86400000).toISOString().slice(0, 10));
     D.prev = await api('/aggregate?week=' + prevLabel).catch(() => null);
   } catch (e) { D.err = e.auth ? '' : e.message; D.agg = null; D.prev = null; }
@@ -351,7 +352,7 @@ function ensureInsights(tab) { Object.keys(MODS).filter(m => MODS[m].tab === tab
 /* ================= 各 tab ================= */
 const TABS = [{ k: 'overview', n: '◎', l: '总览' }, { k: 'acquire', n: '①', l: '获客 · 运营账号' }, { k: 'activate', n: '②', l: '激活 · Onboarding' }, { k: 'retain', n: '③', l: '留存 · 复访' }, { k: 'refer', n: '④', l: '裂变 · 推荐' }, { k: 'monetize', n: '⑤', l: '变现' }, { k: 'datahub', n: '⑥', l: '数据反哺' }];
 const tabName = k => (TABS.find(t => t.k === k) || {}).l || k;
-const weekZone = t => zone('data', t, D.agg ? '数据周 ' + D.agg.period.week + '(' + D.agg.period.start.slice(0, 10) + ' 起,新加坡时间)' : '');
+const weekZone = t => zone('data', t, D.agg ? '数据周 ' + D.agg.period.week + '(' + D.agg.period.start.slice(0, 10) + ' 起,新加坡时间)' + (D.weeks[D.wi] && D.weeks[D.wi].live ? ' · 本周进行中,尚不满一周' : '') : '');
 const kpis = keys => '<div class="kpis">' + keys.map(kpiM).join('') + '</div>';
 const extCard = keys => card('', '外部数据源', '这些数据不在我们的数据库里,接入前不显示数字。', '', '<div class="kpis">' + keys.map(k => kpi(EXTERNAL_LABEL[k], '<span class="muted" style="font-size:16px">' + PEND + '</span>', '', '')).join('') + '</div>');
 const funnelCard = names => '<div class="g2">' + names.map(n => card('', FUNNEL_LABEL[n], '上一步 → 本步的周内转化率。', '', funnelRows(n) || '<div class="empty">无数据</div>')).join('') + '</div>';
@@ -452,7 +453,7 @@ function render() {
     return '<button class="tab' + (t.k === TAB ? ' on' : '') + '" data-act="tab" data-k="' + t.k + '"><span class="n">' + t.n + '</span>' + t.l + (a.length ? '<span class="cnt' + (red ? '' : ' amber') + '">' + a.length + '</span>' : '') + '</button>';
   }).join('');
   const sel = document.getElementById('wkSel');
-  sel.innerHTML = D.weeks.map((w, i) => '<option value="' + i + '"' + (i === D.wi ? ' selected' : '') + '>' + w.label + '</option>').join('');
+  sel.innerHTML = D.weeks.map((w, i) => '<option value="' + i + '"' + (i === D.wi ? ' selected' : '') + '>' + w.label + (w.live ? '(本周·进行中)' : '') + '</option>').join('');
   sel.style.display = D.weeks.length ? '' : 'none';
   const y = window.scrollY;
   if (D.loading) main.innerHTML = '<div class="empty" style="margin:60px auto">加载中…</div>';
