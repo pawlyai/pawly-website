@@ -241,7 +241,13 @@ async function loadWeek(label) {
   try {
     const q = label ? '?week=' + encodeURIComponent(label) : '';
     D.agg = await api('/aggregate' + q);
-    if (!D.weeks.length) { D.weeks = buildWeeks(D.agg.period); D.wi = 1; }
+    if (!D.weeks.length) {
+      // 不带 week 时接口给的是上一完整周:用它排出周列表,然后默认打开第 0 项「本周·进行中」。
+      // 本周取不到(非鉴权错误)就退回上一完整周,页面不至于空着。
+      D.weeks = buildWeeks(D.agg.period); D.wi = 1;
+      const live = await api('/aggregate?week=' + encodeURIComponent(D.weeks[0].label)).catch(e => { if (e.auth) throw e; return null; });
+      if (live) { D.agg = live; D.wi = 0; }
+    }
     const prevLabel = isoLabel(new Date(Date.parse(D.agg.period.start.slice(0, 10) + 'T00:00:00Z') - 7 * 86400000).toISOString().slice(0, 10));
     D.prev = await api('/aggregate?week=' + prevLabel).catch(() => null);
   } catch (e) { D.err = e.auth ? '' : e.message; D.agg = null; D.prev = null; }
