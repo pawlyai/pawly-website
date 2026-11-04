@@ -230,19 +230,30 @@ function isoLabel(mon) {
   const y = th.getUTCFullYear(), j1 = new Date(Date.UTC(y, 0, 4)), wk = 1 + Math.round(((th - j1) / 86400000 - 3 + ((j1.getUTCDay() + 6) % 7)) / 7);
   return y + '-W' + pad(wk);
 }
-function buildWeeks(period) {
-  const mon = period.start.slice(0, 10), out = [];
-  for (let i = 0; i < 8; i++) { const d = new Date(mon + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() - 7 * i); const s = d.toISOString().slice(0, 10); out.push({ label: isoLabel(s), mon: s }); }
-  return out;   // 最新在前
+// 数据周期选项(最新在前):过去 7 天(默认)、过去 30 天、进行中的本周、最近 8 个完整周。
+// q 就是传给 /aggregate 的查询串;days=N 是含今天的滚动窗口(新加坡时间)。
+function buildPeriods() {
+  const t = new Date(todaySGT() + 'T00:00:00Z'), dow = (t.getUTCDay() + 6) % 7;
+  t.setUTCDate(t.getUTCDate() - dow);   // 本周一(新加坡)
+  const out = [{ label: '过去 7 天', q: 'days=7', rolling: true }, { label: '过去 30 天', q: 'days=30', rolling: true }];
+  for (let i = 0; i < 9; i++) {
+    const d = new Date(t); d.setUTCDate(d.getUTCDate() - 7 * i); const l = isoLabel(d.toISOString().slice(0, 10));
+    out.push({ label: l + (i === 0 ? '(本周·进行中)' : ''), q: 'week=' + l, live: i === 0, mon: d.toISOString().slice(0, 10) });
+  }
+  return out;
 }
-async function loadWeek(label) {
+async function loadWeek() {
   D.loading = true; D.err = ''; render();
   try {
-    const q = label ? '?week=' + encodeURIComponent(label) : '';
-    D.agg = await api('/aggregate' + q);
-    if (!D.weeks.length) { D.weeks = buildWeeks(D.agg.period); D.wi = 0; }
-    const prevLabel = isoLabel(new Date(Date.parse(D.agg.period.start.slice(0, 10) + 'T00:00:00Z') - 7 * 86400000).toISOString().slice(0, 10));
-    D.prev = await api('/aggregate?week=' + prevLabel).catch(() => null);
+    if (!D.weeks.length) { D.weeks = buildPeriods(); D.wi = 0; }
+    const cur = D.weeks[D.wi];
+    D.agg = await api('/aggregate?' + cur.q);
+    // 环比只对完整周有意义;滚动窗口和进行中的本周没有可比的上一段
+    D.prev = null;
+    if (!cur.rolling && !cur.live) {
+      const prevLabel = isoLabel(new Date(Date.parse(cur.mon + 'T00:00:00Z') - 7 * 86400000).toISOString().slice(0, 10));
+      D.prev = await api('/aggregate?week=' + prevLabel).catch(() => null);
+    }
   } catch (e) { D.err = e.auth ? '' : e.message; D.agg = null; D.prev = null; }
   D.loading = false; render();
 }
@@ -351,7 +362,7 @@ function ensureInsights(tab) { Object.keys(MODS).filter(m => MODS[m].tab === tab
 /* ================= 各 tab ================= */
 const TABS = [{ k: 'overview', n: '◎', l: '总览' }, { k: 'acquire', n: '①', l: '获客 · 运营账号' }, { k: 'activate', n: '②', l: '激活 · Onboarding' }, { k: 'retain', n: '③', l: '留存 · 复访' }, { k: 'refer', n: '④', l: '裂变 · 推荐' }, { k: 'monetize', n: '⑤', l: '变现' }, { k: 'datahub', n: '⑥', l: '数据反哺' }];
 const tabName = k => (TABS.find(t => t.k === k) || {}).l || k;
-const weekZone = t => zone('data', t, D.agg ? '数据周 ' + D.agg.period.week + '(' + D.agg.period.start.slice(0, 10) + ' 起,新加坡时间)' : '');
+const weekZone = t => zone('data', t, D.agg ? '数据周期 ' + D.weeks[D.wi].label + '(' + D.agg.period.start.slice(0, 10) + ' 至 ' + sgtDate(new Date(Date.parse(D.agg.period.end) - 1)) + ',新加坡时间)' + (D.weeks[D.wi].live ? ' · 本周进行中,尚不满一周' : '') : '');
 const kpis = keys => '<div class="kpis">' + keys.map(kpiM).join('') + '</div>';
 const extCard = keys => card('', '外部数据源', '这些数据不在我们的数据库里,接入前不显示数字。', '', '<div class="kpis">' + keys.map(k => kpi(EXTERNAL_LABEL[k], '<span class="muted" style="font-size:16px">' + PEND + '</span>', '', '')).join('') + '</div>');
 const funnelCard = names => '<div class="g2">' + names.map(n => card('', FUNNEL_LABEL[n], '上一步 → 本步的周内转化率。', '', funnelRows(n) || '<div class="empty">无数据</div>')).join('') + '</div>';
@@ -469,7 +480,7 @@ function go(tab, anchor) {
 
 const ACT = {
   tab: el => go(el.dataset.k),
-  reload: () => loadWeek(D.weeks[D.wi] && D.weeks[D.wi].label),
+  reload: () => loadWeek(),
   copy: el => copy(el.dataset.v),
   tkFromAlert: el => tkFromAlert(alerts()[+el.dataset.i]),
   useHot: el => {
@@ -478,7 +489,7 @@ const ACT = {
   }
 };
 function tkFromAlert(a) {
-  const base = { prio: a.lvl === 'red' ? '#high' : '#medium', desc: a.t + '。' + a.d + '。', refs: '数据来源:增长运营平台 · ' + tabName(a.tab) + ' · 数据周 ' + (D.agg ? D.agg.period.week : '') };
+  const base = { prio: a.lvl === 'red' ? '#high' : '#medium', desc: a.t + '。' + a.d + '。', refs: '数据来源:增长运营平台 · ' + tabName(a.tab) + ' · 数据周期 ' + (D.agg ? D.weeks[D.wi].label : '') };
   const fx = { activate: { type: 'onb_copy', topic: '提升转化:' + a.t }, retain: { type: 'pro_copy', topic: '优化触达:' + a.t, platforms: ['Push'] }, monetize: { type: 'paywall', topic: '提升转化:' + a.t }, acquire: { type: 'quiz', topic: '优化:' + a.t } }[a.tab] || {};
   return tkPrefill(a.tab, Object.assign(base, fx));
 }
@@ -676,7 +687,7 @@ document.addEventListener('submit', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
-  if (t.id === 'wkSel') { D.wi = +t.value; loadWeek(D.weeks[D.wi].label); return; }
+  if (t.id === 'wkSel') { D.wi = +t.value; loadWeek(); return; }
   const dm = t.getAttribute('data-insdate');
   if (dm && t.value) { const m = +dm; INS[m] = { date: t.value, loading: true }; paintInsight(m); loadInsight(m); }
 });
