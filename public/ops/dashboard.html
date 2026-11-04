@@ -127,6 +127,9 @@
   .defs-tbl code{background:#F1F5F9;padding:1px 5px;border-radius:4px;font-size:12px}
   .defs-group td{font-weight:800;font-size:13px;color:var(--brand-d);background:var(--brand-l)}
   .hide{display:none!important}
+  /* #proactive:只显示「Proactive 主动触达表现」一块(给「留存 · 复访」页内嵌用) */
+  .only-proactive header.top,.only-proactive .controls,.only-proactive section,.only-proactive footer{display:none!important}
+  .only-proactive .wrap{padding-top:4px}
 </style>
 </head>
 <body>
@@ -386,6 +389,10 @@ function renderDefs(){ const rows=DEFINITIONS.map(d=> d[0]==='group'
 }
 
 
+/* #proactive:把「Proactive 主动触达表现」那一块提到最外层,其余整页隐藏 */
+if(location.hash==='#proactive'){ document.body.classList.add('only-proactive');
+  const p=document.getElementById('proactive'), h=p&&p.previousElementSibling, wrap=document.querySelector('.wrap');
+  if(p&&h&&wrap){ const note=document.getElementById('srcNote'); wrap.insertBefore(p,note?note.nextSibling:wrap.firstChild); wrap.insertBefore(h,p); } }
 /* ================== 数据层:真实数据来自 /v1/ops/dashboard ================== */
 const TOKEN_KEY='tkg:ops:token';
 const API_BASE=(()=>{ try{ if(window.parent&&window.parent!==window&&window.parent.OPS_API_BASE) return window.parent.OPS_API_BASE; }catch(e){} return window.OPS_API_BASE||'/api/analytics/v1/ops'; })();
