@@ -386,8 +386,8 @@ function quizDropBody(q) {
   let t = '';
   if (q.step_tracked_sessions < q.started_sessions) t += '<div class="note warn">有 ' + fmt(q.started_sessions - q.step_tracked_sessions) + ' 个会话发生在分步埋点上线之前(或没记到步骤),只能归入“开始后没进入第一步”,这几行偏高属正常。</div>';
   const rows = (q.steps || []).map(s => '<tr><td>' + esc(QUIZ_STEP_LABEL(s.step)) + '</td><td class="n">' + fmt(s.sessions) + '</td><td class="n">' + pc(s.share) + '</td><td style="width:38%"><div style="height:8px;border-radius:4px;background:var(--brand);width:' + Math.max(s.share * 100, s.sessions ? 2 : 0).toFixed(1) + '%"></div></td></tr>').join('');
-  rows && (t += '<div class="tw"><table class="t"><thead><tr><th>停在</th><th class="n">会话</th><th class="n">占开始的</th><th></th></tr></thead><tbody>' + rows
-    + '<tr><td><b>完成测验</b></td><td class="n">' + fmt(q.completed_sessions) + '</td><td class="n">' + pc(q.completed_sessions / q.started_sessions) + '</td><td></td></tr></tbody></table></div>');
+  t += '<div class="tw"><table class="t"><thead><tr><th>停在</th><th class="n">会话</th><th class="n">占开始的</th><th></th></tr></thead><tbody>' + rows
+    + '<tr><td><b>完成测验</b></td><td class="n">' + fmt(q.completed_sessions) + '</td><td class="n">' + pc(q.completed_sessions / q.started_sessions) + '</td><td></td></tr></tbody></table></div>';
   const r = q.retake || {};
   t += '<div class="kpis" style="margin-top:10px">' + kpi('开始测验的会话', fmt(q.started_sessions), '', '') + kpi('完成后又测一次', r.rate == null ? '<span class="muted" style="font-size:16px">—</span>' : pc(r.rate), fmt(r.retook_sessions) + ' / ' + fmt(r.completed_sessions) + ' 个完成的会话', '') + '</div>';
   return t;
@@ -401,7 +401,7 @@ function vAcquire() {
   else if (!u || !u.length) t = '<div class="empty">所选区间内没有带 UTM 的事件</div>';
   else t = '<div class="tw"><table class="t"><thead><tr><th>utm_source</th><th>utm_campaign</th><th class="n">访问</th><th class="n">会话</th><th class="n">开始测验</th><th class="n">完成测验</th><th class="n">注册</th><th class="n">分享</th><th class="n">事件数</th></tr></thead><tbody>' + u.map(r => '<tr><td>' + pill(r.utm_source || '(空)', r.utm_source === '(direct)' ? 'p-gray' : 'p-blue') + '</td><td>' + esc(r.utm_campaign || '(空)') + '</td><td class="n">' + fmt(r.visits) + '</td><td class="n">' + fmt(r.sessions) + '</td><td class="n">' + fmt(r.quiz_started) + '</td><td class="n">' + fmt(r.quiz_completed) + '</td><td class="n">' + fmt(r.signups) + '</td><td class="n">' + fmt(r.shares) + '</td><td class="n">' + fmt(r.events) + '</td></tr>').join('') + '</tbody></table></div>';
   h += card('acq-links', '🔗 营销链接表现 · utm_source × utm_campaign', 'go.toki-tail.com 下所有页面(/era、/walk-plan…)自动上报;没带 utm_source 的访问显示为 (direct)。网页访客未登录,看会话数而不是人数。', '', t);
-  h += card('acq-quiz', '🧭 测验流失 · 停在哪一步 / 是否重测', '/era 测验按会话统计:每个会话取到过的最远一步,没走到“完成”的算流失。重测 = 完成后点了“Try again”或同一会话再次开始;关掉页面后再来是新会话,不计入。', '', quizDropBody(D.agg && D.agg.quiz_dropoff));
+  h += card('acq-quiz', '🧭 测验流失 · 停在哪一步 / 是否重测', '/era 测验按会话统计:每个会话取到过的最远一步,没走到“完成”的算流失。只统计 /era(/walk-plan、/bowl 不计);记录页面路径之前(2026-11-04 前)的旧事件也不计。重测 = 完成后点了“Try again”或同一会话再次开始 /era;关掉页面后再来是新会话,不计入。', '', quizDropBody(D.agg && D.agg.quiz_dropoff));
   h += funnelCard(['quiz']);
   h += extCard(['social_followers', 'social_views']);
   h += zone('ops', '生成运营工单', '数据里看到问题 → 填工单 → 复制到 Multica 建单');
