@@ -392,6 +392,18 @@ function quizDropBody(q) {
   t += '<div class="kpis" style="margin-top:10px">' + kpi('开始测验的会话', fmt(q.started_sessions), '', '') + kpi('完成后又测一次', r.rate == null ? '<span class="muted" style="font-size:16px">—</span>' : pc(r.rate), fmt(r.retook_sessions) + ' / ' + fmt(r.completed_sessions) + ' 个完成的会话', '') + '</div>';
   return t;
 }
+/* 营销页面:每个页面按各自的“完成”事件统计(/era=quiz_complete;/bowl、/walk-plan 不发它,用 result_view)。数据来自 /aggregate 的 pages。 */
+const PAGE_DONE_LABEL = { quiz_complete: '完成测验', result_view: '看到结果' };
+function pagesBody(pages) {
+  if (!pages || !pages.length) return '<div class="empty">所选区间内没有数据</div>';
+  return '<div class="tw"><table class="t"><thead><tr><th>页面</th><th class="n">到达</th><th class="n">开始</th><th class="n">完成</th><th class="n">打开注册</th><th class="n">注册成功</th><th class="n">到达会话</th><th class="n">完成会话</th><th class="n">注册会话</th></tr></thead><tbody>'
+    + pages.map(p => '<tr><td><a href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(p.path) + '/</b></a></td><td class="n">' + fmt(p.arrived) + '</td><td class="n">' + fmt(p.started) + '</td><td class="n">' + fmt(p.done) + ' <span class="muted small">' + esc(PAGE_DONE_LABEL[p.done_event] || p.done_event) + '</span></td><td class="n">' + fmt(p.signup_open) + '</td><td class="n">' + fmt(p.signup_success) + '</td><td class="n">' + fmt(p.arrived_sessions) + '</td><td class="n">' + fmt(p.done_sessions) + '</td><td class="n">' + fmt(p.signup_success_sessions) + '</td></tr>').join('')
+    + '</tbody></table></div>';
+}
+function pageLinks(pages) {
+  const list = (pages && pages.length) ? pages : [{ path: '/era', url: 'https://go.toki-tail.com/era/' }, { path: '/bowl', url: 'https://go.toki-tail.com/bowl/' }, { path: '/walk-plan', url: 'https://go.toki-tail.com/walk-plan/' }];
+  return '<div class="kpis">' + list.map(p => '<a class="btn sm" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.path) + '/ ↗</a>').join(' ') + '</div>';
+}
 function vAcquire() {
   let h = weekZone('营销链接 · 内容表现');
   h += kpis(['quiz_started', 'quiz_completed', 'content_shared']);
@@ -401,6 +413,7 @@ function vAcquire() {
   else if (!u || !u.length) t = '<div class="empty">所选区间内没有带 UTM 的事件</div>';
   else t = '<div class="tw"><table class="t"><thead><tr><th>utm_source</th><th>utm_campaign</th><th class="n">访问</th><th class="n">会话</th><th class="n">开始测验</th><th class="n">完成测验</th><th class="n">注册</th><th class="n">分享</th><th class="n">事件数</th></tr></thead><tbody>' + u.map(r => '<tr><td>' + pill(r.utm_source || '(空)', r.utm_source === '(direct)' ? 'p-gray' : 'p-blue') + '</td><td>' + esc(r.utm_campaign || '(空)') + '</td><td class="n">' + fmt(r.visits) + '</td><td class="n">' + fmt(r.sessions) + '</td><td class="n">' + fmt(r.quiz_started) + '</td><td class="n">' + fmt(r.quiz_completed) + '</td><td class="n">' + fmt(r.signups) + '</td><td class="n">' + fmt(r.shares) + '</td><td class="n">' + fmt(r.events) + '</td></tr>').join('') + '</tbody></table></div>';
   h += card('acq-links', '🔗 营销链接表现 · utm_source × utm_campaign', 'go.toki-tail.com 下所有页面(/era、/walk-plan…)自动上报;没带 utm_source 的访问显示为 (direct)。网页访客未登录,看会话数而不是人数。', '', t);
+  h += card('acq-pages', '📄 营销页面 · 各页面漏斗', '到达/开始/完成/注册成功按事件数统计(与上表“访问”同口径),右侧三列是去重后的会话数。“完成”各页用各自的事件:/era = 完成测验(quiz_complete);/bowl、/walk-plan 不发 quiz_complete,用看到结果(result_view)。记录页面路径之前(2026-11-04 前)的旧事件不计。', '', pageLinks(D.agg && D.agg.pages) + pagesBody(D.agg && D.agg.pages));
   h += card('acq-quiz', '🧭 测验流失 · 停在哪一步 / 是否重测', '/era 测验按会话统计:每个会话取到过的最远一步,没走到“完成”的算流失。只统计 /era(/walk-plan、/bowl 不计);记录页面路径之前(2026-11-04 前)的旧事件也不计。重测 = 完成后点了“Try again”或同一会话再次开始 /era;关掉页面后再来是新会话,不计入。', '', quizDropBody(D.agg && D.agg.quiz_dropoff));
   h += funnelCard(['quiz']);
   h += extCard(['social_followers', 'social_views']);
